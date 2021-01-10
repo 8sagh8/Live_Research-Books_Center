@@ -1,0 +1,16 @@
+
+
+{% extends 'haq/sample.html' %}
+
+{% block title%}Available Books{% endblock %}
+
+{% block body %}
+    <span id = "titlespan">
+        <h1>Books Available In Our Bank</h1><hr><br>
+
+        {% for book in final_list %}
+            <p>{{ forloop.revcounter }} - {{ book }}</p>
+            <hr>
+        {% endfor %}
+    </span>
+{% endblock %}

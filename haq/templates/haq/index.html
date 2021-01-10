@@ -1,0 +1,26 @@
+{% extends 'haq/sample.html' %}
+
+{% block title%}Islamic Analysis & References{% endblock %}
+{% block body %}
+
+<h1>Haq References</h1><hr><br>
+
+<div class="olClass">
+<ol>
+{% for ref in reference %}
+    <li>
+        <p class="labelTopic">{{ forloop.revcounter }} - {{ ref.subject }}</p>
+        <span class="spanAlignClass"><span class="labelStyle">Narator:</span><span>{{ ref.speaker }}</span></span><br>
+        <span class="spanAlignClass"><span class="labelStyle">In honor of:</span><span>{{ ref.personFor }}</span></span><br>
+        <span class="spanAlignClass"><span class="labelStyle">Book:</span><span>{{ ref.book }}</span></span><br>
+        <span class="spanAlignClass"><span class="labelStyle">Volume/Para#:</span><span>{{ ref.vol_para}}</span></span><br> 
+        <span class="spanAlignClass"><span class="labelStyle">Chapter/Page#:</span><span>{{ ref.page_chapter }}</span></span><br>
+        <span class="spanAlignClass"><span class="labelStyle">Hadees/Verse#:</span><span>{{ ref.hadees_verse }}</span></span><br>
+        <span class="labelStyle">Description:</span><br>
+        <p style="color:blue;">{{ ref.description }}</p>
+    </li>
+    <hr>
+{% endfor %}
+</ol>
+</div>
+{% endblock %}

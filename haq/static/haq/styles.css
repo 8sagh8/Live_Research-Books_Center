@@ -1,0 +1,125 @@
+/* Body */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+
+/* Main Div */
+
+#main_div {
+    height: 90%;
+    display: flex;
+    background-color: #ff00ff;
+}
+
+
+/*   Option Div in Sample.html */
+
+.option_anchor {
+    color: beige;
+}
+
+
+/*  research -- Topic Div*/
+
+.underMain {
+    margin: 4px 4px;
+    border: solid 2px red;
+    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+    float: left;
+    width: 1000px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+#topicDiv {
+    flex: 20%;
+    background-color: #0b3954;
+    color: #b5bec6;
+}
+
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+#topicDiv li {
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#topicDiv li:hover {
+    color: #c7DBE6;
+    border-left: 4px solid #bfb1c1;
+}
+
+.lineClass {
+    border: 2px solid whitesmoke;
+    border-radius: 3px;
+}
+
+
+/*  research -- research body div */
+
+#bodyDiv {
+    flex: 80%;
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+
+/* title of books page */
+
+#titlespan {
+    margin: 2px;
+    padding: 2px;
+}
+
+#titlespan p {
+    padding: 0px 15px;
+}
+
+.move_center {
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+}
+
+#formSearch {
+    margin-left: 10rem;
+    float: right;
+}
+
+.labelStyle {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.labelTopic {
+    font-weight: bolder;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.olClass {
+    margin-left: 5px
+}
+
+.spanAlignClass {
+    display: flex;
+}
+
+.spanAlignClass> :nth-child(1) {
+    flex: 1;
+}
+
+.spanAlignClass> :nth-child(2) {
+    flex: 3;
+    color: blue;
+}

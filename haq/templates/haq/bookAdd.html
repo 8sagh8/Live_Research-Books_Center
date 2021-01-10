@@ -1,0 +1,76 @@
+{% extends 'haq/sample.html' %}
+
+{% block title%}Add Books{% endblock %}
+
+{% block body %}
+<br>
+    <h1 class="move_center">Add A New Book</h1>
+    
+
+    {% if submission_form == "yes" %}
+        <h3 class="center_text">{{ message }}</h3>
+        <br><br>
+
+    {% else %}
+        <div class="move_center">
+            <br>
+            <h3 class="center_text">{{ message }}</h3>
+            <br><br>
+
+            <form action = '{% url 'haq:bookAdd' %}' method="POST">
+                {% csrf_token %}   <!--this is to avoid fraugry-->
+
+                <input type="text" name="bookName" placeholder="Enter Book Name" style="width:600px;">
+                <br>
+                <select name="bookAuthor" style="width:600px;">
+                    <option>Select Author's Name</option>
+                    {% for p in p_list %}
+                            <option value={{ p.0 }}>{{ p.1 }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <select name="bookSect" style="width:600px;">
+                    <option>Select Religion / Sects </option>
+                    {% for r in r_list %}
+                            <option value={{ r.0 }}>{{ r.1 }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <select name="bookCat" style="width:600px;">
+                    <option>Select Category of Book</option>
+                    {% for c in c_list %}
+                            <option value={{ c.0 }}>{{ c.1 }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <select name="bookStatus" style="width:600px;">
+                    <option>Select Status Of Book</option>
+                    {% for s in s_list %}
+                            <option value={{ s.0 }}>{{ s.1 }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <select name="bookNeed" style="width:600px;">
+                    <option>Select Need of Book</option>
+                    {% for n in n_list %}
+                            <option value={{ n.0 }}>{{ n.1 }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <select name="bookLang" style="width:600px;">
+                    <option>Select Language of Book</option>
+                    {% for l in l_list %}
+                            <option value={{ l.0 }}>{{ l.1 }}</option>
+                    {% endfor %}
+                </select>
+
+
+                <br><br>
+                <input type="submit" value="Click to Submit">
+            </form>
+        </div>
+    <br>
+    <hr>
+
+    {% endif %}
+{% endblock %}

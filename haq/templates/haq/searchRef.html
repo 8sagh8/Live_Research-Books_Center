@@ -1,0 +1,35 @@
+{% extends 'haq/sample.html' %}
+
+{% block title%}FOUND LIST{% endblock %}
+
+{% block body %}
+    <span id = "titlespan">
+        <span class="move_center">
+            <h1 class="move_center">References Searched Page</h1>
+            <br>
+            {% if length_found >= 0 %}
+                <h4>total search found: {{ length_found }}</h4>
+            {% endif %}
+            <hr>
+            <br>
+            
+            {% if size < 3 %}
+                <h5 class="move_center">Number of characters can not be less than 3</h5>
+        </span>
+
+        {% else %}
+            {% for f in found_list %}
+                <h3 class="move_center">{{ forloop.counter }} - {{ f.subject }}</h3>
+                <br>
+                <h5 class="move_center">
+                    Narator: <b><u>{{ f.speaker }}</u></b> --- About: <b><u>{{ f.personFor }}</u></b>
+                </h5> <br>
+                <h6 class="move_center">Book: <b><u>{{ f.book}}</u></b>, Vol/Para: {{ f.vol_para }}, 
+                    Page/Chapter: {{ f.page_chapter }}, Hadees/Verse: {{ f.hadees_verse }}
+                </h6><br>
+                <p  class="move_center">Description: <i>{{ f.description }}</i></p>
+                <hr>
+            {% endfor %}
+        {% endif %}
+    </span>
+{% endblock %}
