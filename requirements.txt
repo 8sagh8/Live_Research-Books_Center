@@ -35,5 +35,3 @@ PyWavelets==1.1.1
 six==1.15.0
 sqlparse==0.4.1
 threadpoolctl==2.1.0
-tifffile==2021.1.14
-whitenoise==5.2.0
