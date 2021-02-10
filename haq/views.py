@@ -1,5 +1,5 @@
 from YaMehdiData.settings import AUTH_PASSWORD_VALIDATORS
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User, auth
@@ -281,15 +281,15 @@ def TopicSearchView(request):
         else:
             for tp in all_topic: # getting single reference from all list of references
                 _flag = False
-                tp = str(tp)
-                _len_word = len(tp)
+                ttp = str(tp)
+                _len_word = len(ttp)
                 _start_point = 0
                 _end_point = _len_search
 
                 if _len_word >= _len_search:
                     while (_end_point <= _len_word):
-                        if tp[_start_point : _end_point].lower() == _searchWord.lower():
-                            found_list.append(tp)
+                        if ttp[_start_point : _end_point].lower() == _searchWord.lower():
+                            found_list.append({'tp_id': tp.id, 'tp_name': ttp})
                             _flag = True
                             break;
                         else:
@@ -298,7 +298,6 @@ def TopicSearchView(request):
             
 
             length_found = len(found_list)
-
     
         return render(request, 'haq/topicSearch.html', {
             "length_found": length_found,
@@ -306,11 +305,29 @@ def TopicSearchView(request):
             "all_topics": temp[0],
             "list_size": temp[1]
         })
+       
     else:
         return render(request, 'haq/topicSearch.html', {
             "all_topics": temp[0],
             "list_size": temp[1]
         })
+
+###############################
+# to Get references of a Topic in database
+def GetTopicView(request, topic_id):
+    topic_name = get_object_or_404(Topic, pk=topic_id)
+    all_refer = Reference.objects.all()
+    new_refer_list = [] 
+
+    for reference in all_refer:
+        if (topic_name == reference.subject):
+            new_refer_list.append(reference)
+
+    return render(request, 'haq/referencesByTopic.html', {
+        'topic': topic_name,
+        'refer': new_refer_list
+        })
+
 
 # to search a PERSON in database
 def PersonalitySearchView(request):
@@ -371,3 +388,10 @@ def PersonalitySearchView(request):
 def LogOutView(request):
     auth.logout(request)
     return redirect("/")
+
+def OSampleView(request):
+
+    return render(request, 'haq/o_sample.html')
+
+
+    

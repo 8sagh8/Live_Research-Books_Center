@@ -3,7 +3,59 @@
 {% block title%}Islamic Analysis & References{% endblock %}
 {% block body %}
 
-<h1>Haq References</h1><hr><br>
+<h1>Haq References</h1>
+<hr><br>
+
+{% for ref in reference %}
+    <div>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{forloop.revcounter}} - <u>{{ref.subject}}</u></h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+
+                    <div>
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Book : {{ref.book}}</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Vol/Para# : {{ref.vol_para}}</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Page/Chapter# : {{ref.page_chapter}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Hadees/Verse# : {{ref.hadees_verse}}</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>Speaker : {{ref.speaker}}</h5>
+                            </div>
+                            <div class="col-4">
+                                <h5>For : {{ref.personFor}}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <p class="card-text">
+                        <large class="text-muted">
+                            <h4><i>Description:-</i></h4>
+                            <br>
+                            <b>{{ref.description}}</b>
+                        </large>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+{% endfor %}
 
 <div class="olClass">
 <ol>

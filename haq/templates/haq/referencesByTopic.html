@@ -1,0 +1,48 @@
+{% extends 'haq/sample.html' %}
+
+{% block title%}References of {{topic}}{% endblock %}
+
+
+{% block body %}
+    <br>
+    <div class="container">
+        <h2>
+            References of {{topic}} -- 
+            <a href="{% url 'haq:topicSearch' %}" class="btn btn-primary " role="button">Back to Topic Page</a></h2>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Volume or Paragraph</th>
+                <th>Page or Chapter </th>
+                <th>Hadees or Verse</th>
+                <th>Speaker</th>
+                <th>For Person</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for ref in refer %}
+                    <tr>
+                        <td><b>{{forloop.counter}}-</b> {{ref.book}} </td>
+                        <td>{{ref.vol_para}}</td>
+                        <td>{{ref.page_chapter}}</td>
+                        <td>{{ref.hadees_verse}}</td>
+                        <td>{{ref.speaker}}</td>
+                        <td>{{ref.personFor}}</td>
+                    </tr>
+                    <tr>
+                        <td>Description:- </td>
+                        <td colspan="4"> <b>{{ref.description}}</b> </td>
+                    </tr>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <a href="{% url 'haq:topicSearch' %}" class="btn btn-primary btn-block" role="button">Back to Topic Page</a>
+    </div>
+
+
+{% endblock %}

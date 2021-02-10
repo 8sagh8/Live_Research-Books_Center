@@ -27,11 +27,7 @@ body {
 /*  research -- Topic Div*/
 
 .underMain {
-    margin: 4px 4px;
-    border: solid 2px red;
-    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
     float: left;
-    width: 1000px;
     overflow-y: auto;
     height: 100%;
 }
@@ -62,15 +58,6 @@ ol {
 .lineClass {
     border: 2px solid whitesmoke;
     border-radius: 3px;
-}
-
-
-/*  research -- research body div */
-
-#bodyDiv {
-    flex: 80%;
-    cursor: pointer;
-    background-color: #ffffff;
 }
 
 

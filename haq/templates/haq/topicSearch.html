@@ -17,6 +17,14 @@
             <br>
             {% if length_found >= 0 %}
                 <h4>total search found: {{ length_found }}</h4>
+            {% else %}
+               
+                {% for topics in all_topics %}
+                    <a href={% url 'haq:getTopic' topics.id %} > <h2>{{topics.id}} - {{topics}}</h2></a>
+                    <hr>
+                {% endfor %}
+
+               
             {% endif %}
         </span>
 
@@ -26,9 +34,10 @@
             <h5 class="move_center">Number of characters can not be less than 3</h5>
         {% else %}
             {% for f in found_list %}
-                <h4 class="move_center">{{ forloop.counter }} - {{ f }}</h4>
+                <a href={% url 'haq:getTopic' f.tp_id %} > <h2>{{forloop.counter}} - {{f.tp_name}}</h2></a>
                 <hr>
             {% endfor %}
         {% endif %}
     </span>
+
 {% endblock %}
