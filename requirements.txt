@@ -35,8 +35,6 @@ pytz==2020.5
 PyWavelets==1.1.1
 requests==2.25.1
 rfc3986==1.4.0
-scikit-image==0.18.1
-scikit-learn==0.24.1
 scipy==1.6.0
 six==1.15.0
 sniffio==1.2.0
