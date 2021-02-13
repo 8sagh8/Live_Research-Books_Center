@@ -3,12 +3,19 @@
 {% block title%}Looking for a Topic{% endblock %}
 
 {% block body %}
-    <span id = "titlespan">
-        <h1 class="move_center">Searching Topics</h1>
+    <div id = "titlespan">
+        <div  class="move_center">
+            <h1 class="move_center">Searching Topics</h1>
+            {% for p in auth_persons %}
+                {% if user.first_name == p.auth_name %}
+                    <button type="button" class="btn btn-primary btn-lg">Add New Reference</button>
+                {% endif %}
+            {% endfor %}
+        </div>
         <br>
         
-        <span id="topicSearch" class="move_center">
-            <form action = '{% url 'haq:topicSearch' %}' method="POST" >
+        <span id="topicSearch" >
+            <form action = '{% url 'haq:topicSearch' %}' method="POST" class="move_center">
                 {% csrf_token %}   <!--this is to avoid fraugry-->
                 <input type="text" name="searchWord" size="50" value="" placeholder="Topic to Search">
                 
@@ -38,6 +45,6 @@
                 <hr>
             {% endfor %}
         {% endif %}
-    </span>
+    </div>
 
 {% endblock %}

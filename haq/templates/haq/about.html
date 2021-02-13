@@ -2,7 +2,33 @@
 
 {% block title%}About Us Page{% endblock %}
 {% block body %}
-    <h4> Dedicated to Farzand-e-Zahra (a.s) </h4>
+    <div class="move_center">
+        <br>
+        <h4> Dedicated to Farzand-e-Zahra (a.s) </h4>
+        <p>Write down what you have learned, A day will come when a sea of ​​knowledge will be in your hands</p>
+        <br>
+    </div>
 
+    <div class="move_center">
+        <caption>Data stored in Database</caption>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Particular</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in all_details %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ detail.0 }}</td>
+                        <td>{{ detail.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     
 {% endblock %}

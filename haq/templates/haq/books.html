@@ -6,11 +6,53 @@
 
 {% block body %}
     <span id = "titlespan">
-        <h1>Books Available In Our Bank</h1><hr><br>
+        <div class="move_center" >
+            <h1>Books Available</h1>
+            <form action = '{% url 'haq:bookSearch' %}' method="POST" class="move_center">
+                {% csrf_token %}   <!--this is to avoid fraugry-->
+                <input type="text" name="searchWord" size="50" value="" placeholder="Search A Book">
+                
+                <input type="submit" value="Click to Search">
+            </form>
+            <br>
+            {% for p in auth_persons %}
+                {% if user.first_name == p.auth_name %}
+                    <button type="button" class="btn btn-primary btn-lg">Add New Book</button>
+                {% endif %}
+            {% endfor %}
+        </div>
 
-        {% for book in final_list %}
-            <p>{{ forloop.revcounter }} - {{ book }}</p>
-            <hr>
-        {% endfor %}
+        <br>
+        <div class="move_center">
+            <caption>Name of Books in Database</caption>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Book ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Sect / Religion</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Need of Book</th>
+                        <th scope="col">Language</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in final_list  %}
+                        <tr>
+                            <th scope="row">{{ book.id }}</th>
+                            <td>{{ book.name }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.sect }}</td>
+                            <td>{{ book.cat }}</td>
+                            <td>{{ book.status }}</td>
+                            <td>{{ book.need }}</td>
+                            <td>{{ book.lang }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </span>
 {% endblock %}

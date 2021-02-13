@@ -1,0 +1,48 @@
+
+
+{% extends 'haq/sample.html' %}
+
+{% block title%}Languages of Books {% endblock %}
+
+{% block body %}
+    <span id = "titlespan">
+        <div class="move_center" >
+            <h1>Languages Available</h1>
+            <form action = '{% url 'haq:bookSearch' %}' method="POST" class="move_center">
+                {% csrf_token %}   <!--this is to avoid fraugry-->
+                <input type="text" name="searchWord" size="50" value="" placeholder="Search A Language -- NOT WORKING">
+                
+                <input type="submit" value="Click to Search">
+            </form>
+            <br>
+            {% for p in auth_persons %}
+                {% if user.first_name == p.auth_name %}
+                    <button type="button" class="btn btn-primary btn-lg">Add New Language</button>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <br>
+        <div class="move_center">
+            <caption>List of Languages and total books: {{total_books}} </caption>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Serial Number</th>
+                        <th scope="col">Language</th>
+                        <th scope="col">Total Books in the Language</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in dict_lang.items %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ key }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </span>
+{% endblock %}

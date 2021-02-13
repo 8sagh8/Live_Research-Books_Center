@@ -9,9 +9,17 @@ urlpatterns = [
     path('', views.AboutView, name="about"),
     path('about/', views.AboutView, name="about"),
     path('index/', views.IndexView, name="index"),  #this is reference
-    path('books/', views.BookView, name="books"),
     path('searchRef/', views.SearchRefView, name="searchRef"),
+    path('books/', views.BookView, name="books"),
     path('bookSearch/', views.BookSearchView, name="bookSearch"),
+    path('categories/', views.CategoryView, name="categories"),
+    path('languages/', views.LanguageView, name="languages"),
+    path('needs/', views.NeedView, name="needs"),
+    path('personalities/', views.PersonalityView, name="personalities"),
+    path('religions/', views.ReligionView, name="religions"),
+    path('status/', views.StatusView, name="status"),
+
+
     path('bookAdd/', views.BookAddView, name="bookAdd"),
     path('bookSectOption/', views.BookSectOptionView, name="bookSectOption"),
     path('topicSearch/', views.TopicSearchView, name="topicSearch"),

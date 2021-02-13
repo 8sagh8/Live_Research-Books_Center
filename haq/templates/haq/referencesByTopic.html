@@ -6,10 +6,18 @@
 {% block body %}
     <br>
     <div class="container">
-        <h2>
-            References of {{topic}} -- 
-            <a href="{% url 'haq:topicSearch' %}" class="btn btn-primary " role="button">Back to Topic Page</a></h2>
-
+        <div  class="move_center">
+            <h1 class="move_center">Topic: {{topic}}</h1>
+            {% for p in auth_persons %}
+                {% if user.first_name == p.auth_name %}
+                    <button type="button" class="btn btn-primary btn-lg">Add New Reference</button>
+                {% endif %}
+            {% endfor %}
+            <br><br>
+            <a href="{% url 'haq:topicSearch' %}" class="btn btn-primary " role="button">Back to Topic Page</a>
+        </div>
+        <br>
+        
         <table class="table table-striped">
             <thead>
             <tr>

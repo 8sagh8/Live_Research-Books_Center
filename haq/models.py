@@ -3,6 +3,13 @@ from django.db.models.deletion import CASCADE
 
 # Create your models here.
 
+    # Authorized Persons
+class Authorized_Person(models.Model):
+    auth_name = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.auth_name
+
  # research Topics
 class Topic(models.Model):
     _topic = models.CharField(max_length=50)
@@ -29,14 +36,6 @@ class Person(models.Model):
     def __str__(self):
         return self._p_name
 
-
-# Religion / Sect models here.
-class Religion(models.Model):
-    _sect = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self._sect
-    
 # Category models here.
 class Category(models.Model):
     _category = models.CharField(max_length=22)
@@ -44,12 +43,12 @@ class Category(models.Model):
     def __str__(self):
         return self._category
 
-# Status models here.
-class Status(models.Model):
-    _status = models.CharField(max_length=16)
+# Language models here.
+class Language(models.Model):
+    _language = models.CharField(max_length=7)
 
     def __str__(self):
-        return self._status
+        return self._language
 
 # Need models here.
 class Need(models.Model):
@@ -58,12 +57,22 @@ class Need(models.Model):
     def __str__(self):
         return self._need
 
-# Language models here.
-class Language(models.Model):
-    _language = models.CharField(max_length=7)
+
+# Religion / Sect models here.
+class Religion(models.Model):
+    _sect = models.CharField(max_length=20)
 
     def __str__(self):
-        return self._language
+        return self._sect
+
+
+# Status models here.
+class Status(models.Model):
+    _status = models.CharField(max_length=16)
+
+    def __str__(self):
+        return self._status
+
 
 # Book models here.
 class Book(models.Model):
@@ -78,6 +87,9 @@ class Book(models.Model):
     def __str__(self):
         return self.name.capitalize() + ' sect: ' + str(self.sect) + ' & language: ' + str(self.lang)
 
+#####################################
+########### IMPROVE ABOVE #############
+#####################################
 # Reference Model
 class Reference(models.Model):
     subject = models.ForeignKey(Topic, on_delete=models.CASCADE)
