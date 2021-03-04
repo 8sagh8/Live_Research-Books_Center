@@ -27,8 +27,10 @@
             {% else %}
                
                 {% for topics in all_topics %}
-                    <a href={% url 'haq:getTopic' topics.id %} > <h2>{{topics.id}} - {{topics}}</h2></a>
-                    <hr>
+                    {% for key, value in topics.items %}
+                        <a href={% url 'haq:getTopic' key %} > <h2>{{key}} - {{value}}</h2></a>
+                        <hr>
+                    {% endfor %}
                 {% endfor %}
 
                

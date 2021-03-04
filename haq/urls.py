@@ -23,6 +23,9 @@ urlpatterns = [
     # API routes
     path('intoJSON/', views.IntoJsonView, name="intoJSON"),
 
+    # JSON Files routes
+    path('createJSON', views.CreateJSONView, name="createJSON"),
+
     #  to work on below
     path('topicJSON/', views.TopicJSONView, name="topicJSON"),
     path('bookAdd/', views.BookAddView, name="bookAdd"),

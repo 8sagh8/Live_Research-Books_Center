@@ -1,0 +1,25 @@
+{% extends 'haq/sample.html' %}
+
+{% block title%}Trial get TOPIC from JSON File {% endblock %}
+
+{% block body %}
+    <div class="move_center">
+        <br>
+        <h4> Create JSON Files </h4>
+        <p>Click below button to fetch data from database and will create 
+            all the JSON Files according to pre-set conditions & requirements
+        </p>
+        <br>
+        <form action = '{% url 'haq:createJSON' %}' method="POST" class="move_center">
+            {% csrf_token %}   <!--this is to avoid fraugry-->
+            <input type="submit" value="Create JSON Files">
+        </form>
+    </div>
+    <hr>
+
+    <div class="move_center">
+        {% for m in msg %}
+            {{m}} -- created.
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -39,9 +39,15 @@ def AboutView(request):
 
 # to search a Topic in database
 def TopicSearchView(request):
+    #  Fetch data from 'topicsJSON.json' File 
+    file_obj = open('haq/static/haq/json_files/topicsJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    
+    list_Authorized_People = Authorized_Person.objects.all()
+
     temp = topic()
     _searchWord = None
-    list_Authorized_People = Authorized_Person.objects.all()
     all_topic = Topic.objects.all()
     found_list = []  #will be sent to html page
     _length_found = 0 #length of the list found
@@ -88,16 +94,26 @@ def TopicSearchView(request):
         })
        
     else:
+        # new_topic_list = []
         new_topic_list = []
-        
-        for t in all_topic:
-            new_topic_list.append(t)
+
+        for d in data_dict.values():
+            for v in d:
+                new_topic_list.append({v['id'] : v['_topic']})
+
+        # for t in all_topic:
+        #     new_topic_list.append(t)
 
         new_topic_list.reverse()
 
+        # for t in new_top:
+        #     print("==>", t, flush=True)
+            
+
         return render(request, 'haq/topicSearch.html', {
             "auth_persons": list_Authorized_People,
-            "all_topics": new_topic_list,       
+            # "all_topics": new_topic_list,  
+            "all_topics": new_topic_list,      
         })
 
 # to Get references of a Topic in database
@@ -449,6 +465,33 @@ def StatusView(request):
         'dict_status': dict_status,
        })
 
+
+# ~~~~~ JSON FILES VIEWS ~~~~~~~~~ #
+# create all the JSON Files
+def CreateJSONView(request):
+    list_Authorized_People = Authorized_Person.objects.all()
+    msg = []
+    if request.method == "POST":
+        topics = Topic.objects.all()
+        topics_list = [] # will store all topics and then go inside json_topic
+
+        for t in topics:
+            topics_list.append({"id": t.id, "_topic": t._topic})
+
+        # will store topics json in here
+        json_topic = { "topics" : topics_list }
+        # convert into json data
+        my_json = json.dumps(json_topic, indent=1)
+
+        with open('haq/static/haq/json_files/topicsJSON.json', mode='w+') as myFile:
+            myFile.write(my_json)
+            msg.append("Topics")
+
+    return render(request, 'haq/jsonFiles/createJson.html', {
+        "auth_persons": list_Authorized_People,
+        "msg" : msg,
+    })
+
 ###########################################
 ###########################################
 ###########################################
@@ -529,6 +572,7 @@ def BookAddView(request):
         "n_list": n_list,
         "l_list": l_list,
     })
+
 
 
 
@@ -632,13 +676,10 @@ def IntoJsonView(request):
 # TopicJSONView -- TRIAL!!! getting Topic from JSON files
 def TopicJSONView(request):
 
-    file_obj = open('haq/static/haq/json_files/topics.json')
+    file_obj = open('haq/static/haq/json_files/topicsJSON.json')
     data_dict = json.load(file_obj)
-
-    for d in data_dict['topics']:
-        print(d, flush=True)
-    
     file_obj.close()
+
     return render(request, 'haq/topicJSON.html', {
         'data' : data_dict,
     })
