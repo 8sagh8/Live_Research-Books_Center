@@ -1,0 +1,27 @@
+{% extends 'haq/sample.html' %}
+
+{% block title%}Trial get TOPIC from JSON File {% endblock %}
+
+{% block body %}
+    <h1>Getting TOPICS DETAIL from JSON File</h1>
+    <hr />
+
+    {% for k, v in data.items %}
+        these are {{k}} <br />
+        {% for dict in v %}
+            <p>
+                {% for i in dict.values %}
+                    <!-- count is nothing so its FALSE, used it to get values 
+                    in right order -->
+                    {% if count == False %}
+                        {{i}} --
+                    {% else %}
+                        {{i}}.
+                    {% endif %}
+                {% endfor %}
+            </p>
+        {% endfor %}
+        
+    {% endfor %}
+
+{% endblock %}

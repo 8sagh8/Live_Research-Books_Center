@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User, auth
+import json
 
 # Topics
 def topic():
@@ -16,6 +17,7 @@ def topic():
 
 # About page
 def AboutView(request):
+    list_Authorized_People = Authorized_Person.objects.all()
     topics = Topic.objects.all()
     references = Reference.objects.all()
     books = Book.objects.all()
@@ -29,6 +31,7 @@ def AboutView(request):
     list_about.append(('Categories', categories.count()))
 
     return render(request, 'haq/about.html', {
+        "auth_persons": list_Authorized_People,
         "all_details": list_about,
     })
 
@@ -597,5 +600,60 @@ def OSampleView(request):
 
     return render(request, 'haq/o_sample.html')
 
+### API routes' Views
+def IntoJsonView(request):
+    print("   ==> haqAPI", flush=True)
+    # return redirect("intoJSON/")
 
+    list_Authorized_People = Authorized_Person.objects.all()
+    status = Status.objects.all()
+    all_books = Book.objects.all()
+    dict_status = {}
+    total_books = 0
+
+    for status in status:
+        counter = 0
+        dict_status[status] = counter
+
+        for book in all_books:
+            if (status == book.status):
+                counter += 1
+                dict_status[status] = counter
+        
+        total_books += counter
+
+    return render(request, 'haq/status.html', {
+        "auth_persons": list_Authorized_People,
+        'total_books': total_books,
+        'dict_status': dict_status,
+       })
+
+
+# TopicJSONView -- TRIAL!!! getting Topic from JSON files
+def TopicJSONView(request):
+
+    file_obj = open('haq/static/haq/json_files/topics.json')
+    data_dict = json.load(file_obj)
+
+    for d in data_dict['topics']:
+        print(d, flush=True)
     
+    file_obj.close()
+    return render(request, 'haq/topicJSON.html', {
+        'data' : data_dict,
+    })
+    
+# print("   ==> serverAPI", flush=True)
+#     topics = Topic.objects.all()
+#     topics_list = [] # will store all topics and then go inside json_topic
+
+#     for t in topics:
+#         topics_list.append({"id": t.id, "_topic": t._topic})
+
+#     # will store topics json in here
+#     json_topic = { "topics" : topics_list }
+#     # convert into json data
+#     my_json = json.dumps(json_topic, indent=1)
+
+#     with open('serverAPI/static/json/topics.json', mode='w+') as myFile:
+#         myFile.write(my_json)

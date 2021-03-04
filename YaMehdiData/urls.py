@@ -15,9 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+# this is to use URL i/o of PATH in 'urlpatterns = []'
+from django.conf.urls import url 
+#from serverAPI import views
+from serverAPI.api import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('mainpage.urls')),
-    path('home/', include('haq.urls')),
+    path('admin/', admin.site.urls),    #route to ADMIN Page only
+    path('', include('mainpage.urls')), #route to Main Login Page only
+    path('home/', include('haq.urls')), #route to Haq About Page only
+    # path to serverAPI
+    url(r'^api/topics_list/$', TopicsList.as_view(), name='topics_list'),
+    path('intoJSON/', include('serverAPI.urls')), 
+    
+    # path(r'^api/topics_list/$', include('serverAPI.urls')) #route to serverAPI Topic Page only
 ]

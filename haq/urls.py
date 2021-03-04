@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls import url
 
 from . import views
@@ -18,15 +18,19 @@ urlpatterns = [
     path('personalities/', views.PersonalityView, name="personalities"),
     path('religions/', views.ReligionView, name="religions"),
     path('status/', views.StatusView, name="status"),
+    path('logout', views.LogOutView, name="logout"),
 
+    # API routes
+    path('intoJSON/', views.IntoJsonView, name="intoJSON"),
 
+    #  to work on below
+    path('topicJSON/', views.TopicJSONView, name="topicJSON"),
     path('bookAdd/', views.BookAddView, name="bookAdd"),
     path('bookSectOption/', views.BookSectOptionView, name="bookSectOption"),
     path('topicSearch/', views.TopicSearchView, name="topicSearch"),
     path('getTopic/', views.GetTopicView, name="getTopic"),
     url(r'^(?P<topic_id>[0-9]+)/$', views.GetTopicView, name="getTopic"),
     path('personalitySearch/', views.PersonalitySearchView, name="personalitySearch"),
-    path('logout', views.LogOutView, name="logout"),
     path('osample', views.OSampleView, name="osample"),
 ]
 
