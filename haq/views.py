@@ -144,8 +144,6 @@ def AboutView(request):
     list_about.append(('Books', books))
     list_about.append(('References', references))
     
-    
-
     return render(request, 'haq/about.html', {
         "auth_person": auth_person,
         "all_details": list_about,
@@ -161,7 +159,6 @@ def StatusView(request):
     
     for status_list in status.values():
         for status_dict in status_list:
-            print("===>",status_dict, flush=True)
             for status in status_dict.values():
                 counter = 0
 
@@ -183,6 +180,54 @@ def StatusView(request):
         'dict_status': dict_status,
        })
 
+# get Books by Status
+def GetStatusBooksView(request, status_id):
+    auth_person = auth_Person_Function(str(request.user))
+    status_name = get_object_or_404(Status, pk=status_id)
+    all_books = get_book_json()
+    new_books_list = [] 
+
+    for books_list in all_books.values():
+        for book in books_list:
+            if str(status_name) == book['status']:
+                new_books_list.append(book)
+
+    new_books_list.reverse()
+
+    return render(request, 'haq/pages/books.html', {
+        "auth_person": auth_person,
+        'status': status_name,
+        'books': new_books_list
+        })
+
+    
+# Books page
+def BookView(request):
+    auth_person = auth_Person_Function(str(request.user))
+    all_books = get_book_json()
+    final_list = []
+
+    if request.method == "POST":
+        _searchWord = request.POST['searchWord']
+        for books in all_books.values():
+            for book in books:      
+                for v in book.values():
+                    if _searchWord.lower() in str(v).lower():
+                        final_list.append(book)
+    else:
+        for books in all_books.values():
+            for book in books:
+                final_list.append(book)
+    final_list.reverse()
+    return render(request, 'haq/pages/books.html', {
+        "auth_person": auth_person,
+        'status' : False, # the status is used by search by status, see 'GetStatusBooksView' 
+        'books': final_list,
+       })
+
+
+
+
 ################################################
 # ~~~~~ END -- General VIEWS ~~~~~~~~~ #
 ################################################
@@ -196,7 +241,7 @@ def TopicSearchView(request):
     data_dict = get_topics_json() # get topics from json file
 
     
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
 
     temp = topic()
     _searchWord = None
@@ -210,7 +255,7 @@ def TopicSearchView(request):
 
         if _len_search < 3:
             return render(request, 'haq/topicSearch.html', {
-                "auth_persons": list_Authorized_People,
+                "auth_person": auth_person,
                 "size": _len_search,
                 "all_topics": temp[0],
                 "list_size": temp[1]
@@ -238,7 +283,7 @@ def TopicSearchView(request):
             length_found = len(found_list)
             
         return render(request, 'haq/topicSearch.html', {
-            "auth_persons": list_Authorized_People,
+            "auth_person": auth_person,
             "length_found": length_found,
             "found_list" : found_list,
             "all_topics": temp[0],
@@ -255,7 +300,7 @@ def TopicSearchView(request):
         new_topic_list.reverse()         
 
         return render(request, 'haq/topicSearch.html', {
-            "auth_persons": list_Authorized_People,
+            "auth_person": auth_person,
             # "all_topics": new_topic_list,  
             "all_topics": new_topic_list,      
         })
@@ -264,7 +309,7 @@ def TopicSearchView(request):
 def GetTopicView(request, topic_id):
     topic_name = get_object_or_404(Topic, pk=topic_id)
     all_refer = Reference.objects.all()
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     new_refer_list = [] 
 
     for reference in all_refer:
@@ -272,19 +317,19 @@ def GetTopicView(request, topic_id):
             new_refer_list.append(reference)
 
     return render(request, 'haq/referencesByTopic.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         'topic': topic_name,
         'refer': new_refer_list
         })
 
 # main Index Page
 def IndexView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     temp = Topic.objects.all()
     reference = Reference.objects.all()
     reference = reversed(list(reference))
     return render(request, 'haq/index.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         "all_topics": temp[0], 
         "list_size": temp[1],
         "reference": reference
@@ -294,7 +339,7 @@ def IndexView(request):
 
 # Searching for References
 def SearchRefView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     temp = topic()
     _searchWord = None
     all_ref = Reference.objects.all()
@@ -308,7 +353,7 @@ def SearchRefView(request):
 
         if _len_search == 0 and _len_search < 3:
             return render(request, 'haq/searchRef.html', {
-                "auth_persons": list_Authorized_People,
+                "auth_person": auth_person,
                 "size": _len_search
             })
 
@@ -350,7 +395,7 @@ def SearchRefView(request):
 
   
         return render(request, 'haq/searchRef.html', {
-            "auth_persons": list_Authorized_People,
+            "auth_person": auth_person,
             "length_found" : length_found,
             "found_list" : found_list,
             "all_topics": temp[0],
@@ -358,101 +403,13 @@ def SearchRefView(request):
         })
 
 
-# Books page
-def BookView(request):
-    temp = topic()
-    list_Authorized_People = Authorized_Person.objects.all()
-    all_books = Book.objects.all()
-    new_list = []
-    new_set = set()
-    final_list = []
-
-    for book in all_books:
-        new_set.add(book.name)
-        new_list.append(book)
-
-    for _set in new_set:
-        for i, _list in enumerate(new_list):
-            if _list.name == _set:
-                final_list.append(_list)
-                new_list.pop(i)
-                break
-            
-    return render(request, 'haq/books.html', {
-        "auth_persons": list_Authorized_People,
-        'final_list': final_list,
-        "all_topics": temp[0],
-        "list_size": temp[1]
-       })
 
 
-# Searching for Books
-def BookSearchView(request):
-    temp = topic()
-    _searchWord = None
-    list_Authorized_People = Authorized_Person.objects.all()
-    all_book = Book.objects.all()
-    found_list = []  #will be sent to html page
-    _length_found = 0 #length of the list found
-
-    if request.method == "POST":
-        _searchWord = request.POST['searchWord']
-        _len_search = len(_searchWord)
-
-        if _len_search < 3:
-            return render(request, 'haq/searchRef.html', {
-                "auth_persons": list_Authorized_People,
-                "size": _len_search,
-                "all_topics": temp[0],
-                "list_size": temp[1]
-            })
-
-        else:
-            for book in all_book: # getting single reference from all list of references
-                _flag = False
-                book_list = []
-
-                book_list.append(str(book.name))
-
-                for _word in book_list:
-                    _len_word = len(_word)
-                    _start_point = 0
-                    _end_point = _len_search
-
-                    if _len_word >= _len_search:
-                        while (_end_point <= _len_word):
-                            if _word[_start_point : _end_point].lower() == _searchWord.lower():
-                                found_list.append(book)
-                                _flag = True
-                                break;
-                            else:
-                                _start_point += 1
-                                _end_point += 1
-                    
-                    if _flag == True:
-                        break;
-
-            length_found = len(found_list)
-
-    
-        return render(request, 'haq/bookSearch.html', {
-            "auth_persons": list_Authorized_People,
-            "length_found": length_found,
-            "found_list" : found_list,
-            "all_topics": temp[0],
-            "list_size": temp[1]
-        })
-    else:
-        return render(request, 'haq/bookSearch.html', {
-            "auth_persons": list_Authorized_People,
-            "all_topics": temp[0],
-            "list_size": temp[1]
-        })
 
 
 # Category(ies) page
 def CategoryView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     categories= Category.objects.all()
     all_books = Book.objects.all()
     dict_cat = {}
@@ -472,7 +429,7 @@ def CategoryView(request):
 
             
     return render(request, 'haq/categories.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         'total_books': total_books,
         'dict_cat': dict_cat,
        })
@@ -480,7 +437,7 @@ def CategoryView(request):
 
 # Language page
 def LanguageView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     language= Language.objects.all()
     all_books = Book.objects.all()
     dict_lang = {}
@@ -500,14 +457,14 @@ def LanguageView(request):
 
             
     return render(request, 'haq/languages.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         'total_books': total_books,
         'dict_lang': dict_lang,
        })
 
 # Needs page
 def NeedView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     need = Need.objects.all()
     all_books = Book.objects.all()
     dict_need = {}
@@ -527,14 +484,14 @@ def NeedView(request):
 
             
     return render(request, 'haq/needs.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         'total_books': total_books,
         'dict_need': dict_need,
        })
 
 # Personalities page
 def PersonalityView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     person = Person.objects.all()
     all_books = Book.objects.all()
     dict_person = {}
@@ -554,14 +511,14 @@ def PersonalityView(request):
 
             
     return render(request, 'haq/personalities.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         'total_books': total_books,
         'dict_person': dict_person,
        })
 
 # Religions page
 def ReligionView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     religion = Religion.objects.all()
     all_books = Book.objects.all()
     dict_religion = {}
@@ -579,7 +536,7 @@ def ReligionView(request):
         total_books += counter
 
     return render(request, 'haq/religions.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         'total_books': total_books,
         'dict_religion': dict_religion,
        })
@@ -744,7 +701,7 @@ def OSampleView(request):
 def IntoJsonView(request):
     # return redirect("intoJSON/")
 
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     status = Status.objects.all()
     all_books = Book.objects.all()
     dict_status = {}
@@ -762,7 +719,7 @@ def IntoJsonView(request):
         total_books += counter
 
     return render(request, 'haq/pages/status.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         'total_books': total_books,
         'dict_status': dict_status,
        })
@@ -803,7 +760,7 @@ def TopicJSONView(request):
 ################################################
 # create 'authorizedPersonJSON.json' file
 def _createAuthPersonJSON():
-    list_Authorized_People = Authorized_Person.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
     authPerson_list = [] # will store all auth.per in here 
 
     for person in list_Authorized_People:

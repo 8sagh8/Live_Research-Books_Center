@@ -7,19 +7,21 @@
 {% block body %}
     <span id = "titlespan">
         <div class="move_center" >
-            <h1>Books Available</h1>
-            <form action = '{% url 'haq:bookSearch' %}' method="POST" class="move_center">
+            <h1>Books Available
+                {% if status != False %}
+                    by Status: {{status}}
+                {% endif %}
+            </h1>
+            <form action = '{% url 'haq:books' %}' method="POST" class="move_center">
                 {% csrf_token %}   <!--this is to avoid fraugry-->
                 <input type="text" name="searchWord" size="50" value="" placeholder="Search A Book">
                 
                 <input type="submit" value="Click to Search">
             </form>
             <br>
-            {% for p in auth_persons %}
-                {% if user.first_name == p.auth_name %}
+            {% if auth_person == "Authorized Person" %}
                     <button type="button" class="btn btn-primary btn-lg">Add New Book</button>
-                {% endif %}
-            {% endfor %}
+            {% endif %}     
         </div>
 
         <br>
@@ -39,9 +41,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for book in final_list  %}
+                    {% for book in books  %}
                         <tr>
-                            <th scope="row">{{ book.id }}</th>
+                            <th scope="row">{{ forloop.revcounter }}</th>
                             <td>{{ book.name }}</td>
                             <td>{{ book.author }}</td>
                             <td>{{ book.sect }}</td>
