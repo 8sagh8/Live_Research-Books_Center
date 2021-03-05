@@ -111,7 +111,7 @@ def get_count(_dict):
             count += 1
     return count
 
-def AboutView(request):
+def IndexView(request):
     auth_person = auth_Person_Function(str(request.user))
     topics = get_topics_json()
     topics = get_count(topics)
@@ -144,7 +144,7 @@ def AboutView(request):
     list_about.append(('Books', books))
     list_about.append(('References', references))
     
-    return render(request, 'haq/about.html', {
+    return render(request, 'haq/pages/index.html', {
         "auth_person": auth_person,
         "all_details": list_about,
     })
@@ -323,19 +323,25 @@ def GetTopicView(request, topic_id):
         })
 
 # main Index Page
-def IndexView(request):
+def AboutView(request):
+    auth_person = auth_Person_Function(str(request.user))
+
+    return render(request, 'haq/about.html', {
+        "auth_person": auth_person,
+    })
+
+# main Reference Page
+def ReferenceView(request):
     auth_person = auth_Person_Function(str(request.user))
     temp = Topic.objects.all()
     reference = Reference.objects.all()
     reference = reversed(list(reference))
-    return render(request, 'haq/index.html', {
+    return render(request, 'haq/reference.html', {
         "auth_person": auth_person,
         "all_topics": temp[0], 
         "list_size": temp[1],
         "reference": reference
     })
-
-
 
 # Searching for References
 def SearchRefView(request):
