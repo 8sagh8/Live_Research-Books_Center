@@ -1,0 +1,280 @@
+{
+ "person": [
+  {
+   "id": 1,
+   "_p_name": "Muhammad Al-Bukhari",
+   "_birth_year": "0",
+   "_death_year": "232"
+  },
+  {
+   "id": 2,
+   "_p_name": "Muslim Bin Al-Hajjaj",
+   "_birth_year": "204",
+   "_death_year": "261"
+  },
+  {
+   "id": 3,
+   "_p_name": "Hakim Al-Nishapuri",
+   "_birth_year": "321",
+   "_death_year": "405"
+  },
+  {
+   "id": 4,
+   "_p_name": "Ibn Majah",
+   "_birth_year": "209",
+   "_death_year": "275"
+  },
+  {
+   "id": 5,
+   "_p_name": "Al Tirmizi",
+   "_birth_year": "0",
+   "_death_year": "270"
+  },
+  {
+   "id": 6,
+   "_p_name": "Al Nasai",
+   "_birth_year": "214",
+   "_death_year": "303"
+  },
+  {
+   "id": 7,
+   "_p_name": "Ahmad Ibn Hanbal",
+   "_birth_year": "164",
+   "_death_year": "241"
+  },
+  {
+   "id": 8,
+   "_p_name": "Imam Malik ibn Anas",
+   "_birth_year": "93",
+   "_death_year": "179"
+  },
+  {
+   "id": 9,
+   "_p_name": "Mohd ibn Abd Allah",
+   "_birth_year": "0",
+   "_death_year": "741"
+  },
+  {
+   "id": 10,
+   "_p_name": "Abu Dawood",
+   "_birth_year": "0",
+   "_death_year": "275"
+  },
+  {
+   "id": 11,
+   "_p_name": "Abi Mohammad Al-Darmi",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 12,
+   "_p_name": "Not Available",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 13,
+   "_p_name": "Allama Shibli Nomani",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 14,
+   "_p_name": "Muhammad ibn Ya'qub al-Kulayni",
+   "_birth_year": "255",
+   "_death_year": "329"
+  },
+  {
+   "id": 15,
+   "_p_name": "Mohammad-Baqer Majlesi",
+   "_birth_year": "1038",
+   "_death_year": "1110"
+  },
+  {
+   "id": 16,
+   "_p_name": "Shaikh Sadooq",
+   "_birth_year": "306",
+   "_death_year": "381"
+  },
+  {
+   "id": 17,
+   "_p_name": "Shaikh Abu Ja'fer Toosi",
+   "_birth_year": "385",
+   "_death_year": "480"
+  },
+  {
+   "id": 18,
+   "_p_name": "Shaikh Hur Aamili",
+   "_birth_year": "1033",
+   "_death_year": "1104"
+  },
+  {
+   "id": 19,
+   "_p_name": "Mohammad Bin Murtaza Faiz Kashani",
+   "_birth_year": "1007",
+   "_death_year": "1091"
+  },
+  {
+   "id": 20,
+   "_p_name": "Prophet (s.a.w.a.w)",
+   "_birth_year": "0",
+   "_death_year": "11"
+  },
+  {
+   "id": 21,
+   "_p_name": "Ibn Kath\u012br",
+   "_birth_year": "701",
+   "_death_year": "774"
+  },
+  {
+   "id": 22,
+   "_p_name": "Jalaludeen AbuBakr Suyuti",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 23,
+   "_p_name": "Ummul Momineen Ayesha",
+   "_birth_year": "0",
+   "_death_year": "58"
+  },
+  {
+   "id": 24,
+   "_p_name": "Hazrat Abu Bakar (1st Khalifa)",
+   "_birth_year": "0",
+   "_death_year": "13"
+  },
+  {
+   "id": 25,
+   "_p_name": "Abdul Rehman Bin Abu Bakar(1st khalifa)",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 26,
+   "_p_name": "Mola Ali (a.s)",
+   "_birth_year": "-23",
+   "_death_year": "40"
+  },
+  {
+   "id": 27,
+   "_p_name": "Hazrat Umar (2nd khalifa)",
+   "_birth_year": "0",
+   "_death_year": "23"
+  },
+  {
+   "id": 28,
+   "_p_name": "Salim(milking) and Abu Obaida Bin Jarrah",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 29,
+   "_p_name": "Salim (milking)",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 30,
+   "_p_name": "Imam Mehdi (a.s)",
+   "_birth_year": "255",
+   "_death_year": "0"
+  },
+  {
+   "id": 31,
+   "_p_name": "Muhammad ibn Jarir al-Tabari",
+   "_birth_year": "224",
+   "_death_year": "310"
+  },
+  {
+   "id": 32,
+   "_p_name": "Hazrat Abu Ubaidah ibn al Jarrah",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 33,
+   "_p_name": "Abdullah Bin Omar(2nd khalifa)",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 34,
+   "_p_name": "ALLAH The Almighty",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 35,
+   "_p_name": "Nafarmaan",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 36,
+   "_p_name": "Kafir - Disbeliever",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 37,
+   "_p_name": "Huzaifa Bin Yamaani",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 38,
+   "_p_name": "Muslim",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 39,
+   "_p_name": "Imam Jaffer -e- Sadiq (a.s)",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 40,
+   "_p_name": "Mawiya ibne Abu Sufyaan",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 41,
+   "_p_name": "Umro Bin Aas",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 42,
+   "_p_name": "Shaitaan / Iblees",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 43,
+   "_p_name": "H.I. Mohammad Mohammadi Ashtahardi",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 44,
+   "_p_name": "Bibi Ayesha",
+   "_birth_year": "0",
+   "_death_year": "58AH"
+  },
+  {
+   "id": 45,
+   "_p_name": "Hazrat Abu Zar Ghaffari",
+   "_birth_year": "0",
+   "_death_year": "0"
+  },
+  {
+   "id": 46,
+   "_p_name": "Zohri",
+   "_birth_year": "0",
+   "_death_year": "0"
+  }
+ ]
+}

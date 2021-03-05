@@ -1,0 +1,48 @@
+{
+ "religion": [
+  {
+   "id": 1,
+   "_sect": "Shia (12 Imams)"
+  },
+  {
+   "id": 2,
+   "_sect": "Sunni (all)"
+  },
+  {
+   "id": 3,
+   "_sect": "Sunni (Hanafi)"
+  },
+  {
+   "id": 4,
+   "_sect": "Sunni (Barelwi)"
+  },
+  {
+   "id": 5,
+   "_sect": "Sunni (Deowband)"
+  },
+  {
+   "id": 6,
+   "_sect": "Sunni (Maleki)"
+  },
+  {
+   "id": 7,
+   "_sect": "Sunni (Hambali)"
+  },
+  {
+   "id": 8,
+   "_sect": "Qadiyani / Ahmedi"
+  },
+  {
+   "id": 9,
+   "_sect": "Christians"
+  },
+  {
+   "id": 10,
+   "_sect": "website link"
+  },
+  {
+   "id": 11,
+   "_sect": "Not Available"
+  }
+ ]
+}

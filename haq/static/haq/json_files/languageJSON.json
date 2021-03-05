@@ -1,0 +1,24 @@
+{
+ "language": [
+  {
+   "id": 1,
+   "_language": "Arabic"
+  },
+  {
+   "id": 2,
+   "_language": "English"
+  },
+  {
+   "id": 3,
+   "_language": "Hindi"
+  },
+  {
+   "id": 4,
+   "_language": "Persian"
+  },
+  {
+   "id": 5,
+   "_language": "Urdu"
+  }
+ ]
+}

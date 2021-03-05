@@ -1,0 +1,44 @@
+{
+ "categories": [
+  {
+   "id": 1,
+   "_category": "Quran"
+  },
+  {
+   "id": 2,
+   "_category": "Quran with Translation"
+  },
+  {
+   "id": 3,
+   "_category": "Quran with Tafseer"
+  },
+  {
+   "id": 4,
+   "_category": "Hadith and Sunnah"
+  },
+  {
+   "id": 5,
+   "_category": "Biography & History"
+  },
+  {
+   "id": 6,
+   "_category": "Islamic History"
+  },
+  {
+   "id": 7,
+   "_category": "Critical Analysis"
+  },
+  {
+   "id": 8,
+   "_category": "General Book"
+  },
+  {
+   "id": 9,
+   "_category": "Language Book"
+  },
+  {
+   "id": 10,
+   "_category": "Fiqh and Hadees"
+  }
+ ]
+}

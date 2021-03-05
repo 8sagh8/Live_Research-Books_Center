@@ -54,70 +54,60 @@
 
                             <!-- View References and Research -->
                             <div class="sb-sidenav-menu-heading">REFERENCES & RESEARCH</div>
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Material
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{% url 'haq:index' %}">References</a>
-                                    <a class="nav-link" href="{% url 'haq:topicSearch' %}">Topics</a>
-                                    <a class="nav-link" href="{% url 'haq:books' %}">Books</a>
-                                    <a class="nav-link" href="{% url 'haq:categories' %}">Categories</a>
-                                    <a class="nav-link" href="{% url 'haq:languages' %}">Languages</a>
-                                    <a class="nav-link" href="{% url 'haq:needs' %}">Needs</a>
-                                    <a class="nav-link" href="{% url 'haq:personalities' %}">Personalities</a>
-                                    <a class="nav-link" href="{% url 'haq:religions' %}">Religions</a>
-                                    <a class="nav-link" href="{% url 'haq:status' %}">Status</a>
-                                    <a class="nav-link" href="{% url 'haq:createJSON' %}">tus</a>
-                                </nav>
-                            </div> 
-                            
-                            {% for p in auth_persons %}
-                                {% if user.first_name == p.auth_name %}
-                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseJSON" aria-expanded="false" aria-controls="collapseLayouts">
-                                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                        JSON Files
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="collapseJSON" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="{% url 'haq:createJSON' %}">tus</a>
-                                        </nav>
-                                    </div> 
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{% url 'haq:index' %}">References</a>
+                                <a class="nav-link" href="{% url 'haq:topicSearch' %}">Topics</a>
+                                <a class="nav-link" href="{% url 'haq:books' %}">Books</a>
+                                <a class="nav-link" href="{% url 'haq:categories' %}">Categories</a>
+                                <a class="nav-link" href="{% url 'haq:languages' %}">Languages</a>
+                                <a class="nav-link" href="{% url 'haq:needs' %}">Needs</a>
+                                <a class="nav-link" href="{% url 'haq:personalities' %}">Personalities</a>
+                                <a class="nav-link" href="{% url 'haq:religions' %}">Religions</a>
+                                <a class="nav-link" href="{% url 'haq:status' %}">Status</a>
+                            </nav>
+
+                            {% if auth_person == "Authorized Person" %}
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseJSON" aria-expanded="false" aria-controls="collapseLayouts">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    JSON Files
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseJSON" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="{% url 'haq:createJSON' %}">tus</a>
+                                    </nav>
+                                </div> 
 
 
 
-                                    <!-- Add References and Research -->
-                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                        API Server Details
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-                                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                            <a class="nav-link collapsed" href="{% url 'haq:createJSON' %}" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                                Load into Json File
-                                            </a>
-                                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                                Upload from Json File
-                                            </a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link" href="{% url 'haq:topicJSON' %}">Get JSON TOPIC - Delete</a>
-                                    <a class="nav-link" href="{% url 'haq:osample' %}">Sample - Delete</a>
-                                    <div class="sb-sidenav-menu-heading">View Details</div>
-                                    <a class="nav-link" href="charts.html">
-                                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                        Details
-                                    </a>
-                                    <a class="nav-link" href="tables.html">
-                                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                        List
-                                    </a>
-                                {% endif %}
-                            {% endfor %}
+                                <!-- Add References and Research -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    API Server Details
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                        <a class="nav-link collapsed" href="{% url 'haq:createJSON' %}" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                            Load into Json File
+                                        </a>
+                                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                            Upload from Json File
+                                        </a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link" href="{% url 'haq:topicJSON' %}">Get JSON TOPIC - Delete</a>
+                                <a class="nav-link" href="{% url 'haq:osample' %}">Sample - Delete</a>
+                                <div class="sb-sidenav-menu-heading">View Details</div>
+                                <a class="nav-link" href="charts.html">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                    Details
+                                </a>
+                                <a class="nav-link" href="tables.html">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                    List
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
 

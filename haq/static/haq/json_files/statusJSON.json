@@ -1,0 +1,20 @@
+{
+ "status": [
+  {
+   "id": 1,
+   "_status": "Don't Have It"
+  },
+  {
+   "id": 2,
+   "_status": "Hard & Soft Copy"
+  },
+  {
+   "id": 3,
+   "_status": "Hard Copy only"
+  },
+  {
+   "id": 4,
+   "_status": "Soft Copy only"
+  }
+ ]
+}

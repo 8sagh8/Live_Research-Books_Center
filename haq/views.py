@@ -5,6 +5,76 @@ from .models import *
 from django.contrib.auth.models import User, auth
 import json
 
+##########################################################
+# ~~~~~ Fetch Dictionary Typed Data from Files ~~~~~~~~~ #
+##########################################################
+
+#  Fetch data from 'topicsJSON.json' File 
+def get_topics_json():
+    file_obj = open('haq/static/haq/json_files/topicsJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    return data_dict
+
+#  Fetch data from 'categoriesJSON.json' File 
+def get_categories_json():
+    file_obj = open('haq/static/haq/json_files/categoriesJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    return data_dict
+
+#  Fetch data from 'statusJSON.json' File 
+def get_status_json():
+    file_obj = open('haq/static/haq/json_files/statusJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    return data_dict
+
+#  Fetch data from 'religionJSON.json' File 
+def get_religion_json():
+    file_obj = open('haq/static/haq/json_files/religionJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    return data_dict
+
+#  Fetch data from 'personJSON.json' File 
+def get_person_json():
+    file_obj = open('haq/static/haq/json_files/personJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    return data_dict
+
+#  Fetch data from 'needJSON.json' File 
+def get_need_json():
+    file_obj = open('haq/static/haq/json_files/needJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    return data_dict
+
+#  Fetch data from 'languageJSON.json' File 
+def get_language_json():
+    file_obj = open('haq/static/haq/json_files/languageJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    return data_dict
+
+################################################
+# ~~~~~ General Functions ~~~~~~~~~ #
+################################################
+# Authorized Person ## auth_person = auth_Person_Function(str(request.user))
+def auth_Person_Function(current_user_name):
+    #  Fetch data from 'authorizedPersonJSON.json' File 
+    file_obj = open('haq/static/haq/json_files/authorizedPersonJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+
+    for person in data_dict.values():
+        for p in person:
+            for auth_per in p.values():
+                if (current_user_name == auth_per):
+                    return "Authorized Person"
+    return False
+
 # Topics
 def topic():
     all_topics = Topic.objects.all()
@@ -14,35 +84,69 @@ def topic():
 
     return (all_topics, list_size )
 
+################################################
+# ~~~~~ General VIEWS ~~~~~~~~~ #
+################################################
 
 # About page
+def get_count(_dict):
+    count = 0
+    for value_list in _dict.values():
+        for value in value_list:
+            count += 1
+    return count
+
 def AboutView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
-    topics = Topic.objects.all()
+    auth_person = auth_Person_Function(str(request.user))
+    topics = get_topics_json()
+    topics = get_count(topics)
+    categories = get_categories_json()
+    categories = get_count(categories)
+    status = get_status_json()
+    status = get_count(status)
+    religion = get_religion_json()
+    religion = get_count(religion)
+    person = get_person_json()
+    person = get_count(person)
+    need = get_need_json()
+    need = get_count(need)
+    language = get_language_json()
+    language = get_count(language)
+
     references = Reference.objects.all()
     books = Book.objects.all()
-    categories= Category.objects.all()
 
     list_about = []
 
-    list_about.append(('Topics', topics.count()))
+    list_about.append(('Topics', topics))
+    list_about.append(('Categories', categories))
+    list_about.append(('Status', status))
+    list_about.append(('Religion', religion))
+    list_about.append(('Person', person))
+    list_about.append(('Need', need))
+    list_about.append(('Language', language))
     list_about.append(('References', references.count()))
     list_about.append(('Books', books.count()))
-    list_about.append(('Categories', categories.count()))
+    
 
     return render(request, 'haq/about.html', {
-        "auth_persons": list_Authorized_People,
+        "auth_person": auth_person,
         "all_details": list_about,
     })
+
+
+################################################
+# ~~~~~ END -- General VIEWS ~~~~~~~~~ #
+################################################
+
+
 
 
 
 # to search a Topic in database
 def TopicSearchView(request):
-    #  Fetch data from 'topicsJSON.json' File 
-    file_obj = open('haq/static/haq/json_files/topicsJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
+    data_dict = get_topics_json() # get topics from json file
+
     
     list_Authorized_People = Authorized_Person.objects.all()
 
@@ -94,21 +198,13 @@ def TopicSearchView(request):
         })
        
     else:
-        # new_topic_list = []
         new_topic_list = []
 
         for d in data_dict.values():
             for v in d:
                 new_topic_list.append({v['id'] : v['_topic']})
 
-        # for t in all_topic:
-        #     new_topic_list.append(t)
-
-        new_topic_list.reverse()
-
-        # for t in new_top:
-        #     print("==>", t, flush=True)
-            
+        new_topic_list.reverse()         
 
         return render(request, 'haq/topicSearch.html', {
             "auth_persons": list_Authorized_People,
@@ -466,31 +562,7 @@ def StatusView(request):
        })
 
 
-# ~~~~~ JSON FILES VIEWS ~~~~~~~~~ #
-# create all the JSON Files
-def CreateJSONView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
-    msg = []
-    if request.method == "POST":
-        topics = Topic.objects.all()
-        topics_list = [] # will store all topics and then go inside json_topic
 
-        for t in topics:
-            topics_list.append({"id": t.id, "_topic": t._topic})
-
-        # will store topics json in here
-        json_topic = { "topics" : topics_list }
-        # convert into json data
-        my_json = json.dumps(json_topic, indent=1)
-
-        with open('haq/static/haq/json_files/topicsJSON.json', mode='w+') as myFile:
-            myFile.write(my_json)
-            msg.append("Topics")
-
-    return render(request, 'haq/jsonFiles/createJson.html', {
-        "auth_persons": list_Authorized_People,
-        "msg" : msg,
-    })
 
 ###########################################
 ###########################################
@@ -502,7 +574,7 @@ def BookSectOptionView(request):
     temp = topic()
     all_sects = Religion.objects.all()
     _size = len(all_sects)
-    print(_size)
+
     return render(request, 'haq/bookSectOption.html', {
         "all_sects": all_sects,
         "size": _size,
@@ -551,7 +623,6 @@ def BookAddView(request):
         bCat = request.POST['bookCat']
         bStatus = request.POST['bookStatus']
         bNeed = request.POST['bookNeed']
-        print("==> bNeed: ", bNeed)
         bLang = request.POST['bookLang']
         
         data = None
@@ -646,7 +717,6 @@ def OSampleView(request):
 
 ### API routes' Views
 def IntoJsonView(request):
-    print("   ==> haqAPI", flush=True)
     # return redirect("intoJSON/")
 
     list_Authorized_People = Authorized_Person.objects.all()
@@ -698,3 +768,192 @@ def TopicJSONView(request):
 
 #     with open('serverAPI/static/json/topics.json', mode='w+') as myFile:
 #         myFile.write(my_json)
+
+#########################################
+# ~~~~~ API Functions & VIEWS ~~~~~~~~~ #
+#########################################
+
+################################################
+# ~~~~~ JSON FILES Functions & VIEWS ~~~~~~~~~ #
+################################################
+# create 'authorizedPersonJSON.json' file
+def _createAuthPersonJSON():
+    list_Authorized_People = Authorized_Person.objects.all()
+    authPerson_list = [] # will store all auth.per in here 
+
+    for person in list_Authorized_People:
+        authPerson_list.append({"name": person.auth_name})
+
+    json_person = {"authPerson": authPerson_list}
+    my_json = json.dumps(json_person, indent=1)
+
+    with open('haq/static/haq/json_files/authorizedPersonJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "AuthPerson"
+
+# create 'topicsJSON.json' file
+def _createTopicsJSON():
+    topics = Topic.objects.all()
+    topics_list = [] # will store all topics and then go inside json_topic
+
+    for t in topics:
+        topics_list.append({"id": t.id, "_topic": t._topic})
+
+    # will store topics json in here
+    json_data = { "topics" : topics_list }
+    # convert into json data
+    my_json = json.dumps(json_data, indent=1)
+
+    with open('haq/static/haq/json_files/topicsJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "Topics"
+
+# create 'categoriesJSON.json' file
+def _createCategoriesJSON():
+    categories = Category.objects.all()
+    categories_list = [] # will store all categories and then go inside json file
+
+    for c in categories:
+        categories_list.append({"id": c.id, "_category": c._category})
+
+    # will store topics json in here
+    json_data = { "categories" : categories_list }
+    # convert into json data
+    my_json = json.dumps(json_data, indent=1)
+
+    with open('haq/static/haq/json_files/categoriesJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "Categories"
+
+
+    # create 'statusJSON.json' file
+def _createStatusJSON():
+    status = Status.objects.all()
+    status_list = [] # will store all status and then go inside json file
+
+    for s in status:
+        status_list.append({"id": s.id, "_status": s._status})
+
+    # will store topics json in here
+    json_data = { "status" : status_list }
+    # convert into json data
+    my_json = json.dumps(json_data, indent=1)
+
+    with open('haq/static/haq/json_files/statusJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "Status"
+
+    # create 'religionJSON.json' file
+def _createReligionJSON():
+    religion = Religion.objects.all()
+    religion_list = [] # will store all religion and then go inside json file
+
+    for r in religion:
+        religion_list.append({"id": r.id, "_sect": r._sect})
+
+    # will store topics json in here
+    json_data = { "religion" : religion_list }
+    # convert into json data
+    my_json = json.dumps(json_data, indent=1)
+
+    with open('haq/static/haq/json_files/religionJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "Religion"
+
+
+    # create 'personJSON.json' file
+def _createPersonJSON():
+    person = Person.objects.all()
+    person_list = [] # will store all person and then go inside json file
+
+    for p in person:
+        person_list.append({"id": p.id, "_p_name": p._p_name,
+        "_birth_year": p._birth_year, "_death_year": p._death_year})
+
+    # will store topics json in here
+    json_data = { "person" : person_list }
+    # convert into json data
+    my_json = json.dumps(json_data, indent=1)
+
+    with open('haq/static/haq/json_files/personJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "Persons"
+
+    # create 'needJSON.json' file
+def _createNeedJSON():
+    need = Need.objects.all()
+    need_list = [] # will store all need and then go inside json file
+
+    for n in need:
+        need_list.append({"id": n.id, "_need": n._need})
+
+    # will store need json in here
+    json_data = { "need" : need_list }
+    # convert into json data
+    my_json = json.dumps(json_data, indent=1)
+
+    with open('haq/static/haq/json_files/needJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "Need"
+
+    # create 'languageJSON.json' file
+def _createLanguageJSON():
+    language = Language.objects.all()
+    language_list = [] # will store all language and then go inside json file
+
+    for l in language:
+        language_list.append({"id": l.id, "_language": l._language})
+
+    # will store language json in here
+    json_data = { "language" : language_list }
+    # convert into json data
+    my_json = json.dumps(json_data, indent=1)
+
+    with open('haq/static/haq/json_files/languageJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "Language"
+
+
+def CreateJSONView(request):
+    auth_person = auth_Person_Function(str(request.user))
+
+    msg = []
+    if request.method == "POST":
+        # create Authorized Person File
+        create_authPerson = _createAuthPersonJSON()
+        msg.append(create_authPerson)
+        # create Topics File
+        created_file = _createTopicsJSON()
+        msg.append(created_file)
+        # create Categories File
+        created_file = _createCategoriesJSON()
+        msg.append(created_file)
+        # create Status File
+        created_file = _createStatusJSON()
+        msg.append(created_file)
+        # create Religion File
+        created_file = _createReligionJSON()
+        msg.append(created_file)
+        # create Person File
+        created_file = _createPersonJSON()
+        msg.append(created_file)
+        # create Need File
+        created_file = _createNeedJSON()
+        msg.append(created_file)
+        # create Language File
+        created_file = _createLanguageJSON()
+        msg.append(created_file)
+
+
+    return render(request, 'haq/jsonFiles/createJson.html', {
+        "auth_person": auth_person,
+        "msg" : msg,
+    })

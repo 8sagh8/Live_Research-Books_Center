@@ -19,7 +19,7 @@
 
     <div class="move_center">
         {% for m in msg %}
-            {{m}} -- created.
+            <h5>{{ forloop.counter }}: {{m}} -- created.</h5>
         {% endfor %}
     </div>
 {% endblock %}
