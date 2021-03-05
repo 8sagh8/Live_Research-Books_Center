@@ -8,17 +8,26 @@
     <span id = "titlespan">
         <div class="move_center" >
             <h1>Status of Books as per Need</h1>
-            <form action = '{% url 'haq:bookSearch' %}' method="POST" class="move_center">
-                {% csrf_token %}   <!--this is to avoid fraugry-->
-                <input type="text" name="searchWord" size="50" value="" placeholder="Search A Status -- NOT WORKING">
-                
-                <input type="submit" value="Click to Search">
-            </form>
             <br>
 
             {% if auth_person == "Authorized Person" %}
                 <button type="button" class="btn btn-primary btn-lg">Add New Status</button>
             {% endif %}
+            <br>
+            {% if length_found >= 0 %}
+                <h4>total search found: {{ length_found }}</h4>
+            {% else %}
+               
+                {% for topics in all_topics %}
+                    {% for key, value in topics.items %}
+                        <a href={% url 'haq:getTopic' key %} > <h2>{{key}} - {{value}}</h2></a>
+                        <hr>
+                    {% endfor %}
+                {% endfor %}
+
+               
+            {% endif %}
+        </span>
      
         </div>
 

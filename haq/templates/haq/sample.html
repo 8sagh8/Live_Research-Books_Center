@@ -48,7 +48,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 About us &<br>Instructions
                             </a>
-                            
+
                             <!-- View References and Research -->
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{% url 'haq:index' %}">References</a>
@@ -70,7 +70,21 @@
                                 </a>
                                 <div class="collapse" id="collapseJSON" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="{% url 'haq:createJSON' %}">tus</a>
+                                        <ul>
+                                            <li>
+                                                <a class="nav-link" href="{% url 'haq:createJSON' %}">Get All Files</a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link" href="#">Post New data</a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link" href="#">Update data</a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link" href="#">Delete data</a>
+                                            </li>
+                                        </ul>
+                                        
                                     </nav>
                                 </div> 
 
