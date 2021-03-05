@@ -99,6 +99,42 @@ def topic():
 
     return (all_topics, list_size )
 
+# standard function for get JSON Data and count Books
+def getData_countBooks(jsonData, all_books, _field):
+    dict_jsonData = {}
+    total_books = 0
+    print("==>", jsonData, flush=True)
+    for jsonData_list in jsonData.values():
+        for jsonData_dict in jsonData_list:
+            for jsonData in jsonData_dict.values():
+                counter = 0
+                for book_list in all_books.values():
+                    for book in book_list:
+                        if (jsonData == str(book[_field])):
+                            counter += 1
+                            if len(dict_jsonData) == 0:
+                                dict_jsonData = {jsonData: [jsonData_dict['id'], counter]}
+                            elif jsonData in dict_jsonData.keys():
+                                dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+                            else:
+                                dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+                total_books += counter
+    return [dict_jsonData, total_books]
+
+#standard function to get Books by Demand
+def books_by_demand(request, demanded_name, _field):
+    auth_person = auth_Person_Function(str(request.user))
+    all_books = get_book_json()
+    new_books_list = []
+
+    for books_list in all_books.values():
+        for book in books_list:
+            if str(demanded_name) == book[_field]:
+                new_books_list.append(book)
+    new_books_list.reverse()
+
+    return [auth_person, demanded_name, new_books_list]
+
 ################################################
 # ~~~~~ General VIEWS ~~~~~~~~~ #
 ################################################
@@ -154,25 +190,11 @@ def StatusView(request):
     auth_person = auth_Person_Function(str(request.user))
     status = get_status_json()
     all_books = get_book_json()
-    dict_status = {}
-    total_books = 0
-    
-    for status_list in status.values():
-        for status_dict in status_list:
-            for status in status_dict.values():
-                counter = 0
 
-                for book_list in all_books.values():
-                    for book in book_list:
-                        if (status == str(book['status'])):
-                            counter += 1
-                            if len(dict_status) == 0:
-                                dict_status= {status: [status_dict['id'], counter]}
-                            elif status in dict_status.keys():
-                                dict_status[status] = [status_dict['id'], counter]
-                            else:
-                                dict_status[status] = [status_dict['id'], counter]
-                total_books += counter
+    # 3rd parameter, is field name in BOOK MODULE
+    returning_value = getData_countBooks(status, all_books, 'status')
+    dict_status = returning_value [0]
+    total_books = returning_value [1]
 
     return render(request, 'haq/pages/status.html', {
         "auth_person": auth_person,
@@ -182,25 +204,144 @@ def StatusView(request):
 
 # get Books by Status
 def GetStatusBooksView(request, status_id):
-    auth_person = auth_Person_Function(str(request.user))
     status_name = get_object_or_404(Status, pk=status_id)
-    all_books = get_book_json()
-    new_books_list = [] 
-
-    for books_list in all_books.values():
-        for book in books_list:
-            if str(status_name) == book['status']:
-                new_books_list.append(book)
-
-    new_books_list.reverse()
-
+    
+    # 3rd parameter, is field name in BOOK MODULE
+    demanded = books_by_demand(request, status_name, 'status')
+    
     return render(request, 'haq/pages/books.html', {
-        "auth_person": auth_person,
-        'status': status_name,
-        'books': new_books_list
-        })
+        "auth_person": demanded[0],
+        'status': demanded[1],
+        'books': demanded[2]
+    })
 
     
+# Religions page
+def ReligionView(request):
+    auth_person = auth_Person_Function(str(request.user))
+    religion = get_religion_json()
+    all_books = get_book_json()
+    
+    # 3rd parameter, is field name in BOOK MODULE
+    returning_value = getData_countBooks(religion, all_books, 'sect')
+    dict_religion = returning_value [0]
+    total_books = returning_value [1]
+
+    return render(request, 'haq/pages/religions.html', {
+        "auth_person": auth_person,
+        'total_books': total_books,
+        'dict_religion': dict_religion,
+       })
+
+# get Books by Religious / Sects
+def GetReligiousBooksView(request, sect_id):
+    religion_name = get_object_or_404(Religion, pk=sect_id)
+    
+    # 3rd parameter, is field name in BOOK MODULE
+    demanded = books_by_demand(request, religion_name, 'sect')
+    
+    return render(request, 'haq/pages/books.html', {
+        "auth_person": demanded[0],
+        'status': demanded[1],
+        'books': demanded[2]
+    })
+
+
+# Needs page
+def NeedView(request):
+    auth_person = auth_Person_Function(str(request.user))
+    need = get_need_json()
+    all_books = get_book_json()
+    
+    # 3rd parameter, is field name in BOOK MODULE
+    returning_value = getData_countBooks(need, all_books, 'need')
+    dict_need = returning_value [0]
+    total_books = returning_value [1]
+
+    return render(request, 'haq/pages/need.html', {
+        "auth_person": auth_person,
+        'total_books': total_books,
+        'dict_need': dict_need,
+       })
+
+
+# get Books by Need
+def GetNeedBooksView(request, need_id):
+    need_name = get_object_or_404(Need, pk=need_id)
+    
+    # 3rd parameter, is field name in BOOK MODULE
+    demanded = books_by_demand(request, need_name, 'need')
+    
+    return render(request, 'haq/pages/books.html', {
+        "auth_person": demanded[0],
+        'status': demanded[1],
+        'books': demanded[2]
+    })
+
+# Languages page
+def LanguagesView(request):
+    auth_person = auth_Person_Function(str(request.user))
+    languages = get_language_json()
+    all_books = get_book_json()
+
+    # 3rd parameter, is field name in BOOK MODULE
+    returning_value = getData_countBooks(languages, all_books, 'lang')
+    dict_languages = returning_value [0]
+    total_books = returning_value [1]
+
+    return render(request, 'haq/pages/languages.html', {
+        "auth_person": auth_person,
+        'total_books': total_books,
+        'dict_languages': dict_languages,
+       })
+
+
+# get Books by Languages
+def GetLanguagesBooksView(request, language_id):
+    languages_name = get_object_or_404(Language, pk=language_id)
+
+    # 3rd parameter, is field name in BOOK MODULE
+    demanded = books_by_demand(request, languages_name, 'lang')
+    
+    return render(request, 'haq/pages/books.html', {
+        "auth_person": demanded[0],
+        'status': demanded[1],
+        'books': demanded[2]
+    })
+
+
+# categories page
+def CategoriesView(request):
+    auth_person = auth_Person_Function(str(request.user))
+    categories = get_categories_json()
+    all_books = get_book_json()
+
+    # 3rd parameter, is field name in BOOK MODULE
+    returning_value = getData_countBooks(categories, all_books, 'cat')
+    
+    dict_categories = returning_value [0]
+    total_books = returning_value [1]
+
+    return render(request, 'haq/pages/categories.html', {
+        "auth_person": auth_person,
+        'total_books': total_books,
+        'dict_categories': dict_categories,
+       })
+
+
+
+# get Books by Categories
+def GetCategoriesBooksView(request, category_id):
+    categories_name = get_object_or_404(Category, pk=category_id)
+    # 3rd parameter, is field name in BOOK MODULE
+    demanded = books_by_demand(request, categories_name, 'cat')
+    
+    return render(request, 'haq/pages/books.html', {
+        "auth_person": demanded[0],
+        'status': demanded[1],
+        'books': demanded[2]
+    })
+
 # Books page
 def BookView(request):
     auth_person = auth_Person_Function(str(request.user))
@@ -225,161 +366,6 @@ def BookView(request):
         'books': final_list,
        })
 
-# Religions page
-def ReligionView(request):
-    auth_person = auth_Person_Function(str(request.user))
-    religion = get_religion_json()
-    all_books = get_book_json()
-    dict_religion = {}
-    total_books = 0
-
-    for religion_list in religion.values():
-        for religion_dict in religion_list:
-            for religion in religion_dict.values():
-                counter = 0
-                for book_list in all_books.values():
-                    for book in book_list:
-                        if (religion == str(book['sect'])):
-                            counter += 1
-                            if len(dict_religion) == 0:
-                                dict_religion = {religion: [religion_dict['id'], counter]}
-                            elif religion in dict_religion.keys():
-                                dict_religion[religion] = [religion_dict['id'], counter]
-                            else:
-                                dict_religion[religion] = [religion_dict['id'], counter]
-                total_books += counter
-
-
-    return render(request, 'haq/pages/religions.html', {
-        "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_religion': dict_religion,
-       })
-
-# get Books by Religious / Sects
-def GetReligiousBooksView(request, sect_id):
-    auth_person = auth_Person_Function(str(request.user))
-    religion_name = get_object_or_404(Religion, pk=sect_id)
-    all_books = get_book_json()
-    new_books_list = [] 
-
-    for books_list in all_books.values():
-        for book in books_list:
-            if str(religion_name) == book['sect']:
-                new_books_list.append(book)
-
-    new_books_list.reverse()
-
-    return render(request, 'haq/pages/books.html', {
-        "auth_person": auth_person,
-        'status': religion_name,
-        'books': new_books_list
-        })
-
-
-# Needs page
-def NeedView(request):
-    auth_person = auth_Person_Function(str(request.user))
-    need = get_need_json()
-    all_books = get_book_json()
-    dict_need = {}
-    total_books = 0
-
-    for need_list in need.values():
-        for need_dict in need_list:
-            for need in need_dict.values():
-                counter = 0
-                for book_list in all_books.values():
-                    for book in book_list:
-                        if (need == str(book['need'])):
-                            counter += 1
-                            if len(dict_need) == 0:
-                                dict_need = {need: [need_dict['id'], counter]}
-                            elif need in dict_need.keys():
-                                dict_need[need] = [need_dict['id'], counter]
-                            else:
-                                dict_need[need] = [need_dict['id'], counter]
-                total_books += counter
-
-
-    return render(request, 'haq/pages/need.html', {
-        "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_need': dict_need,
-       })
-
-
-# get Books by Need
-def GetNeedBooksView(request, need_id):
-    auth_person = auth_Person_Function(str(request.user))
-    need_name = get_object_or_404(Need, pk=need_id)
-    all_books = get_book_json()
-    new_books_list = [] 
-
-    for books_list in all_books.values():
-        for book in books_list:
-            if str(need_name) == book['need']:
-                new_books_list.append(book)
-
-    new_books_list.reverse()
-
-    return render(request, 'haq/pages/books.html', {
-        "auth_person": auth_person,
-        'status': need_name,
-        'books': new_books_list
-        })
-
-# Languages page
-def LanguagesView(request):
-    auth_person = auth_Person_Function(str(request.user))
-    languages = get_language_json()
-    all_books = get_book_json()
-    dict_languages = {}
-    total_books = 0
-
-    for languages_list in languages.values():
-        for languages_dict in languages_list:
-            for languages in languages_dict.values():
-                counter = 0
-                for book_list in all_books.values():
-                    for book in book_list:
-                        if (languages == str(book['lang'])):
-                            counter += 1
-                            if len(dict_languages) == 0:
-                                dict_languages = {languages: [languages_dict['id'], counter]}
-                            elif languages in dict_languages.keys():
-                                dict_languages[languages] = [languages_dict['id'], counter]
-                            else:
-                                dict_languages[languages] = [languages_dict['id'], counter]
-                total_books += counter
-
-
-    return render(request, 'haq/pages/languages.html', {
-        "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_languages': dict_languages,
-       })
-
-
-# get Books by Languages
-def GetLanguagesBooksView(request, language_id):
-    auth_person = auth_Person_Function(str(request.user))
-    languages_name = get_object_or_404(Language, pk=language_id)
-    all_books = get_book_json()
-    new_books_list = [] 
-
-    for books_list in all_books.values():
-        for book in books_list:
-            if str(languages_name) == book['lang']:
-                new_books_list.append(book)
-
-    new_books_list.reverse()
-
-    return render(request, 'haq/pages/books.html', {
-        "auth_person": auth_person,
-        'status': languages_name,
-        'books': new_books_list
-        })
 ################################################
 # ~~~~~ END -- General VIEWS ~~~~~~~~~ #
 ################################################

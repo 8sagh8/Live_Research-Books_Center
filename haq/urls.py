@@ -15,13 +15,14 @@ urlpatterns = [
     url(r'getNeedBooks/(?P<need_id>[0-9]+)/$', views.GetNeedBooksView, name="getNeedBooks"),
     path('languages/', views.LanguagesView, name="languages"),
     url(r'getLanguagesBooks/(?P<language_id>[0-9]+)/$', views.GetLanguagesBooksView, name="getLanguagesBooks"),
+    path('categories/', views.CategoriesView, name="categories"),
+    url(r'getCategoriesBooks/(?P<category_id>[0-9]+)/$', views.GetCategoriesBooksView, name="getCategoriesBooks"),
 
     path('', views.IndexView, name="index"),
     path('index/', views.IndexView, name="index"),
     path('about/', views.AboutView, name="about"),
     path('reference/', views.ReferenceView, name="reference"),
     path('searchRef/', views.SearchRefView, name="searchRef"),
-    path('categories/', views.CategoryView, name="categories"),
     path('personalities/', views.PersonalityView, name="personalities"),
     
     path('logout', views.LogOutView, name="logout"),

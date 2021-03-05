@@ -1,0 +1,43 @@
+{% extends 'haq/sample.html' %}
+{% block title%}List of book as per categories {% endblock %}
+
+{% block body %}
+    <span id = "titlespan">
+        <div class="move_center" >
+            <h1>List of Book According to Category of it</h1>
+  
+            {% if auth_person == "Authorized Person" %}
+                <button type="button" class="btn btn-primary btn-lg">Add New Category</button>
+            {% endif %}
+        </span>
+     
+        </div>
+
+        <br>
+        <div class="move_center">
+            <caption>List of categories and total number of books: {{total_books}} </caption>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Serial Number</th>
+                        <th scope="col">Categories</th>
+                        <th scope="col">Total Books</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for k, v in dict_categories.items %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                <a href={% url 'haq:getCategoriesBooks' v.0 %}  class="a_book" >
+                                    <h2>{{k}}</h2>
+                                </a>
+                            </td>
+                            <td>{{ v.1 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </span>
+{% endblock %}
