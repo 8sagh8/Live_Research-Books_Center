@@ -158,9 +158,10 @@ def StatusView(request):
     all_books = get_book_json()
     dict_status = {}
     total_books = 0
-
+    
     for status_list in status.values():
         for status_dict in status_list:
+            print("===>",status_dict, flush=True)
             for status in status_dict.values():
                 counter = 0
 
@@ -169,9 +170,11 @@ def StatusView(request):
                         if (status == str(book['status'])):
                             counter += 1
                             if len(dict_status) == 0:
-                                dict_status= {status : counter}
+                                dict_status= {status: [status_dict['id'], counter]}
+                            elif status in dict_status.keys():
+                                dict_status[status] = [status_dict['id'], counter]
                             else:
-                                dict_status[status] = counter
+                                dict_status[status] = [status_dict['id'], counter]
                 total_books += counter
 
     return render(request, 'haq/pages/status.html', {

@@ -14,19 +14,6 @@
                 <button type="button" class="btn btn-primary btn-lg">Add New Status</button>
             {% endif %}
             <br>
-            {% if length_found >= 0 %}
-                <h4>total search found: {{ length_found }}</h4>
-            {% else %}
-               
-                {% for topics in all_topics %}
-                    {% for key, value in topics.items %}
-                        <a href={% url 'haq:getTopic' key %} > <h2>{{key}} - {{value}}</h2></a>
-                        <hr>
-                    {% endfor %}
-                {% endfor %}
-
-               
-            {% endif %}
         </span>
      
         </div>
@@ -43,11 +30,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for key, value in dict_status.items %}
+                    {% for k, v in dict_status.items %}
                         <tr>
                             <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ key }}</td>
-                            <td>{{ value }}</td>
+                            <td>
+                                <a href={% url 'haq:getTopic' v.0 %} >
+                                    <h2>{{k}}</h2>
+                                </a>
+                            </td>
+                            <td>{{ v.1 }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
