@@ -1,0 +1,414 @@
+{
+ "book": [
+  {
+   "id": 1,
+   "name": "Sahih Al-Bukhari (1 to 6)",
+   "author": "Muhammad Al-Bukhari",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 2,
+   "name": "Sahih Al-Bukhari (1 to 9)",
+   "author": "Muhammad Al-Bukhari",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "English"
+  },
+  {
+   "id": 3,
+   "name": "Sahih Al-Bukhari (1 to 10)",
+   "author": "Muhammad Al-Bukhari",
+   "sect": "Qadiyani / Ahmedi",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 4,
+   "name": "Sahih Muslim  (1 to 6)",
+   "author": "Muslim Bin Al-Hajjaj",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 5,
+   "name": "Sahih Muslim  (1 to 7)",
+   "author": "Muslim Bin Al-Hajjaj",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "English"
+  },
+  {
+   "id": 6,
+   "name": "Sahih Muslim  (1 to 6)",
+   "author": "Muslim Bin Al-Hajjaj",
+   "sect": "Qadiyani / Ahmedi",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 7,
+   "name": "Mustadrak Al-Hakim (00 - 01 to 06)",
+   "author": "Hakim Al-Nishapuri",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 8,
+   "name": "Sunan Ibn Majah (01 to 05)",
+   "author": "Ibn Majah",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 9,
+   "name": "Jamia Al-Tirmizi  (01 to 06)",
+   "author": "Al Tirmizi",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "English"
+  },
+  {
+   "id": 10,
+   "name": "Jamia Al-Tirmizi  (01 to 02)",
+   "author": "Al Tirmizi",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 11,
+   "name": "Sunan Nisai Al Sughra (01 to 07)",
+   "author": "Al Tirmizi",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 12,
+   "name": "Sunan Nisai Al Sughra (01 to 06)",
+   "author": "Al Tirmizi",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "English"
+  },
+  {
+   "id": 13,
+   "name": "Musnad Ahmad ibn Hambal (01 to 14)",
+   "author": "Ahmad Ibn Hanbal",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 14,
+   "name": "Muwatta Imam Malik",
+   "author": "Imam Malik ibn Anas",
+   "sect": "Sunni (Maleki)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 15,
+   "name": "Muwatta Imam Malik",
+   "author": "Imam Malik ibn Anas",
+   "sect": "Sunni (Maleki)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "English"
+  },
+  {
+   "id": 16,
+   "name": "Mishkat Al-Masabih (01 to 03)",
+   "author": "Mohd ibn Abd Allah",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 17,
+   "name": "Sunan Abu Dawood (01 to 04)",
+   "author": "Abu Dawood",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 18,
+   "name": "Sunan Abu Dawood (01 to 05)",
+   "author": "Abu Dawood",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "English"
+  },
+  {
+   "id": 19,
+   "name": "Sunan Darmi (01 to 02)",
+   "author": "Abi Mohammad Al-Darmi",
+   "sect": "Sunni (all)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 20,
+   "name": "Arabic Grammer",
+   "author": "Not Available",
+   "sect": "Not Available",
+   "cat": "Language Book",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 21,
+   "name": "Al Farooq",
+   "author": "Allama Shibli Nomani",
+   "sect": "Sunni (Hanafi)",
+   "cat": "Biography & History",
+   "status": "Soft Copy only",
+   "need": "Low",
+   "lang": "Urdu"
+  },
+  {
+   "id": 22,
+   "name": "Farsi Bol Chal",
+   "author": "Not Available",
+   "sect": "Not Available",
+   "cat": "Language Book",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 23,
+   "name": "Ferozul Lughat Farsi-Urdu",
+   "author": "Not Available",
+   "sect": "Not Available",
+   "cat": "Language Book",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 24,
+   "name": "Faru-e-Kafi (01 to 04)",
+   "author": "Muhammad ibn Ya'qub al-Kulayni",
+   "sect": "Shia (12 Imams)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 25,
+   "name": "Usool-e-Kafi V/01 to v/05",
+   "author": "Muhammad ibn Ya'qub al-Kulayni",
+   "sect": "Shia (12 Imams)",
+   "cat": "Hadith and Sunnah",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 26,
+   "name": "Bahar-ul-Anwar (01 to 12 & 35)",
+   "author": "Mohammad-Baqer Majlesi",
+   "sect": "Shia (12 Imams)",
+   "cat": "Hadith and Sunnah",
+   "status": "Hard & Soft Copy",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 27,
+   "name": "Hayat-ul-Qaloob -V/01 to 03",
+   "author": "Mohammad-Baqer Majlesi",
+   "sect": "Shia (12 Imams)",
+   "cat": "Biography & History",
+   "status": "Hard & Soft Copy",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 28,
+   "name": "Manla Yahdhul al-Faqih (01 to 04)",
+   "author": "Shaikh Sadooq",
+   "sect": "Shia (12 Imams)",
+   "cat": "Fiqh and Hadees",
+   "status": "Hard & Soft Copy",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 29,
+   "name": "Al-Istabsar Fi Ma Ikhtilaf Man Al Akhbar",
+   "author": "Shaikh Abu Ja'fer Toosi",
+   "sect": "Shia (12 Imams)",
+   "cat": "Fiqh and Hadees",
+   "status": "Don't Have It",
+   "need": "Urgent",
+   "lang": "Urdu"
+  },
+  {
+   "id": 30,
+   "name": "Ahteez Al-Ahkaam",
+   "author": "Shaikh Abu Ja'fer Toosi",
+   "sect": "Shia (12 Imams)",
+   "cat": "Fiqh and Hadees",
+   "status": "Don't Have It",
+   "need": "Urgent",
+   "lang": "Urdu"
+  },
+  {
+   "id": 31,
+   "name": "Wasail Al-Shia",
+   "author": "Shaikh Hur Aamili",
+   "sect": "Shia (12 Imams)",
+   "cat": "Hadith and Sunnah",
+   "status": "Don't Have It",
+   "need": "Urgent",
+   "lang": "Urdu"
+  },
+  {
+   "id": 32,
+   "name": "Al-Waafi",
+   "author": "Mohammad Bin Murtaza Faiz Kashani",
+   "sect": "Shia (12 Imams)",
+   "cat": "Hadith and Sunnah",
+   "status": "Don't Have It",
+   "need": "Urgent",
+   "lang": "Urdu"
+  },
+  {
+   "id": 33,
+   "name": "Tafseer Saafi",
+   "author": "Mohammad Bin Murtaza Faiz Kashani",
+   "sect": "Shia (12 Imams)",
+   "cat": "Quran with Tafseer",
+   "status": "Soft Copy only",
+   "need": "Urgent",
+   "lang": "Urdu"
+  },
+  {
+   "id": 34,
+   "name": "Tareekh ibne Kaseer",
+   "author": "Ibn Kathir",
+   "sect": "Sunni (all)",
+   "cat": "Biography & History",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 35,
+   "name": "Tareekh-ul-Khulafa",
+   "author": "Jalaludeen AbuBakr Suyuti",
+   "sect": "Sunni (all)",
+   "cat": "Biography & History",
+   "status": "Soft Copy only",
+   "need": "High",
+   "lang": "Urdu"
+  },
+  {
+   "id": 36,
+   "name": "Tareekh -e- Tabari (01 to 07)",
+   "author": "Muhammad ibn Jarir al-Tabari",
+   "sect": "Sunni (all)",
+   "cat": "Islamic History",
+   "status": "Soft Copy only",
+   "need": "Urgent",
+   "lang": "Urdu"
+  },
+  {
+   "id": 37,
+   "name": "Tareekh -e- Tabari (00, 01 to 40)",
+   "author": "Muhammad ibn Jarir al-Tabari",
+   "sect": "Sunni (all)",
+   "cat": "Islamic History",
+   "status": "Soft Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 38,
+   "name": "Quran Pak",
+   "author": "ALLAH The Almighty",
+   "sect": "Not Available",
+   "cat": "Quran",
+   "status": "Hard & Soft Copy",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 39,
+   "name": "Tafseer Saafi",
+   "author": "Mohammad Bin Murtaza Faiz Kashani",
+   "sect": "Shia (12 Imams)",
+   "cat": "Quran with Tafseer",
+   "status": "Soft Copy only",
+   "need": "Urgent",
+   "lang": "Urdu"
+  },
+  {
+   "id": 45,
+   "name": "Qasasul Ambiyaa",
+   "author": "H.I. Mohammad Mohammadi Ashtahardi",
+   "sect": "Shia (12 Imams)",
+   "cat": "Biography & History",
+   "status": "Hard Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  },
+  {
+   "id": 46,
+   "name": "Tafseer Ibne Kaseer",
+   "author": "Ibn Kathir",
+   "sect": "Sunni (all)",
+   "cat": "Quran with Tafseer",
+   "status": "Hard Copy only",
+   "need": "Don't Buy",
+   "lang": "Urdu"
+  }
+ ]
+}

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User, auth
 import json
+import io
 
 ##########################################################
 # ~~~~~ Fetch Dictionary Typed Data from Files ~~~~~~~~~ #
@@ -58,6 +59,20 @@ def get_language_json():
     file_obj.close()
     return data_dict
 
+#  Fetch data from 'bookJSON.json' File 
+def get_book_json():
+    file_obj = open('haq/static/haq/json_files/bookJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    return data_dict
+
+#  Fetch data from 'referenceJSON.json' File 
+def get_reference_json():
+    file_obj = open('haq/static/haq/json_files/referenceJSON.json', encoding='utf-16')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+
+    return data_dict
 ################################################
 # ~~~~~ General Functions ~~~~~~~~~ #
 ################################################
@@ -112,9 +127,10 @@ def AboutView(request):
     need = get_count(need)
     language = get_language_json()
     language = get_count(language)
-
-    references = Reference.objects.all()
-    books = Book.objects.all()
+    books = get_book_json()
+    books = get_count(books)
+    references = get_reference_json()
+    references = get_count(references)    
 
     list_about = []
 
@@ -125,8 +141,9 @@ def AboutView(request):
     list_about.append(('Person', person))
     list_about.append(('Need', need))
     list_about.append(('Language', language))
-    list_about.append(('References', references.count()))
-    list_about.append(('Books', books.count()))
+    list_about.append(('Books', books))
+    list_about.append(('References', references))
+    
     
 
     return render(request, 'haq/about.html', {
@@ -134,6 +151,34 @@ def AboutView(request):
         "all_details": list_about,
     })
 
+# Status page
+def StatusView(request):
+    auth_person = auth_Person_Function(str(request.user))
+    status = get_status_json()
+    all_books = get_book_json()
+    dict_status = {}
+    total_books = 0
+
+    for status_list in status.values():
+        for status_dict in status_list:
+            for status in status_dict.values():
+                counter = 0
+
+                for book_list in all_books.values():
+                    for book in book_list:
+                        if (status == str(book['status'])):
+                            counter += 1
+                            if len(dict_status) == 0:
+                                dict_status= {status : counter}
+                            else:
+                                dict_status[status] = counter
+                total_books += counter
+
+    return render(request, 'haq/pages/status.html', {
+        "auth_person": auth_person,
+        'total_books': total_books,
+        'dict_status': dict_status,
+       })
 
 ################################################
 # ~~~~~ END -- General VIEWS ~~~~~~~~~ #
@@ -536,30 +581,7 @@ def ReligionView(request):
         'dict_religion': dict_religion,
        })
 
-# Status page
-def StatusView(request):
-    list_Authorized_People = Authorized_Person.objects.all()
-    status = Status.objects.all()
-    all_books = Book.objects.all()
-    dict_status = {}
-    total_books = 0
 
-    for status in status:
-        counter = 0
-        dict_status[status] = counter
-
-        for book in all_books:
-            if (status == book.status):
-                counter += 1
-                dict_status[status] = counter
-        
-        total_books += counter
-
-    return render(request, 'haq/status.html', {
-        "auth_persons": list_Authorized_People,
-        'total_books': total_books,
-        'dict_status': dict_status,
-       })
 
 
 
@@ -736,7 +758,7 @@ def IntoJsonView(request):
         
         total_books += counter
 
-    return render(request, 'haq/status.html', {
+    return render(request, 'haq/pages/status.html', {
         "auth_persons": list_Authorized_People,
         'total_books': total_books,
         'dict_status': dict_status,
@@ -921,6 +943,62 @@ def _createLanguageJSON():
     
     return "Language"
 
+    # create 'bookJSON.json' file
+def _createBookJSON():
+    book = Book.objects.all()
+    book_list = [] # will store all book and then go inside json file
+
+    for b in book:
+        book_list.append({
+            "id": b.id,
+            "name": b.name, 
+            "author": str(b.author),
+            "sect": str(b.sect),
+            "cat": str(b.cat), 
+            "status": str(b.status), 
+            "need": str(b.need), 
+            "lang": str(b.lang)
+        })
+    
+    # will store language json in here
+    json_data = { "book" : book_list }
+    
+    # convert into json data
+    my_json = json.dumps(json_data, indent=1)
+    
+    with open('haq/static/haq/json_files/bookJSON.json', mode='w+') as myFile:
+        myFile.write(my_json)
+    
+    return "Book"
+
+
+    # create 'referenceJSON.json' file
+def _createReferenceJSON():
+    reference = Reference.objects.all()
+    reference_list = [] # will store all reference and then go inside json file
+    
+    for r in reference:
+        reference_list.append({
+            "id": r.id,
+            "subject": str(r.subject),
+            "speaker" : str(r.speaker),
+            "personFor" : str(r.personFor),
+            "book" : str(r.book),
+            "vol_para" : r.vol_para,
+            "page_chapter" : r.page_chapter,
+            "hadees_verse" : r.hadees_verse,
+            "description" : r.description
+        })
+
+    # will store reference json in here
+    json_data = { "reference" : reference_list }
+    # convert into json data
+    my_json = json.dumps(json_data, indent=2)
+
+    with io.open('haq/static/haq/json_files/referenceJSON.json', mode='w+', encoding="utf-16") as myFile:
+        myFile.write(my_json)
+    
+    return "Reference"
 
 def CreateJSONView(request):
     auth_person = auth_Person_Function(str(request.user))
@@ -950,6 +1028,12 @@ def CreateJSONView(request):
         msg.append(created_file)
         # create Language File
         created_file = _createLanguageJSON()
+        msg.append(created_file)
+        # create Books File
+        created_file = _createBookJSON()
+        msg.append(created_file)
+        # create References File
+        created_file = _createReferenceJSON()
         msg.append(created_file)
 
 
