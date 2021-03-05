@@ -8,7 +8,13 @@ app_name = "haq"
 urlpatterns = [
     path('books/', views.BookView, name="books"),
     path('status/', views.StatusView, name="status"),
-    path('getStatusBooks/', views.GetStatusBooksView, name="getStatusBooks"),
+    url(r'getStatusBooks/(?P<status_id>[0-9]+)/$', views.GetStatusBooksView, name="getStatusBooks"),
+    path('religions/', views.ReligionView, name="religions"),
+    url(r'getReligiousBooks/(?P<sect_id>[0-9]+)/$', views.GetReligiousBooksView, name="getReligiousBooks"),
+    path('need/', views.NeedView, name="need"),
+    url(r'getNeedBooks/(?P<need_id>[0-9]+)/$', views.GetNeedBooksView, name="getNeedBooks"),
+    path('languages/', views.LanguagesView, name="languages"),
+    url(r'getLanguagesBooks/(?P<language_id>[0-9]+)/$', views.GetLanguagesBooksView, name="getLanguagesBooks"),
 
     path('', views.IndexView, name="index"),
     path('index/', views.IndexView, name="index"),
@@ -16,11 +22,8 @@ urlpatterns = [
     path('reference/', views.ReferenceView, name="reference"),
     path('searchRef/', views.SearchRefView, name="searchRef"),
     path('categories/', views.CategoryView, name="categories"),
-    path('languages/', views.LanguageView, name="languages"),
-    path('needs/', views.NeedView, name="needs"),
     path('personalities/', views.PersonalityView, name="personalities"),
-    path('religions/', views.ReligionView, name="religions"),
-    url(r'getStatusBooks/(?P<status_id>[0-9]+)/$', views.GetStatusBooksView, name="getStatusBooks"),
+    
     path('logout', views.LogOutView, name="logout"),
 
     # API routes
