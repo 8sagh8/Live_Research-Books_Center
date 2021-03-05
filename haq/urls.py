@@ -20,7 +20,7 @@ urlpatterns = [
     path('needs/', views.NeedView, name="needs"),
     path('personalities/', views.PersonalityView, name="personalities"),
     path('religions/', views.ReligionView, name="religions"),
-    url(r'Status/(?P<status_id>[0-9]+)/$', views.GetStatusBooksView, name="getStatusBooks"),
+    url(r'getStatusBooks/(?P<status_id>[0-9]+)/$', views.GetStatusBooksView, name="getStatusBooks"),
     path('logout', views.LogOutView, name="logout"),
 
     # API routes
@@ -35,7 +35,7 @@ urlpatterns = [
     path('bookSectOption/', views.BookSectOptionView, name="bookSectOption"),
     path('topicSearch/', views.TopicSearchView, name="topicSearch"),
     # path('getTopic/', views.GetTopicView, name="getTopic"),
-    url(r'Topic/(?P<topic_id>[0-9]+)/$', views.GetTopicView, name="getTopic"),
+    url(r'getTopic/(?P<topic_id>[0-9]+)/$', views.GetTopicView, name="getTopic"),
     path('personalitySearch/', views.PersonalitySearchView, name="personalitySearch"),
     path('osample', views.OSampleView, name="osample"),
 ]
