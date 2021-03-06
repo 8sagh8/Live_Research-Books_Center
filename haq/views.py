@@ -501,7 +501,7 @@ def PersonalityView(request):
         new_personalities_list = []
 
         for person in temp:
-            if _searchWord.lower() in person[1]:
+            if _searchWord.lower() in person[1].lower():
                 new_personalities_list.append(person)
 
 
