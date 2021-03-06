@@ -19,13 +19,15 @@ urlpatterns = [
     url(r'getCategoriesBooks/(?P<category_id>[0-9]+)/$', views.GetCategoriesBooksView, name="getCategoriesBooks"),
     path('topicSearch/', views.TopicSearchView, name="topicSearch"),
     url(r'getTopic/(?P<topic_id>[0-9]+)/$', views.GetTopicView, name="getTopic"),
+    path('reference/', views.ReferenceView, name="reference"),
+    path('personalities/', views.PersonalityView, name="personalities"),
+    url(r'getPersonRef/(?P<person_id>[0-9]+)/$', views.GetPersonRefView, name="getPersonRef"),
+
 
     path('', views.IndexView, name="index"),
     path('index/', views.IndexView, name="index"),
     path('about/', views.AboutView, name="about"),
-    path('reference/', views.ReferenceView, name="reference"),
     path('searchRef/', views.SearchRefView, name="searchRef"),
-    path('personalities/', views.PersonalityView, name="personalities"),
     path('logout', views.LogOutView, name="logout"),
 
     # API routes
