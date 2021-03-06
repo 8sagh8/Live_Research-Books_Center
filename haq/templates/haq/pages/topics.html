@@ -1,0 +1,43 @@
+{% extends 'haq/sample.html' %}
+{% block title%}List of Topics {% endblock %}
+
+{% block body %}
+    <span id = "titlespan">
+        <div class="move_center" >
+            <h1>List of Topics</h1>
+  
+            {% if auth_person == "Authorized Person" %}
+                <button type="button" class="btn btn-primary btn-lg">Add New Topic</button>
+            {% endif %}
+        </span>
+     
+        </div>
+
+        <br>
+        <div class="move_center">
+            <caption>List of TOPICS and total number of references: {{total_references}} </caption>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Serial Number</th>
+                        <th scope="col">Topics</th>
+                        <th scope="col">Total References</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for k, v in dict_topics.items %}
+                        <tr>
+                            <th scope="row">{{ forloop.revcounter }}</th>
+                            <td>
+                                <a href={% url 'haq:getTopic' v.0 %}  class="a_book" >
+                                    <h2>{{k}}</h2>
+                                </a>
+                            </td>
+                            <td>{{ v.1 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </span>
+{% endblock %}

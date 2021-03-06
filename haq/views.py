@@ -135,6 +135,46 @@ def books_by_demand(request, demanded_name, _field):
 
     return [auth_person, demanded_name, new_books_list]
 
+# standard function for get JSON Data and count References
+def getData_countReferences(request, jsonData, _field):
+    auth_person = auth_Person_Function(str(request.user))
+    all_references = get_reference_json()
+    dict_jsonData = {}
+    total_references = 0
+
+    for jsonData_list in jsonData.values():
+        for jsonData_dict in jsonData_list:
+            for jsonData in jsonData_dict.values():
+                counter = 0
+                for references_list in all_references.values():
+                    for references in references_list:
+                        if (jsonData == str(references[_field])):
+                            counter += 1
+                            if len(dict_jsonData) == 0:
+                                dict_jsonData = {jsonData: [jsonData_dict['id'], counter]}
+                            elif jsonData in dict_jsonData.keys():
+                                dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+                            else:
+                                dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+                total_references += counter
+                
+    return [auth_person, total_references, dict_jsonData]
+
+#standard function to get References by Demand
+def references_by_demand(request, demanded_name, _field):
+    auth_person = auth_Person_Function(str(request.user))
+    all_references = get_reference_json()
+    new_references_list = []
+
+    for references_list in all_references.values():
+        for references in references_list:
+            if str(demanded_name) == references[_field]:
+                new_references_list.append(references)
+    new_references_list.reverse()
+
+    return [auth_person, demanded_name, new_references_list]
+
+
 ################################################
 # ~~~~~ General VIEWS ~~~~~~~~~ #
 ################################################
@@ -366,99 +406,36 @@ def BookView(request):
         'books': final_list,
        })
 
+# Topic page
+def TopicSearchView(request):
+    topics = get_topics_json()
+    
+    # 3rd parameter, is field name in BOOK MODULE
+    returning_value = getData_countReferences(request, topics, 'subject')
+
+    return render(request, 'haq/pages/topics.html', {
+        "auth_person": returning_value[0],
+        'total_references': returning_value[1],
+        'dict_topics': returning_value[2],
+    })
+
+# to Get references of a Topic
+def GetTopicView(request, topic_id):
+    topic_name = get_object_or_404(Topic, pk=topic_id)
+    returning_value = references_by_demand(request, topic_name, 'subject')
+    
+    return render(request, 'haq/pages/referencesByTopic.html', {
+        "auth_person": returning_value[0],
+        'topic': returning_value[1],
+        'refer': returning_value[2]
+    })
+
 ################################################
 # ~~~~~ END -- General VIEWS ~~~~~~~~~ #
 ################################################
 
 
 
-
-
-# to search a Topic in database
-def TopicSearchView(request):
-    data_dict = get_topics_json() # get topics from json file
-
-    
-    auth_person = auth_Person_Function(str(request.user))
-
-    temp = topic()
-    _searchWord = None
-    all_topic = Topic.objects.all()
-    found_list = []  #will be sent to html page
-    _length_found = 0 #length of the list found
-
-    if request.method == "POST":
-        _searchWord = request.POST['searchWord']
-        _len_search = len(_searchWord)
-
-        if _len_search < 3:
-            return render(request, 'haq/topicSearch.html', {
-                "auth_person": auth_person,
-                "size": _len_search,
-                "all_topics": temp[0],
-                "list_size": temp[1]
-            })
-
-        else:
-            for tp in all_topic: # getting single reference from all list of references
-                _flag = False
-                ttp = str(tp)
-                _len_word = len(ttp)
-                _start_point = 0
-                _end_point = _len_search
-
-                if _len_word >= _len_search:
-                    while (_end_point <= _len_word):
-                        if ttp[_start_point : _end_point].lower() == _searchWord.lower():
-                            found_list.append({'tp_id': tp.id, 'tp_name': ttp})
-                            _flag = True
-                            break;
-                        else:
-                            _start_point += 1
-                            _end_point += 1
-            
-
-            length_found = len(found_list)
-            
-        return render(request, 'haq/topicSearch.html', {
-            "auth_person": auth_person,
-            "length_found": length_found,
-            "found_list" : found_list,
-            "all_topics": temp[0],
-            "list_size": temp[1]
-        })
-       
-    else:
-        new_topic_list = []
-
-        for d in data_dict.values():
-            for v in d:
-                new_topic_list.append({v['id'] : v['_topic']})
-
-        new_topic_list.reverse()         
-
-        return render(request, 'haq/topicSearch.html', {
-            "auth_person": auth_person,
-            # "all_topics": new_topic_list,  
-            "all_topics": new_topic_list,      
-        })
-
-# to Get references of a Topic in database
-def GetTopicView(request, topic_id):
-    topic_name = get_object_or_404(Topic, pk=topic_id)
-    all_refer = Reference.objects.all()
-    auth_person = auth_Person_Function(str(request.user))
-    new_refer_list = [] 
-
-    for reference in all_refer:
-        if (topic_name == reference.subject):
-            new_refer_list.append(reference)
-
-    return render(request, 'haq/referencesByTopic.html', {
-        "auth_person": auth_person,
-        'topic': topic_name,
-        'refer': new_refer_list
-        })
 
 # main Index Page
 def AboutView(request):
