@@ -103,7 +103,6 @@ def topic():
 def getData_countBooks(jsonData, all_books, _field):
     dict_jsonData = {}
     total_books = 0
-    print("==>", jsonData, flush=True)
     for jsonData_list in jsonData.values():
         for jsonData_dict in jsonData_list:
             for jsonData in jsonData_dict.values():
@@ -804,7 +803,7 @@ def TopicJSONView(request):
         'data' : data_dict,
     })
     
-# print("   ==> serverAPI", flush=True)
+
 #     topics = Topic.objects.all()
 #     topics_list = [] # will store all topics and then go inside json_topic
 

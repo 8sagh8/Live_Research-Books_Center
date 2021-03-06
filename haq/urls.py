@@ -5,18 +5,21 @@ from . import views
 
 app_name = "haq"
 
+# url(r'^getStatusBooks/(?P<status_id>[0-9]+)/$', views.GetStatusBooksView, name="getStatusBooks"),
+# url(r'^getReligiousBooks/(?P<sect_id>[0-9]+)/$', views.GetReligiousBooksView, name="getReligiousBooks"),
+        
+
 urlpatterns = [
     path('books/', views.BookView, name="books"),
     path('status/', views.StatusView, name="status"),
-    url(r'^getStatusBooks/(?P<status_id>[0-9]+)/$', views.GetStatusBooksView, name="getStatusBooks"),
+    path('getStatusBooks/<status_id>/', views.GetStatusBooksView, name="getStatusBooks"),
     path('religions/', views.ReligionView, name="religions"),
-    url(r'^getReligiousBooks/(?P<sect_id>[0-9]+)/$', views.GetReligiousBooksView, name="getReligiousBooks"),
+    path('getReligiousBooks/<sect_id>', views.GetReligiousBooksView, name="getReligiousBooks"),
     path('need/', views.NeedView, name="need"),
     url(r'^getNeedBooks/(?P<need_id>[0-9]+)/$', views.GetNeedBooksView, name="getNeedBooks"),
     path('languages/', views.LanguagesView, name="languages"),
     url(r'getLanguagesBooks/(?P<language_id>[0-9]+)/$', views.GetLanguagesBooksView, name="getLanguagesBooks"),
     path('categories/', views.CategoriesView, name="categories"),
-    # path(r'^getCategoriesBooks/(?P<category_id>\d+)/$', views.GetCategoriesBooksView, name="getCategoriesBooks"),
     path('getCategoriesBooks/<category_id>', views.GetCategoriesBooksView, name="getCategoriesBooks"),
     path('topicSearch/', views.TopicSearchView, name="topicSearch"),
     url(r'^getTopic/(?P<topic_id>\d+)/', views.GetTopicView, name="getTopic"),
@@ -49,6 +52,7 @@ urlpatterns = [
     # url(r'^getPersonRef/(?P<person_id>[0-9]+)/$', views.GetPersonRefView, name="getPersonRef"),
     # url(r'^getTopic/(?P<topic_id>[0-9]+)/$', views.GetTopicView, name="getTopic"),
     # url(r'^getCategoriesBooks/(?P<category_id>[0-9]+)/$', views.GetCategoriesBooksView, name="getCategoriesBooks"),
+    # path(r'^getCategoriesBooks/(?P<category_id>\d+)/$', views.GetCategoriesBooksView, name="getCategoriesBooks"),
     
 ]
 
