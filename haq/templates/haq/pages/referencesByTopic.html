@@ -1,20 +1,35 @@
 {% extends 'haq/sample.html' %}
-
-{% block title%}References of {{topic}}{% endblock %}
-
+{% block title%}
+    {% if topic == None %}
+        List of References
+    {% else %}
+        References of {{topic}}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     <br>
     <div class="container">
         <div  class="move_center">
-            <h1 class="move_center">Topic: {{topic}}</h1>
-            {% for p in auth_persons %}
-                {% if user.first_name == p.auth_name %}
+            {% if topic == None %}
+                <h1 class="move_center">List of References</h1>
+            {% else %}
+                <h1 class="move_center">Topic: {{topic}}</h1>
+            {% endif %}
+            
+            {% if auth_person == "Authorized Person" %}
                     <button type="button" class="btn btn-primary btn-lg">Add New Reference</button>
                 {% endif %}
-            {% endfor %}
+            
             <br><br>
-            <a href="{% url 'haq:topicSearch' %}" class="btn btn-primary " role="button">Back to Topic Page</a>
+            <form action = '{% url 'haq:topicSearch' %}' method="POST" class="move_center">
+                {% csrf_token %}   <!--this is to avoid fraugry-->
+                <input type="text" name="searchWord" size="50" value="" placeholder="Search A Topic">
+                
+                <input type="submit" value="Click to Search">
+            </form>
+            <br>
+            <a href="{% url 'haq:topicSearch' %}" class="btn btn-primary " role="button">Go to Topics Page</a>
         </div>
         <br>
         
@@ -25,8 +40,12 @@
                 <th>Volume or Paragraph</th>
                 <th>Page or Chapter </th>
                 <th>Hadees or Verse</th>
+                <th>
+                    {% if topic == None %}Topic{% endif %}
+                </th>
                 <th>Speaker</th>
                 <th>For Person</th>
+                
             </tr>
             </thead>
             <tbody>
@@ -36,8 +55,14 @@
                         <td>{{ref.vol_para}}</td>
                         <td>{{ref.page_chapter}}</td>
                         <td>{{ref.hadees_verse}}</td>
+                        <td>
+                            {% if topic == None %}
+                                {{ref.subject}}}
+                            {% endif %}
+                        </td>
                         <td>{{ref.speaker}}</td>
                         <td>{{ref.personFor}}</td>
+                        
                     </tr>
                     <tr>
                         <td>Description:- </td>

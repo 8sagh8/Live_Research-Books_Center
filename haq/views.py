@@ -166,10 +166,15 @@ def references_by_demand(request, demanded_name, _field):
     all_references = get_reference_json()
     new_references_list = []
 
-    for references_list in all_references.values():
-        for references in references_list:
-            if str(demanded_name) == references[_field]:
-                new_references_list.append(references)
+    if demanded_name == None:
+        for references_list in all_references.values():
+            for references in references_list:
+                    new_references_list.append(references)
+    else:
+        for references_list in all_references.values():
+            for references in references_list:
+                if str(demanded_name) == references[_field]:
+                    new_references_list.append(references)
     new_references_list.reverse()
 
     return [auth_person, demanded_name, new_references_list]
@@ -368,8 +373,6 @@ def CategoriesView(request):
         'dict_categories': dict_categories,
        })
 
-
-
 # get Books by Categories
 def GetCategoriesBooksView(request, category_id):
     categories_name = get_object_or_404(Category, pk=category_id)
@@ -430,6 +433,49 @@ def GetTopicView(request, topic_id):
         'refer': returning_value[2]
     })
 
+# to Get References
+def ReferenceView(request):
+    topic_name = None
+    returning_value = references_by_demand(request, topic_name, 'subject')
+    
+    return render(request, 'haq/pages/referencesByTopic.html', {
+        "auth_person": returning_value[0],
+        'topic': returning_value[1],
+        'refer': returning_value[2]
+    })
+
+# Personalities page
+def PersonalityView(request):
+    auth_person = auth_Person_Function(str(request.user))
+    all_personalities = get_person_json()
+    new_personalities_list = []
+
+    for personalities_list in all_personalities.values():
+        for personalities in personalities_list:
+            temp = []
+            for p in personalities.values():
+                temp.append(p)
+            new_personalities_list.append(temp)
+    new_personalities_list.reverse()
+
+    return render(request, 'haq/pages/personalities.html', {
+        "auth_person": auth_person,
+        'total_personalities': new_personalities_list,
+    })
+
+# get References by Person
+def GetPersonRefView(request, person_id):
+    person_name = get_object_or_404(Person, pk=person_id)
+
+    # 3rd parameter, is field name in Reference MODULE
+    returning_value = references_by_demand(request, person_name, 'personFor')
+    
+    return render(request, 'haq/pages/referencesByTopic.html', {
+        "auth_person": returning_value[0],
+        'topic': returning_value[1],
+        'refer': returning_value[2]
+    })
+
 ################################################
 # ~~~~~ END -- General VIEWS ~~~~~~~~~ #
 ################################################
@@ -445,18 +491,7 @@ def AboutView(request):
         "auth_person": auth_person,
     })
 
-# main Reference Page
-def ReferenceView(request):
-    auth_person = auth_Person_Function(str(request.user))
-    temp = Topic.objects.all()
-    reference = Reference.objects.all()
-    reference = reversed(list(reference))
-    return render(request, 'haq/reference.html', {
-        "auth_person": auth_person,
-        "all_topics": temp[0], 
-        "list_size": temp[1],
-        "reference": reference
-    })
+
 
 # Searching for References
 def SearchRefView(request):
@@ -578,32 +613,6 @@ def LanguageView(request):
         'dict_lang': dict_lang,
        })
 
-# Personalities page
-def PersonalityView(request):
-    auth_person = auth_Person_Function(str(request.user))
-    person = Person.objects.all()
-    all_books = Book.objects.all()
-    dict_person = {}
-    total_books = 0
-
-    for p in person:
-        counter = 0
-        dict_person[p] = counter
-
-        for book in all_books:
-            if (p == book.author):
-                counter += 1
-                dict_person[p] = counter
-        
-        total_books += counter
-
-
-            
-    return render(request, 'haq/personalities.html', {
-        "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_person': dict_person,
-       })
 
 ###########################################
 ###########################################

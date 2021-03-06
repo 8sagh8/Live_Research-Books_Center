@@ -1,19 +1,19 @@
 {% extends 'haq/sample.html' %}
-{% block title%}List of Topics {% endblock %}
+{% block title%}List of Personalities {% endblock %}
 
 {% block body %}
     <span id = "titlespan">
         <div class="move_center" >
-            <h1>List of Topics</h1>
-            <form action = '{% url 'haq:topicSearch' %}' method="POST" class="move_center">
+            <h1>List of Personalities</h1>
+            <form action = '{% url 'haq:categories' %}' method="POST" class="move_center">
                 {% csrf_token %}   <!--this is to avoid fraugry-->
-                <input type="text" name="searchWord" size="50" value="" placeholder="Search A Topic">
+                <input type="text" name="searchWord" size="50" value="" placeholder="Search A Personality">
                 
                 <input type="submit" value="Click to Search">
             </form>
             <br>
             {% if auth_person == "Authorized Person" %}
-                <button type="button" class="btn btn-primary btn-lg">Add New Topic</button>
+                <button type="button" class="btn btn-primary btn-lg">Add New Personality</button>
             {% endif %}
         </span>
      
@@ -21,26 +21,29 @@
 
         <br>
         <div class="move_center">
-            <caption>List of TOPICS and total number of references: {{total_references}} </caption>
-            <table class="table table-bordered">
+                        <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">Serial Number</th>
-                        <th scope="col">Topics</th>
-                        <th scope="col">Total References</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Birth Year</th>
+                        <th scope="col">Death Year</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for k, v in dict_topics.items %}
+                    {% for person in total_personalities %}
                         <tr>
                             <th scope="row">{{ forloop.revcounter }}</th>
                             <td>
-                                <a href={% url 'haq:getTopic' v.0 %}  class="a_book" >
-                                    <h2>{{k}}</h2>
+                                
+                                <a href={% url 'haq:getPersonRef' person.0 %} class="a_book" >
+                                    {{person.1}}
                                 </a>
                             </td>
-                            <td>{{ v.1 }}</td>
+                            <td>{{person.2}}</td>
+                            <td>{{ person.3 }}</td>
                         </tr>
+
                     {% endfor %}
                 </tbody>
             </table>
