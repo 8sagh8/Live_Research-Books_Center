@@ -22,6 +22,7 @@
 
         <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="{% static 'mainpage/styles.css' %}"
+
     </head>
     <body>
         <h1 id="mainHeading">Welcome to Research Center</h1>
@@ -46,14 +47,18 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="password" id="password" class="form-control" placeholder="password">
+                                <input type="password" name="password" id="password" class="form-control" placeholder="password">                             
                             </div>
-
-
+                            <div style="text-align:center;">
+                                <label style="color:white; font-size:20px;">
+                                    Click GUEST, if you are a new user!
+                                </label>
+                            </div>
+                            <br>
                             <div class="form-group">
 
-                                <input type="submit" value="Login" class="btn float-left login_btn">
-                                <input type="submit" id="log_guest" value="Guest" class="btn float-right login_btn">
+                                <input type="submit" value="Login" class="btn float-left" style="background-color: pink;">
+                                <input type="submit" id="log_guest" value="Guest" class="btn float-right" style="background-color: pink;">
                                 
                             </div>
                         </form>
@@ -64,11 +69,13 @@
                             <h4 id="messageHeading"> {{message}} </h4>
                         {% endfor %}
                     </div>
+                    <!--
                     <div class="card-footer">
-                        <div class="d-flex justify-content-center links">
-                            Don't have an account?<a href="#">Sign Up</a>
+                        <div class="d-flex justify-content-center links" style="font-size: 20px; color:">
+                            Don't have an account?<a href="#" style="color: greenyellow;">Sign Up</a>
                         </div>
                     </div>
+                    -->
                 </div>
             </div>  
         </div>

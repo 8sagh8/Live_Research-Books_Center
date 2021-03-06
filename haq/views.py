@@ -156,8 +156,15 @@ def getData_countReferences(request, jsonData, _field):
                             else:
                                 dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
                 total_references += counter
-                
-    return [auth_person, total_references, dict_jsonData]
+    # below is to get Dictionary in Reverse ORDER...
+    new_dict_jsonData = {}
+    for key, value in reversed(dict_jsonData.items()):
+        if len(new_dict_jsonData) == 0:
+            new_dict_jsonData = {key : value}
+        else:
+            new_dict_jsonData[key] = value
+
+    return [auth_person, total_references, new_dict_jsonData]
 
 #standard function to get References by Demand
 def references_by_demand(request, demanded_name, _field):
@@ -178,6 +185,24 @@ def references_by_demand(request, demanded_name, _field):
 
     return [auth_person, demanded_name, new_references_list]
 
+def getData(request, all_json_data):
+    auth_person = auth_Person_Function(str(request.user))
+    final_list = []
+    
+    if request.method == "POST":
+        _searchWord = request.POST['searchWord']
+        for json_data in all_json_data.values():
+            for data in json_data:      
+                for d in data.values():
+                    if _searchWord.lower() in str(d).lower():
+                        final_list.append(data)
+    else:
+        for json_data in all_json_data.values():
+            for json in json_data:
+                final_list.append(json)
+    final_list.reverse()
+
+    return [auth_person, final_list]
 
 ################################################
 # ~~~~~ General VIEWS ~~~~~~~~~ #
@@ -361,16 +386,26 @@ def CategoriesView(request):
     all_books = get_book_json()
 
     # 3rd parameter, is field name in BOOK MODULE
-    returning_value = getData_countBooks(categories, all_books, 'cat')
+    final_list = getData_countBooks(categories, all_books, 'cat')
     
-    dict_categories = returning_value [0]
-    total_books = returning_value [1]
+    if request.method == 'POST':
+        _searchWord = request.POST['searchWord']
+        temp = final_list[0] 
+        final_list[0] = None
+
+        for key, value in temp.items():
+            if _searchWord.lower() in key.lower():
+                if final_list[0] == None:
+                    final_list[0] = {key: value}
+                else:
+                    final_list[0][key] = value
 
     return render(request, 'haq/pages/categories.html', {
         "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_categories': dict_categories,
+        'total_books': final_list [1],
+        'dict_categories': final_list [0],
        })
+
 
 # get Books by Categories
 def GetCategoriesBooksView(request, category_id):
@@ -384,41 +419,42 @@ def GetCategoriesBooksView(request, category_id):
         'books': demanded[2]
     })
 
+
 # Books page
 def BookView(request):
-    auth_person = auth_Person_Function(str(request.user))
     all_books = get_book_json()
-    final_list = []
-
-    if request.method == "POST":
-        _searchWord = request.POST['searchWord']
-        for books in all_books.values():
-            for book in books:      
-                for v in book.values():
-                    if _searchWord.lower() in str(v).lower():
-                        final_list.append(book)
-    else:
-        for books in all_books.values():
-            for book in books:
-                final_list.append(book)
-    final_list.reverse()
+    final_list = getData(request, all_books)
+    
     return render(request, 'haq/pages/books.html', {
-        "auth_person": auth_person,
+        "auth_person": final_list[0],
         'status' : False, # the status is used by search by status, see 'GetStatusBooksView' 
-        'books': final_list,
-       })
+        'books': final_list[1],
+    })
 
 # Topic page
 def TopicSearchView(request):
+    final_list = None
     topics = get_topics_json()
     
     # 3rd parameter, is field name in BOOK MODULE
-    returning_value = getData_countReferences(request, topics, 'subject')
+    final_list = getData_countReferences(request, topics, 'subject')
+
+    if request.method == 'POST':
+        _searchWord = request.POST['searchWord']
+        temp = final_list[2] 
+        final_list[2] = None
+
+        for key, value in temp.items():
+            if _searchWord.lower() in key.lower():
+                if final_list[2] == None:
+                    final_list[2] = {key: value}
+                else:
+                    final_list[2][key] = value
 
     return render(request, 'haq/pages/topics.html', {
-        "auth_person": returning_value[0],
-        'total_references': returning_value[1],
-        'dict_topics': returning_value[2],
+        "auth_person": final_list[0],
+        'total_references': final_list[1],
+        'dict_topics': final_list[2],
     })
 
 # to Get references of a Topic
@@ -434,13 +470,15 @@ def GetTopicView(request, topic_id):
 
 # to Get References
 def ReferenceView(request):
-    topic_name = None
-    returning_value = references_by_demand(request, topic_name, 'subject')
+    topic_name = None 
+    all_references = get_reference_json()
+    
+    final_list = getData(request, all_references)
     
     return render(request, 'haq/pages/referencesByTopic.html', {
-        "auth_person": returning_value[0],
-        'topic': returning_value[1],
-        'refer': returning_value[2]
+        "auth_person": final_list[0],
+        'topic': topic_name,
+        'refer': final_list[1],
     })
 
 # Personalities page
@@ -456,6 +494,16 @@ def PersonalityView(request):
                 temp.append(p)
             new_personalities_list.append(temp)
     new_personalities_list.reverse()
+
+    if request.method == 'POST':
+        _searchWord = request.POST['searchWord']
+        temp = new_personalities_list
+        new_personalities_list = []
+
+        for person in temp:
+            if _searchWord.lower() in person[1]:
+                new_personalities_list.append(person)
+
 
     return render(request, 'haq/pages/personalities.html', {
         "auth_person": auth_person,

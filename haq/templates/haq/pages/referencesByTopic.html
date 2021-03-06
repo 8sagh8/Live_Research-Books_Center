@@ -22,9 +22,9 @@
                 {% endif %}
             
             <br><br>
-            <form action = '{% url 'haq:topicSearch' %}' method="POST" class="move_center">
+            <form action = '{% url 'haq:reference' %}' method="POST" class="move_center">
                 {% csrf_token %}   <!--this is to avoid fraugry-->
-                <input type="text" name="searchWord" size="50" value="" placeholder="Search A Topic">
+                <input type="text" name="searchWord" size="50" value="" placeholder="Search References">
                 
                 <input type="submit" value="Click to Search">
             </form>
@@ -36,6 +36,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
+                <th>No.</th>
                 <th>Book</th>
                 <th>Volume or Paragraph</th>
                 <th>Page or Chapter </th>
@@ -51,7 +52,8 @@
             <tbody>
                 {% for ref in refer %}
                     <tr>
-                        <td><b>{{forloop.counter}}-</b> {{ref.book}} </td>
+                        <th>{{forloop.revcounter}}</th>
+                        <td>{{ref.book}}</td>
                         <td>{{ref.vol_para}}</td>
                         <td>{{ref.page_chapter}}</td>
                         <td>{{ref.hadees_verse}}</td>

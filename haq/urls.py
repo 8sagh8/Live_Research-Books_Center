@@ -7,7 +7,11 @@ app_name = "haq"
 
 # url(r'^getStatusBooks/(?P<status_id>[0-9]+)/$', views.GetStatusBooksView, name="getStatusBooks"),
 # url(r'^getReligiousBooks/(?P<sect_id>[0-9]+)/$', views.GetReligiousBooksView, name="getReligiousBooks"),
-        
+# url(r'^getNeedBooks/(?P<need_id>[0-9]+)/$', views.GetNeedBooksView, name="getNeedBooks"),
+# url(r'getLanguagesBooks/(?P<language_id>[0-9]+)/$', views.GetLanguagesBooksView, name="getLanguagesBooks"),
+# url(r'^getTopic/(?P<topic_id>\d+)/', views.GetTopicView, name="getTopic"),
+# path(r'getPersonRef/<int:person_id>/', views.GetPersonRefView, name="getPersonRef"),
+                    
 
 urlpatterns = [
     path('books/', views.BookView, name="books"),
@@ -16,16 +20,16 @@ urlpatterns = [
     path('religions/', views.ReligionView, name="religions"),
     path('getReligiousBooks/<sect_id>', views.GetReligiousBooksView, name="getReligiousBooks"),
     path('need/', views.NeedView, name="need"),
-    url(r'^getNeedBooks/(?P<need_id>[0-9]+)/$', views.GetNeedBooksView, name="getNeedBooks"),
+    path('getNeedBooks/<need_id>/', views.GetNeedBooksView, name="getNeedBooks"),
     path('languages/', views.LanguagesView, name="languages"),
-    url(r'getLanguagesBooks/(?P<language_id>[0-9]+)/$', views.GetLanguagesBooksView, name="getLanguagesBooks"),
+    path('getLanguagesBooks/<language_id>/', views.GetLanguagesBooksView, name="getLanguagesBooks"),
     path('categories/', views.CategoriesView, name="categories"),
-    path('getCategoriesBooks/<category_id>', views.GetCategoriesBooksView, name="getCategoriesBooks"),
+    path('getCategoriesBooks/<category_id>/', views.GetCategoriesBooksView, name="getCategoriesBooks"),
     path('topicSearch/', views.TopicSearchView, name="topicSearch"),
-    url(r'^getTopic/(?P<topic_id>\d+)/', views.GetTopicView, name="getTopic"),
+    path('getTopic/<topic_id>/', views.GetTopicView, name="getTopic"),
     path('reference/', views.ReferenceView, name="reference"),
     path('personalities/', views.PersonalityView, name="personalities"),
-    path(r'getPersonRef/<int:person_id>/', views.GetPersonRefView, name="getPersonRef"),
+    path('getPersonRef/<person_id>/', views.GetPersonRefView, name="getPersonRef"),
 
 
     path('', views.IndexView, name="index"),
