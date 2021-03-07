@@ -229,8 +229,21 @@ def get_count(_dict):
             count += 1
     return count
 
+# About and Instruction Page
+def AboutView(request):
+    auth_person = auth_Person_Function(str(request.user))
+    isServerLocal = isServerLocalFunction()
+
+    return render(request, 'haq/about.html', {
+        "auth_person": auth_person,
+        'isServerLocal' : isServerLocal,
+    })
+
+# main Index Page
 def IndexView(request):
     auth_person = auth_Person_Function(str(request.user))
+    isServerLocal = isServerLocalFunction()
+
     topics = get_topics_json()
     topics = get_count(topics)
     categories = get_categories_json()
@@ -250,8 +263,8 @@ def IndexView(request):
     references = get_reference_json()
     references = get_count(references)    
 
-    list_about = []
-
+    list_about = []                         
+                                
     list_about.append(('Topics', topics))
     list_about.append(('Categories', categories))
     list_about.append(('Status', status))
@@ -265,6 +278,7 @@ def IndexView(request):
     return render(request, 'haq/pages/index.html', {
         "auth_person": auth_person,
         "all_details": list_about,
+        "isServerLocal" : isServerLocal,
     })
 
 # Status page
@@ -449,7 +463,7 @@ def BookView(request):
     })
 
 # Topic page
-def TopicSearchView(request):
+def TopicView(request):
     final_list = None
     topics = get_topics_json()
     
@@ -553,13 +567,7 @@ def GetPersonRefView(request, person_id):
 
 
 
-# main Index Page
-def AboutView(request):
-    auth_person = auth_Person_Function(str(request.user))
 
-    return render(request, 'haq/about.html', {
-        "auth_person": auth_person,
-    })
 
 
 
