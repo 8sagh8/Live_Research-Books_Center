@@ -118,7 +118,9 @@
                             </a>
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{% url 'haq:reference' %}">References</a>
+                                {% if isServerLocal == True %}
                                 <a class="nav-link" href="{% url 'haq:topicSearch' %}">Topics</a>
+                                {% endif %}
                                 <a class="nav-link" href="{% url 'haq:books' %}">Books</a>
                                 <a class="nav-link" href="{% url 'haq:categories' %}">Categories</a>
                                 <a class="nav-link" href="{% url 'haq:languages' %}">Languages</a>
@@ -173,13 +175,7 @@
 
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-
-                        {% if user.first_name == 'Guest' %}
-                            Salam.. {{user.first_name}}!
-                        {% else %}
-                            Salam.. {{user.first_name}}!
-                        {% endif %} 
-
+                        Salam.. {{user.first_name}}!
                     </div>
                 </nav>
             </div>
