@@ -435,6 +435,7 @@ def GetCategoriesBooksView(request, category_id):
     })
 
 
+
 # Books page
 def BookView(request):
     all_books = get_book_json()
@@ -444,6 +445,7 @@ def BookView(request):
         "auth_person": final_list[0],
         'status' : False, # the status is used by search by status, see 'GetStatusBooksView' 
         'books': final_list[1],
+        'isServerLocal': final_list[2],
     })
 
 # Topic page
