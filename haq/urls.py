@@ -37,7 +37,6 @@ urlpatterns = [
     path('createJSON', views.CreateJSONView, name="createJSON"),
 
     #  to work on below
-    path('topicJSON/', views.TopicJSONView, name="topicJSON"),
     path('bookAdd/', views.BookAddView, name="bookAdd"),
     path('bookSectOption/', views.BookSectOptionView, name="bookSectOption"),
 

@@ -13,63 +13,63 @@ import json, io, sys
 
 #  Fetch data from 'topicsJSON.json' File 
 def get_topics_json():
-    file_obj = open('haq/static/haq/json_files/topicsJSON.json')
+    file_obj = open('staticfiles/topicsJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
     return data_dict
 
 #  Fetch data from 'categoriesJSON.json' File 
 def get_categories_json():
-    file_obj = open('haq/static/haq/json_files/categoriesJSON.json')
+    file_obj = open('staticfiles/categoriesJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
     return data_dict
 
 #  Fetch data from 'statusJSON.json' File 
 def get_status_json():
-    file_obj = open('haq/static/haq/json_files/statusJSON.json')
+    file_obj = open('staticfiles/statusJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
     return data_dict
 
 #  Fetch data from 'religionJSON.json' File 
 def get_religion_json():
-    file_obj = open('haq/static/haq/json_files/religionJSON.json')
+    file_obj = open('staticfiles/religionJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
     return data_dict
 
 #  Fetch data from 'personJSON.json' File 
 def get_person_json():
-    file_obj = open('haq/static/haq/json_files/personJSON.json')
+    file_obj = open('staticfiles/personJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
     return data_dict
 
 #  Fetch data from 'needJSON.json' File 
 def get_need_json():
-    file_obj = open('haq/static/haq/json_files/needJSON.json')
+    file_obj = open('staticfiles/needJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
     return data_dict
 
 #  Fetch data from 'languageJSON.json' File 
 def get_language_json():
-    file_obj = open('haq/static/haq/json_files/languageJSON.json')
+    file_obj = open('staticfiles/languageJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
     return data_dict
 
 #  Fetch data from 'bookJSON.json' File 
 def get_book_json():
-    file_obj = open('haq/static/haq/json_files/bookJSON.json')
+    file_obj = open('staticfiles/bookJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
     return data_dict
 
 #  Fetch data from 'referenceJSON.json' File 
 def get_reference_json():
-    file_obj = open('haq/static/haq/json_files/referenceJSON.json', encoding='utf-16')
+    file_obj = open('staticfiles/referenceJSON.json', encoding='utf-16')
     data_dict = json.load(file_obj)
     file_obj.close()
 
@@ -80,7 +80,7 @@ def get_reference_json():
 # Authorized Person ## auth_person = auth_Person_Function(str(request.user))
 def auth_Person_Function(current_user_name):
     #  Fetch data from 'authorizedPersonJSON.json' File 
-    file_obj = open('haq/static/haq/json_files/authorizedPersonJSON.json')
+    file_obj = open('staticfiles/authorizedPersonJSON.json')
     data_dict = json.load(file_obj)
     file_obj.close()
 
@@ -802,33 +802,6 @@ def IntoJsonView(request):
         'dict_status': dict_status,
        })
 
-
-# TopicJSONView -- TRIAL!!! getting Topic from JSON files
-def TopicJSONView(request):
-
-    file_obj = open('haq/static/haq/json_files/topicsJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-
-    return render(request, 'haq/topicJSON.html', {
-        'data' : data_dict,
-    })
-    
-
-#     topics = Topic.objects.all()
-#     topics_list = [] # will store all topics and then go inside json_topic
-
-#     for t in topics:
-#         topics_list.append({"id": t.id, "_topic": t._topic})
-
-#     # will store topics json in here
-#     json_topic = { "topics" : topics_list }
-#     # convert into json data
-#     my_json = json.dumps(json_topic, indent=1)
-
-#     with open('serverAPI/static/json/topics.json', mode='w+') as myFile:
-#         myFile.write(my_json)
-
 #########################################
 # ~~~~~ API Functions & VIEWS ~~~~~~~~~ #
 #########################################
@@ -837,17 +810,17 @@ def TopicJSONView(request):
 # ~~~~~ JSON FILES Functions & VIEWS ~~~~~~~~~ #
 ################################################
 # create 'authorizedPersonJSON.json' file
-def _createAuthPersonJSON():
-    auth_person = auth_Person_Function(str(request.user))
+def _createAuthPersonJSON(request):
+    auth_person = Authorized_Person.objects.all()
     authPerson_list = [] # will store all auth.per in here 
 
-    for person in list_Authorized_People:
+    for person in auth_person:
         authPerson_list.append({"name": person.auth_name})
 
     json_person = {"authPerson": authPerson_list}
     my_json = json.dumps(json_person, indent=1)
 
-    with open('haq/static/haq/json_files/authorizedPersonJSON.json', mode='w+') as myFile:
+    with open('staticfiles/authorizedPersonJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "AuthPerson"
@@ -865,7 +838,7 @@ def _createTopicsJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=1)
 
-    with open('haq/static/haq/json_files/topicsJSON.json', mode='w+') as myFile:
+    with open('staticfiles/topicsJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "Topics"
@@ -883,7 +856,7 @@ def _createCategoriesJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=1)
 
-    with open('haq/static/haq/json_files/categoriesJSON.json', mode='w+') as myFile:
+    with open('staticfiles/categoriesJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "Categories"
@@ -902,7 +875,7 @@ def _createStatusJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=1)
 
-    with open('haq/static/haq/json_files/statusJSON.json', mode='w+') as myFile:
+    with open('staticfiles/statusJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "Status"
@@ -920,7 +893,7 @@ def _createReligionJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=1)
 
-    with open('haq/static/haq/json_files/religionJSON.json', mode='w+') as myFile:
+    with open('staticfiles/religionJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "Religion"
@@ -940,7 +913,7 @@ def _createPersonJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=1)
 
-    with open('haq/static/haq/json_files/personJSON.json', mode='w+') as myFile:
+    with open('staticfiles/personJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "Persons"
@@ -958,7 +931,7 @@ def _createNeedJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=1)
 
-    with open('haq/static/haq/json_files/needJSON.json', mode='w+') as myFile:
+    with open('staticfiles/needJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "Need"
@@ -976,7 +949,7 @@ def _createLanguageJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=1)
 
-    with open('haq/static/haq/json_files/languageJSON.json', mode='w+') as myFile:
+    with open('staticfiles/languageJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "Language"
@@ -1004,7 +977,7 @@ def _createBookJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=1)
     
-    with open('haq/static/haq/json_files/bookJSON.json', mode='w+') as myFile:
+    with open('staticfiles/bookJSON.json', mode='w+') as myFile:
         myFile.write(my_json)
     
     return "Book"
@@ -1033,7 +1006,7 @@ def _createReferenceJSON():
     # convert into json data
     my_json = json.dumps(json_data, indent=2)
 
-    with io.open('haq/static/haq/json_files/referenceJSON.json', mode='w+', encoding="utf-16") as myFile:
+    with io.open('staticfiles/referenceJSON.json', mode='w+', encoding="utf-16") as myFile:
         myFile.write(my_json)
     
     return "Reference"
@@ -1044,7 +1017,7 @@ def CreateJSONView(request):
     msg = []
     if request.method == "POST":
         # create Authorized Person File
-        create_authPerson = _createAuthPersonJSON()
+        create_authPerson = _createAuthPersonJSON(request)
         msg.append(create_authPerson)
         # create Topics File
         created_file = _createTopicsJSON()
