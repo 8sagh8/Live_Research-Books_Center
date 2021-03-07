@@ -27,11 +27,7 @@ urlpatterns = [
     path('', views.IndexView, name="index"),
     path('index/', views.IndexView, name="index"),
     path('about/', views.AboutView, name="about"),
-    path('searchRef/', views.SearchRefView, name="searchRef"),
     path('logout', views.LogOutView, name="logout"),
-
-    # API routes
-    path('intoJSON/', views.IntoJsonView, name="intoJSON"),
 
     # JSON Files routes
     path('createJSON', views.CreateJSONView, name="createJSON"),

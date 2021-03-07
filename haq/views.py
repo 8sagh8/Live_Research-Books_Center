@@ -561,70 +561,6 @@ def AboutView(request):
 
 
 
-# Searching for References
-def SearchRefView(request):
-    auth_person = auth_Person_Function(str(request.user))
-    temp = topic()
-    _searchWord = None
-    all_ref = Reference.objects.all()
-    found_list = []  #will be sent to html page
-    length_found = 0 #length of found list
-
-    if request.method == "POST":
-        _searchWord = request.POST['searchWord']
-        _len_search = len(_searchWord)
-
-
-        if _len_search == 0 and _len_search < 3:
-            return render(request, 'haq/searchRef.html', {
-                "auth_person": auth_person,
-                "size": _len_search
-            })
-
-
-        else:
-            if _len_search > 2:
-                for ref in all_ref: # getting single reference from all list of references
-                    _flag = False
-                    ref_list = []
-
-                    ref_list.append(str(ref.subject))
-                    ref_list.append(str(ref.speaker))
-                    ref_list.append(str(ref.personFor))
-                    ref_list.append(str(ref.book))
-                    ref_list.append(str(ref.vol_para))
-                    ref_list.append(str(ref.page_chapter))
-                    ref_list.append(str(ref.hadees_verse))
-                    ref_list.append(str(ref.description))
-
-                    for _word in ref_list:
-                        _len_word = len(_word)
-                        _start_point = 0
-                        _end_point = _len_search
-
-                        if _len_word >= _len_search:
-                            while (_end_point <= _len_word):
-                                if _word[_start_point : _end_point].lower() == _searchWord.lower():
-                                    found_list.append(ref)
-                                    _flag = True
-                                    break;
-                                else:
-                                    _start_point += 1
-                                    _end_point += 1
-                        
-                        if _flag == True:
-                            break;
-
-                length_found = len(found_list) 
-
-  
-        return render(request, 'haq/searchRef.html', {
-            "auth_person": auth_person,
-            "length_found" : length_found,
-            "found_list" : found_list,
-            "all_topics": temp[0],
-            "list_size": temp[1]
-        })
 
 # Category(ies) page
 def CategoryView(request):
@@ -805,6 +741,7 @@ def IntoJsonView(request):
 #########################################
 # ~~~~~ API Functions & VIEWS ~~~~~~~~~ #
 #########################################
+
 
 ################################################
 # ~~~~~ JSON FILES Functions & VIEWS ~~~~~~~~~ #

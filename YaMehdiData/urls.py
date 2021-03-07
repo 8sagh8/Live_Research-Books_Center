@@ -24,9 +24,16 @@ urlpatterns = [
     path('admin/', admin.site.urls),    #route to ADMIN Page only
     path('', include('mainpage.urls')), #route to Main Login Page only
     path('home/', include('haq.urls')), #route to Haq About Page only
-    # path to serverAPI
-    url(r'^api/topics_list/$', TopicsList.as_view(), name='topics_list'),
-    path('intoJSON/', include('serverAPI.urls')), 
     
-    # path(r'^api/topics_list/$', include('serverAPI.urls')) #route to serverAPI Topic Page only
+    # path to serverAPI
+    path('rest_api/topics_list/', TopicList.as_view(), name='topics_list'),
+    path('rest_api/categories_list/', CategoryList.as_view(), name='topics_list'),
+    path('rest_api/statuss_list/', StatusList.as_view(), name='topics_list'),
+    path('rest_api/religions_list/', ReligionList.as_view(), name='topics_list'),
+    path('rest_api/persons_list/', PersonList.as_view(), name='topics_list'),
+    path('rest_api/needs_list/', NeedList.as_view(), name='topics_list'),
+    path('rest_api/languages_list/', LanguageList.as_view(), name='topics_list'),
+    path('rest_api/books_list/', BookList.as_view(), name='topics_list'),
+    path('rest_api/references_list/', ReferenceList.as_view(), name='topics_list'),
+
 ]
