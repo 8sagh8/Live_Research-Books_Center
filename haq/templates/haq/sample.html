@@ -49,6 +49,35 @@
                                 About us &<br>Instructions
                             </a>
 
+                            <!-- API get json data -->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseJSON" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                JSON Files
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseJSON" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <ul>
+                                        <li>
+                                            <a class="nav-link" href="https://www.youtube.com/" target="_blank">
+                                                Get All Files
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link" href="https://live-research-books.herokuapp.com/rest_api/topics_list/" target="_blank">
+                                                Topics API
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link" href="#">Update data</a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link" href="#">Delete data</a>
+                                        </li>
+                                    </ul>
+                                    
+                                </nav>
+                            </div> 
                             <!-- View References and Research -->
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{% url 'haq:reference' %}">References</a>
