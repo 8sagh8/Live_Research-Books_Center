@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-import os
+import os, sys
 from pathlib import Path
 import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = ')pyq(4tqo*f&m=0sd=-h=4m9)yxvas782b^jpy1xhlc)c#szu+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Turn it False before pushing on Heroku
-DEBUG = False
+# Determine if in Production or Development
+if (len(sys.argv) >= 2 and sys.argv[1] == 'runserver'):
+    DEBUG = True  
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = []
 

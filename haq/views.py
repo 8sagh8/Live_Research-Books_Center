@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User, auth
-import json
-import io
+import json, io, sys
+   
+
 
 ##########################################################
 # ~~~~~ Fetch Dictionary Typed Data from Files ~~~~~~~~~ #
@@ -99,8 +100,16 @@ def topic():
 
     return (all_topics, list_size )
 
+# Determine if in Production or Development (localhost)
+def isServerLocalFunction():
+    isServerLocal = False
+    if (len(sys.argv) >= 2 and sys.argv[1] == 'runserver'):
+        isServerLocal = True
+    return isServerLocal
+
 # standard function for get JSON Data and count Books
 def getData_countBooks(jsonData, all_books, _field):
+    isServerLocal = isServerLocalFunction()
     dict_jsonData = {}
     total_books = 0
     for jsonData_list in jsonData.values():
@@ -118,12 +127,13 @@ def getData_countBooks(jsonData, all_books, _field):
                             else:
                                 dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
                 total_books += counter
-    return [dict_jsonData, total_books]
+    return [dict_jsonData, total_books, isServerLocal]
 
 #standard function to get Books by Demand
 def books_by_demand(request, demanded_name, _field):
     auth_person = auth_Person_Function(str(request.user))
     all_books = get_book_json()
+    isServerLocal = isServerLocalFunction()
     new_books_list = []
 
     for books_list in all_books.values():
@@ -132,7 +142,7 @@ def books_by_demand(request, demanded_name, _field):
                 new_books_list.append(book)
     new_books_list.reverse()
 
-    return [auth_person, demanded_name, new_books_list]
+    return [auth_person, demanded_name, new_books_list, isServerLocal]
 
 # standard function for get JSON Data and count References
 def getData_countReferences(request, jsonData, _field):
@@ -140,6 +150,7 @@ def getData_countReferences(request, jsonData, _field):
     all_references = get_reference_json()
     dict_jsonData = {}
     total_references = 0
+    isServerLocal = isServerLocalFunction()
 
     for jsonData_list in jsonData.values():
         for jsonData_dict in jsonData_list:
@@ -164,12 +175,13 @@ def getData_countReferences(request, jsonData, _field):
         else:
             new_dict_jsonData[key] = value
 
-    return [auth_person, total_references, new_dict_jsonData]
+    return [auth_person, total_references, new_dict_jsonData, isServerLocal]
 
 #standard function to get References by Demand
 def references_by_demand(request, demanded_name, _field):
     auth_person = auth_Person_Function(str(request.user))
     all_references = get_reference_json()
+    isServerLocal = isServerLocalFunction()
     new_references_list = []
 
     if demanded_name == None:
@@ -183,10 +195,11 @@ def references_by_demand(request, demanded_name, _field):
                     new_references_list.append(references)
     new_references_list.reverse()
 
-    return [auth_person, demanded_name, new_references_list]
+    return [auth_person, demanded_name, new_references_list, isServerLocal]
 
 def getData(request, all_json_data):
     auth_person = auth_Person_Function(str(request.user))
+    isServerLocal = isServerLocalFunction()
     final_list = []
     
     if request.method == "POST":
@@ -202,7 +215,7 @@ def getData(request, all_json_data):
                 final_list.append(json)
     final_list.reverse()
 
-    return [auth_person, final_list]
+    return [auth_person, final_list, isServerLocal]
 
 ################################################
 # ~~~~~ General VIEWS ~~~~~~~~~ #
@@ -262,14 +275,13 @@ def StatusView(request):
 
     # 3rd parameter, is field name in BOOK MODULE
     returning_value = getData_countBooks(status, all_books, 'status')
-    dict_status = returning_value [0]
-    total_books = returning_value [1]
 
     return render(request, 'haq/pages/status.html', {
         "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_status': dict_status,
-       })
+        'total_books': returning_value [1],
+        'dict_status': returning_value [0],
+        'isServerLocal' : returning_value [2]
+    })
 
 # get Books by Status
 def GetStatusBooksView(request, status_id):
@@ -281,7 +293,8 @@ def GetStatusBooksView(request, status_id):
     return render(request, 'haq/pages/books.html', {
         "auth_person": demanded[0],
         'status': demanded[1],
-        'books': demanded[2]
+        'books': demanded[2],
+        'isServerLocal' : demanded[3],
     })
 
     
@@ -293,13 +306,12 @@ def ReligionView(request):
     
     # 3rd parameter, is field name in BOOK MODULE
     returning_value = getData_countBooks(religion, all_books, 'sect')
-    dict_religion = returning_value [0]
-    total_books = returning_value [1]
 
     return render(request, 'haq/pages/religions.html', {
         "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_religion': dict_religion,
+        'total_books': returning_value [1],
+        'dict_religion': returning_value [0],
+        'isServerLocal': returning_value [2],
        })
 
 # get Books by Religious / Sects
@@ -312,7 +324,8 @@ def GetReligiousBooksView(request, sect_id):
     return render(request, 'haq/pages/books.html', {
         "auth_person": demanded[0],
         'status': demanded[1],
-        'books': demanded[2]
+        'books': demanded[2],
+        'isServerLocal': demanded[3],
     })
 
 
@@ -324,14 +337,13 @@ def NeedView(request):
     
     # 3rd parameter, is field name in BOOK MODULE
     returning_value = getData_countBooks(need, all_books, 'need')
-    dict_need = returning_value [0]
-    total_books = returning_value [1]
 
     return render(request, 'haq/pages/need.html', {
         "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_need': dict_need,
-       })
+        'total_books': returning_value [1],
+        'dict_need': returning_value [0],
+        'isServerLocal': returning_value [2],
+    })
 
 
 # get Books by Need
@@ -344,7 +356,8 @@ def GetNeedBooksView(request, need_id):
     return render(request, 'haq/pages/books.html', {
         "auth_person": demanded[0],
         'status': demanded[1],
-        'books': demanded[2]
+        'books': demanded[2],
+        'isServerLocal': demanded[3],
     })
 
 # Languages page
@@ -355,14 +368,13 @@ def LanguagesView(request):
 
     # 3rd parameter, is field name in BOOK MODULE
     returning_value = getData_countBooks(languages, all_books, 'lang')
-    dict_languages = returning_value [0]
-    total_books = returning_value [1]
 
     return render(request, 'haq/pages/languages.html', {
         "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_languages': dict_languages,
-       })
+        'total_books': returning_value [1],
+        'dict_languages': returning_value [0],
+        'isServerLocal': returning_value [2],
+    })
 
 
 # get Books by Languages
@@ -375,7 +387,8 @@ def GetLanguagesBooksView(request, language_id):
     return render(request, 'haq/pages/books.html', {
         "auth_person": demanded[0],
         'status': demanded[1],
-        'books': demanded[2]
+        'books': demanded[2],
+        'isServerLocal': demanded[3],
     })
 
 
@@ -404,7 +417,8 @@ def CategoriesView(request):
         "auth_person": auth_person,
         'total_books': final_list [1],
         'dict_categories': final_list [0],
-       })
+        'isServerLocal': final_list[2],
+    })
 
 
 # get Books by Categories
@@ -416,7 +430,8 @@ def GetCategoriesBooksView(request, category_id):
     return render(request, 'haq/pages/books.html', {
         "auth_person": demanded[0],
         'status': demanded[1],
-        'books': demanded[2]
+        'books': demanded[2],
+        'isServerLocal': demanded[3],
     })
 
 
@@ -424,7 +439,7 @@ def GetCategoriesBooksView(request, category_id):
 def BookView(request):
     all_books = get_book_json()
     final_list = getData(request, all_books)
-    
+  
     return render(request, 'haq/pages/books.html', {
         "auth_person": final_list[0],
         'status' : False, # the status is used by search by status, see 'GetStatusBooksView' 
@@ -455,6 +470,7 @@ def TopicSearchView(request):
         "auth_person": final_list[0],
         'total_references': final_list[1],
         'dict_topics': final_list[2],
+        'isServerLocal' : final_list[3],
     })
 
 # to Get references of a Topic
@@ -465,7 +481,8 @@ def GetTopicView(request, topic_id):
     return render(request, 'haq/pages/referencesByTopic.html', {
         "auth_person": returning_value[0],
         'topic': returning_value[1],
-        'refer': returning_value[2]
+        'refer': returning_value[2],
+        'isServerLocal' : returning_value[3],
     })
 
 # to Get References
@@ -479,6 +496,7 @@ def ReferenceView(request):
         "auth_person": final_list[0],
         'topic': topic_name,
         'refer': final_list[1],
+        'isServerLocal' : final_list[2],
     })
 
 # Personalities page
@@ -486,6 +504,7 @@ def PersonalityView(request):
     auth_person = auth_Person_Function(str(request.user))
     all_personalities = get_person_json()
     new_personalities_list = []
+    isServerLocal = isServerLocalFunction()
 
     for personalities_list in all_personalities.values():
         for personalities in personalities_list:
@@ -506,8 +525,9 @@ def PersonalityView(request):
 
 
     return render(request, 'haq/pages/personalities.html', {
-        "auth_person": auth_person,
+        'auth_person' : auth_person,
         'total_personalities': new_personalities_list,
+        'isServerLocal' : isServerLocal
     })
 
 # get References by Person
@@ -520,7 +540,8 @@ def GetPersonRefView(request, person_id):
     return render(request, 'haq/pages/referencesByTopic.html', {
         "auth_person": returning_value[0],
         'topic': returning_value[1],
-        'refer': returning_value[2]
+        'refer': returning_value[2],
+        'isServerLocal': returning_value[3],
     })
 
 ################################################

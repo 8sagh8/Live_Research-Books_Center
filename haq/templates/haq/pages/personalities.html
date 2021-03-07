@@ -35,10 +35,13 @@
                         <tr>
                             <th scope="row">{{ forloop.revcounter }}</th>
                             <td>
-                                
+                                {% if isServerLocal == True %}
                                 <a href={% url 'haq:getPersonRef' person.0 %} class="a_book" >
                                     {{person.1}}
                                 </a>
+                                {% else %}
+                                    {{person.1}}
+                                {% endif %}
                             </td>
                             <td>{{person.2}}</td>
                             <td>{{ person.3 }}</td>
