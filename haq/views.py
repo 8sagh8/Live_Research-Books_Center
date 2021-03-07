@@ -769,69 +769,11 @@ def BookAddView(request):
 
 
 
-# to search a PERSON in database
-def PersonalitySearchView(request):
-    temp = topic()
-    _searchWord = None
-    all_person = Person.objects.all()
-    found_list = []  #will be sent to html page
-    _length_found = 0 #length of the list found
-
-    if request.method == "POST":
-        _searchWord = request.POST['searchWord']
-        _len_search = len(_searchWord)
-
-        if _len_search < 3:
-            return render(request, 'haq/personalitySearch.html', {
-                "size": _len_search,
-                "all_topics": temp[0],
-                "list_size": temp[1]
-            })
-
-        else:
-            for tp in all_person: # getting single reference from all list of references
-                _flag = False
-                tp = str(tp)
-                _len_word = len(tp)
-                _start_point = 0
-                _end_point = _len_search
-
-                if _len_word >= _len_search:
-                    while (_end_point <= _len_word):
-                        if tp[_start_point : _end_point].lower() == _searchWord.lower():
-                            found_list.append(tp)
-                            _flag = True
-                            break;
-                        else:
-                            _start_point += 1
-                            _end_point += 1
-            
-
-            length_found = len(found_list)
-
-    
-        return render(request, 'haq/personalitySearch.html', {
-            "length_found": length_found,
-            "found_list" : found_list,
-            "all_topics": temp[0],
-            "list_size": temp[1]
-        })
-    else:
-        return render(request, 'haq/personalitySearch.html', {
-            "all_topics": temp[0],
-            "list_size": temp[1]
-        })
-
-
 ### Log out View
 
 def LogOutView(request):
     auth.logout(request)
     return redirect("/")
-
-def OSampleView(request):
-
-    return render(request, 'haq/o_sample.html')
 
 ### API routes' Views
 def IntoJsonView(request):
