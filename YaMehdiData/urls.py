@@ -26,6 +26,7 @@ urlpatterns = [
     path('home/', include('haq.urls')), #route to Haq About Page only
     
     # path to serverAPI
+    path('rest_api/authPerson_list/', AuthPersonList.as_view(), name='authPerson_list'),
     path('rest_api/topics_list/', TopicList.as_view(), name='topics_list'),
     path('rest_api/categories_list/', CategoryList.as_view(), name='topics_list'),
     path('rest_api/statuss_list/', StatusList.as_view(), name='topics_list'),

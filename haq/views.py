@@ -4,76 +4,92 @@ from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User, auth
 import json, io, sys
+import requests
    
 
 
 ##########################################################
-# ~~~~~ Fetch Dictionary Typed Data from Files ~~~~~~~~~ #
+# ~~~~~ Fetch LIst Typed Data from APIs ~~~~~~~~~ #
 ##########################################################
+#  Fetch data from 'Authorized Person API' File 
+def get_authPerson_json():
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/authPerson_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'topicsJSON.json' File 
 def get_topics_json():
-    file_obj = open('staticfiles/topicsJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-    return data_dict
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/topics_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'categoriesJSON.json' File 
 def get_categories_json():
-    file_obj = open('staticfiles/categoriesJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-    return data_dict
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/categories_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'statusJSON.json' File 
 def get_status_json():
-    file_obj = open('staticfiles/statusJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-    return data_dict
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/statuss_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'religionJSON.json' File 
 def get_religion_json():
-    file_obj = open('staticfiles/religionJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-    return data_dict
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/religions_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'personJSON.json' File 
 def get_person_json():
-    file_obj = open('staticfiles/personJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-    return data_dict
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/persons_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'needJSON.json' File 
 def get_need_json():
-    file_obj = open('staticfiles/needJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-    return data_dict
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/needs_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'languageJSON.json' File 
 def get_language_json():
-    file_obj = open('staticfiles/languageJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-    return data_dict
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/languages_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'bookJSON.json' File 
 def get_book_json():
-    file_obj = open('staticfiles/bookJSON.json')
-    data_dict = json.load(file_obj)
-    file_obj.close()
-    return data_dict
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/books_list/?format=json'
+    ).json()
+
+    return _data
 
 #  Fetch data from 'referenceJSON.json' File 
 def get_reference_json():
-    file_obj = open('staticfiles/referenceJSON.json', encoding='utf-16')
-    data_dict = json.load(file_obj)
-    file_obj.close()
+    _data = requests.get(
+        'https://live-research-books.herokuapp.com/rest_api/references_list/?format=json'
+    ).json()
 
-    return data_dict
+    return _data
 ################################################
 # ~~~~~ General Functions ~~~~~~~~~ #
 ################################################
@@ -82,9 +98,12 @@ def auth_Person_Function(current_user_name):
     #  Fetch data from 'authorizedPersonJSON.json' File 
     file_obj = open('staticfiles/authorizedPersonJSON.json')
     data_dict = json.load(file_obj)
-    file_obj.close()
 
+    file_obj.close()
+    data_list = get_authPerson_json()
     for person in data_dict.values():
+        print("==>", person, flush=True)
+        print("==>", data_list, flush=True)
         for p in person:
             for auth_per in p.values():
                 if (current_user_name == auth_per):
@@ -93,7 +112,7 @@ def auth_Person_Function(current_user_name):
 
 # Topics
 def topic():
-    all_topics = Topic.objects.all()
+    all_topics = get_topics_json()
     list_size = 0
     if len(all_topics) != 0:
         list_size = len(all_topics)
@@ -112,21 +131,19 @@ def getData_countBooks(jsonData, all_books, _field):
     isServerLocal = isServerLocalFunction()
     dict_jsonData = {}
     total_books = 0
-    for jsonData_list in jsonData.values():
-        for jsonData_dict in jsonData_list:
-            for jsonData in jsonData_dict.values():
-                counter = 0
-                for book_list in all_books.values():
-                    for book in book_list:
-                        if (jsonData == str(book[_field])):
-                            counter += 1
-                            if len(dict_jsonData) == 0:
-                                dict_jsonData = {jsonData: [jsonData_dict['id'], counter]}
-                            elif jsonData in dict_jsonData.keys():
-                                dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
-                            else:
-                                dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
-                total_books += counter
+    for jsonData_dict in jsonData:
+        for jsonData in jsonData_dict.values():
+            counter = 0
+            for book in all_books:
+                if (jsonData == str(book[_field])):
+                    counter += 1
+                    if len(dict_jsonData) == 0:
+                        dict_jsonData = {jsonData: [jsonData_dict['id'], counter]}
+                    elif jsonData in dict_jsonData.keys():
+                        dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+                    else:
+                        dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+            total_books += counter
     return [dict_jsonData, total_books, isServerLocal]
 
 #standard function to get Books by Demand
@@ -136,10 +153,10 @@ def books_by_demand(request, demanded_name, _field):
     isServerLocal = isServerLocalFunction()
     new_books_list = []
 
-    for books_list in all_books.values():
-        for book in books_list:
-            if str(demanded_name) == book[_field]:
-                new_books_list.append(book)
+    # for books_list in all_books.values():
+    for book in all_books:
+        if str(demanded_name) == book[_field]:
+            new_books_list.append(book)
     new_books_list.reverse()
 
     return [auth_person, demanded_name, new_books_list, isServerLocal]
@@ -152,21 +169,19 @@ def getData_countReferences(request, jsonData, _field):
     total_references = 0
     isServerLocal = isServerLocalFunction()
 
-    for jsonData_list in jsonData.values():
-        for jsonData_dict in jsonData_list:
-            for jsonData in jsonData_dict.values():
-                counter = 0
-                for references_list in all_references.values():
-                    for references in references_list:
-                        if (jsonData == str(references[_field])):
-                            counter += 1
-                            if len(dict_jsonData) == 0:
-                                dict_jsonData = {jsonData: [jsonData_dict['id'], counter]}
-                            elif jsonData in dict_jsonData.keys():
-                                dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
-                            else:
-                                dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
-                total_references += counter
+    for jsonData_dict in jsonData:
+        for jsonData in jsonData_dict.values():
+            counter = 0
+            for references in all_references:
+                if (jsonData == str(references[_field])):
+                    counter += 1
+                    if len(dict_jsonData) == 0:
+                        dict_jsonData = {jsonData: [jsonData_dict['id'], counter]}
+                    elif jsonData in dict_jsonData.keys():
+                        dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+                    else:
+                        dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+            total_references += counter
     # below is to get Dictionary in Reverse ORDER...
     new_dict_jsonData = {}
     for key, value in reversed(dict_jsonData.items()):
@@ -189,10 +204,9 @@ def references_by_demand(request, demanded_name, _field):
             for references in references_list:
                     new_references_list.append(references)
     else:
-        for references_list in all_references.values():
-            for references in references_list:
-                if str(demanded_name) == references[_field]:
-                    new_references_list.append(references)
+        for references in all_references:
+            if str(demanded_name) == references[_field]:
+                new_references_list.append(references)
     new_references_list.reverse()
 
     return [auth_person, demanded_name, new_references_list, isServerLocal]
@@ -210,9 +224,9 @@ def getData(request, all_json_data):
                     if _searchWord.lower() in str(d).lower():
                         final_list.append(data)
     else:
-        for json_data in all_json_data.values():
-            for json in json_data:
-                final_list.append(json)
+        # for json_data in all_json_data.values():
+        for json in all_json_data:
+            final_list.append(json)
     final_list.reverse()
 
     return [auth_person, final_list, isServerLocal]
@@ -222,11 +236,10 @@ def getData(request, all_json_data):
 ################################################
 
 # About page
-def get_count(_dict):
+def get_count(_list):
     count = 0
-    for value_list in _dict.values():
-        for value in value_list:
-            count += 1
+    for value in _list:
+        count += 1
     return count
 
 # About and Instruction Page
@@ -315,9 +328,10 @@ def GetStatusBooksView(request, status_id):
 # Religions page
 def ReligionView(request):
     auth_person = auth_Person_Function(str(request.user))
+
     religion = get_religion_json()
     all_books = get_book_json()
-    
+
     # 3rd parameter, is field name in BOOK MODULE
     returning_value = getData_countBooks(religion, all_books, 'sect')
 
@@ -346,6 +360,8 @@ def GetReligiousBooksView(request, sect_id):
 # Needs page
 def NeedView(request):
     auth_person = auth_Person_Function(str(request.user))
+    # need = get_need_json()
+    # all_books = get_book_json()
     need = get_need_json()
     all_books = get_book_json()
     
@@ -377,6 +393,8 @@ def GetNeedBooksView(request, need_id):
 # Languages page
 def LanguagesView(request):
     auth_person = auth_Person_Function(str(request.user))
+    # languages = get_language_json()
+    # all_books = get_book_json()
     languages = get_language_json()
     all_books = get_book_json()
 
@@ -411,6 +429,7 @@ def CategoriesView(request):
     auth_person = auth_Person_Function(str(request.user))
     categories = get_categories_json()
     all_books = get_book_json()
+    
 
     # 3rd parameter, is field name in BOOK MODULE
     final_list = getData_countBooks(categories, all_books, 'cat')
@@ -454,7 +473,7 @@ def GetCategoriesBooksView(request, category_id):
 def BookView(request):
     all_books = get_book_json()
     final_list = getData(request, all_books)
-  
+    
     return render(request, 'haq/pages/books.html', {
         "auth_person": final_list[0],
         'status' : False, # the status is used by search by status, see 'GetStatusBooksView' 
@@ -522,12 +541,11 @@ def PersonalityView(request):
     new_personalities_list = []
     isServerLocal = isServerLocalFunction()
 
-    for personalities_list in all_personalities.values():
-        for personalities in personalities_list:
-            temp = []
-            for p in personalities.values():
-                temp.append(p)
-            new_personalities_list.append(temp)
+    for personalities in all_personalities:
+        temp = []
+        for p in personalities.values():
+            temp.append(p)
+        new_personalities_list.append(temp)
     new_personalities_list.reverse()
 
     if request.method == 'POST':

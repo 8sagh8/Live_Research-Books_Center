@@ -7,6 +7,12 @@ import json
 from .getData import *
 
 # Get, Put, Post, Delete
+# Authorized Person List
+class AuthPersonList(APIView):
+    def get(self, request):
+        model = get_authPerson_json()
+        for data in model.values():
+            return Response(data)
 
 # Topics List
 class TopicList(APIView):

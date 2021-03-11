@@ -4,6 +4,13 @@
 ##########################################################
 
 import json
+#  Fetch data from 'authorizedPersonJSON.json' File 
+def get_authPerson_json():
+    file_obj = open('staticfiles/authorizedPersonJSON.json')
+    data_dict = json.load(file_obj)
+    file_obj.close()
+    
+    return data_dict
 
 #  Fetch data from 'topicsJSON.json' File 
 def get_topics_json():
