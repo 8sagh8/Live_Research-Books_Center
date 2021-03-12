@@ -926,7 +926,8 @@ def _createBookJSON():
             "cat": str(b.cat), 
             "status": str(b.status), 
             "need": str(b.need), 
-            "lang": str(b.lang)
+            "lang": str(b.lang),
+            "data_status" : b.data_status
         })
     
     # will store language json in here
