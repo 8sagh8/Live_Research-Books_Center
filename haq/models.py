@@ -83,6 +83,7 @@ class Book(models.Model):
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     need = models.ForeignKey(Need, on_delete=models.CASCADE)
     lang = models.ForeignKey(Language, on_delete=models.CASCADE)
+    data_status = models.CharField(max_length=1, default='P')
 
     def __str__(self):
         return self.name.capitalize() + ' sect: ' + str(self.sect) + ' & language: ' + str(self.lang)

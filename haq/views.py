@@ -95,19 +95,12 @@ def get_reference_json():
 ################################################
 # Authorized Person ## auth_person = auth_Person_Function(str(request.user))
 def auth_Person_Function(current_user_name):
-    #  Fetch data from 'authorizedPersonJSON.json' File 
-    file_obj = open('staticfiles/authorizedPersonJSON.json')
-    data_dict = json.load(file_obj)
-
-    file_obj.close()
     data_list = get_authPerson_json()
-    for person in data_dict.values():
-        print("==>", person, flush=True)
-        print("==>", data_list, flush=True)
-        for p in person:
-            for auth_per in p.values():
-                if (current_user_name == auth_per):
-                    return "Authorized Person"
+
+    for p in data_list:
+        for auth_per in p.values():
+            if (current_user_name == auth_per):
+                return "Authorized Person"
     return False
 
 # Topics
