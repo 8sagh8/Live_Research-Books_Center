@@ -759,11 +759,6 @@ def IntoJsonView(request):
         'dict_status': dict_status,
        })
 
-#########################################
-# ~~~~~ API Functions & VIEWS ~~~~~~~~~ #
-#########################################
-
-
 ################################################
 # ~~~~~ JSON FILES Functions & VIEWS ~~~~~~~~~ #
 ################################################
@@ -773,8 +768,12 @@ def _createAuthPersonJSON(request):
     authPerson_list = [] # will store all auth.per in here 
 
     for person in auth_person:
-        authPerson_list.append({"name": person.auth_name})
-
+        authPerson_list.append({
+            "name": person.auth_name,
+            "data_status" : person.data_status,
+            "data_user" : '',
+        })
+        
     json_person = {"authPerson": authPerson_list}
     my_json = json.dumps(json_person, indent=1)
 
@@ -789,7 +788,11 @@ def _createTopicsJSON():
     topics_list = [] # will store all topics and then go inside json_topic
 
     for t in topics:
-        topics_list.append({"id": t.id, "_topic": t._topic})
+        topics_list.append({
+            "id": t.id, "_topic": t._topic,
+            "data_status" : t.data_status,
+            "data_user" : '',
+        })
 
     # will store topics json in here
     json_data = { "topics" : topics_list }
@@ -807,7 +810,12 @@ def _createCategoriesJSON():
     categories_list = [] # will store all categories and then go inside json file
 
     for c in categories:
-        categories_list.append({"id": c.id, "_category": c._category})
+        categories_list.append({
+            "id": c.id,
+            "_category": c._category,
+            "data_status" : c.data_status,
+            "data_user" : '',
+        })
 
     # will store topics json in here
     json_data = { "categories" : categories_list }
@@ -826,7 +834,12 @@ def _createStatusJSON():
     status_list = [] # will store all status and then go inside json file
 
     for s in status:
-        status_list.append({"id": s.id, "_status": s._status})
+        status_list.append({
+            "id": s.id, 
+            "_status": s._status,
+            "data_status" : s.data_status,
+            "data_user" : '',
+        })
 
     # will store topics json in here
     json_data = { "status" : status_list }
@@ -844,7 +857,12 @@ def _createReligionJSON():
     religion_list = [] # will store all religion and then go inside json file
 
     for r in religion:
-        religion_list.append({"id": r.id, "_sect": r._sect})
+        religion_list.append({
+            "id": r.id, 
+            "_sect": r._sect,
+            "data_status" : r.data_status,
+            "data_user" : '',
+        })
 
     # will store topics json in here
     json_data = { "religion" : religion_list }
@@ -863,8 +881,14 @@ def _createPersonJSON():
     person_list = [] # will store all person and then go inside json file
 
     for p in person:
-        person_list.append({"id": p.id, "_p_name": p._p_name,
-        "_birth_year": p._birth_year, "_death_year": p._death_year})
+        person_list.append({
+            "id": p.id, 
+            "_p_name": p._p_name,
+            "_birth_year": p._birth_year, 
+            "_death_year": p._death_year,
+            "data_status" : p.data_status,
+            "data_user" : '',
+        })
 
     # will store topics json in here
     json_data = { "person" : person_list }
@@ -882,7 +906,12 @@ def _createNeedJSON():
     need_list = [] # will store all need and then go inside json file
 
     for n in need:
-        need_list.append({"id": n.id, "_need": n._need})
+        need_list.append({
+            "id": n.id, 
+            "_need": n._need,
+            "data_status" : n.data_status,
+            "data_user" : '',
+        })
 
     # will store need json in here
     json_data = { "need" : need_list }
@@ -900,7 +929,12 @@ def _createLanguageJSON():
     language_list = [] # will store all language and then go inside json file
 
     for l in language:
-        language_list.append({"id": l.id, "_language": l._language})
+        language_list.append({
+            "id": l.id, 
+            "_language": l._language,
+            "data_status" : l.data_status,
+            "data_user" : '',
+        })
 
     # will store language json in here
     json_data = { "language" : language_list }
@@ -927,7 +961,8 @@ def _createBookJSON():
             "status": str(b.status), 
             "need": str(b.need), 
             "lang": str(b.lang),
-            "data_status" : b.data_status
+            "data_status" : b.data_status,
+            "data_user" : '',
         })
     
     # will store language json in here
@@ -957,7 +992,9 @@ def _createReferenceJSON():
             "vol_para" : r.vol_para,
             "page_chapter" : r.page_chapter,
             "hadees_verse" : r.hadees_verse,
-            "description" : r.description
+            "description" : r.description,
+            "data_status" : r.data_status,
+            "data_user" : '',
         })
 
     # will store reference json in here

@@ -1,13 +1,19 @@
 {
  "authPerson": [
   {
-   "name": "Admin"
+   "name": "Admin",
+   "data_status": "P",
+   "data_user": ""
   },
   {
-   "name": "Sammar"
+   "name": "Sammar",
+   "data_status": "P",
+   "data_user": ""
   },
   {
-   "name": "sam"
+   "name": "sam",
+   "data_status": "P",
+   "data_user": ""
   }
  ]
 }

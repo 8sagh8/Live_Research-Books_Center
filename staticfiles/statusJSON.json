@@ -2,19 +2,27 @@
  "status": [
   {
    "id": 1,
-   "_status": "Don't Have It"
+   "_status": "Don't Have It",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 2,
-   "_status": "Hard & Soft Copy"
+   "_status": "Hard & Soft Copy",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 3,
-   "_status": "Hard Copy only"
+   "_status": "Hard Copy only",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 4,
-   "_status": "Soft Copy only"
+   "_status": "Soft Copy only",
+   "data_status": "P",
+   "data_user": ""
   }
  ]
 }

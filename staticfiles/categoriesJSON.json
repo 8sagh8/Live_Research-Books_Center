@@ -2,43 +2,63 @@
  "categories": [
   {
    "id": 1,
-   "_category": "Quran"
+   "_category": "Quran",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 2,
-   "_category": "Quran with Translation"
+   "_category": "Quran with Translation",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 3,
-   "_category": "Quran with Tafseer"
+   "_category": "Quran with Tafseer",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 4,
-   "_category": "Hadith and Sunnah"
+   "_category": "Hadith and Sunnah",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 5,
-   "_category": "Biography & History"
+   "_category": "Biography & History",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 6,
-   "_category": "Islamic History"
+   "_category": "Islamic History",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 7,
-   "_category": "Critical Analysis"
+   "_category": "Critical Analysis",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 8,
-   "_category": "General Book"
+   "_category": "General Book",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 9,
-   "_category": "Language Book"
+   "_category": "Language Book",
+   "data_status": "P",
+   "data_user": ""
   },
   {
    "id": 10,
-   "_category": "Fiqh and Hadees"
+   "_category": "Fiqh and Hadees",
+   "data_status": "P",
+   "data_user": ""
   }
  ]
 }
