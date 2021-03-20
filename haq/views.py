@@ -475,7 +475,7 @@ def BookView(request):
     })
 
 # Topic page
-def TopicView(request):
+def TopicsView(request):
     final_list = None
     topics = get_topics_json()
     
