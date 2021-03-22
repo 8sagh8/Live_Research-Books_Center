@@ -589,30 +589,3 @@ def GetPersonRefView(request, person_id):
 def LogOutView(request):
     auth.logout(request)
     return redirect("/")
-
-### API routes' Views
-def IntoJsonView(request):
-    # return redirect("intoJSON/")
-
-    auth_person = auth_Person_Function(str(request.user))
-    status = Status.objects.all()
-    all_books = Book.objects.all()
-    dict_status = {}
-    total_books = 0
-
-    for status in status:
-        counter = 0
-        dict_status[status] = counter
-
-        for book in all_books:
-            if (status == book.status):
-                counter += 1
-                dict_status[status] = counter
-        
-        total_books += counter
-
-    return render(request, 'haq/pages/status.html', {
-        "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_status': dict_status,
-       })

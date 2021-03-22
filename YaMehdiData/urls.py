@@ -19,7 +19,7 @@ from django.urls import include, path
 from django.conf.urls import url 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),    #route to ADMIN Page only
+    # path('admin/', admin.site.urls),    #route to ADMIN Page only
     path('', include('mainpage.urls')), #route to Main Login Page only
     path('home/', include('haq.urls')), #route to Haq About Page only
 ]
