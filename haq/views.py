@@ -14,7 +14,7 @@ import requests
 #  Fetch data from 'Authorized Person API' File 
 def get_authPerson_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/authPerson_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/authPerson_list/?format=json'
     ).json()
 
     return _data
@@ -22,7 +22,7 @@ def get_authPerson_json():
 #  Fetch data from 'topicsJSON.json' File 
 def get_topics_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/topics_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/topics_list/?format=json'
     ).json()
 
     return _data
@@ -30,7 +30,7 @@ def get_topics_json():
 #  Fetch data from 'categoriesJSON.json' File 
 def get_categories_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/categories_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/categories_list/?format=json'
     ).json()
 
     return _data
@@ -38,7 +38,7 @@ def get_categories_json():
 #  Fetch data from 'statusJSON.json' File 
 def get_status_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/statuss_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/statuss_list/?format=json'
     ).json()
 
     return _data
@@ -46,7 +46,7 @@ def get_status_json():
 #  Fetch data from 'religionJSON.json' File 
 def get_religion_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/religions_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/religions_list/?format=json'
     ).json()
 
     return _data
@@ -54,7 +54,7 @@ def get_religion_json():
 #  Fetch data from 'personJSON.json' File 
 def get_person_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/persons_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/persons_list/?format=json'
     ).json()
 
     return _data
@@ -62,7 +62,7 @@ def get_person_json():
 #  Fetch data from 'needJSON.json' File 
 def get_need_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/needs_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/needs_list/?format=json'
     ).json()
 
     return _data
@@ -70,7 +70,7 @@ def get_need_json():
 #  Fetch data from 'languageJSON.json' File 
 def get_language_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/languages_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/languages_list/?format=json'
     ).json()
 
     return _data
@@ -78,7 +78,7 @@ def get_language_json():
 #  Fetch data from 'bookJSON.json' File 
 def get_book_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/books_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/books_list/?format=json'
     ).json()
 
     return _data
@@ -86,7 +86,7 @@ def get_book_json():
 #  Fetch data from 'referenceJSON.json' File 
 def get_reference_json():
     _data = requests.get(
-        'https://live-research-books.herokuapp.com/rest_api/references_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/references_list/?format=json'
     ).json()
 
     return _data
@@ -579,151 +579,9 @@ def GetPersonRefView(request, person_id):
 
 
 
-
-
-
-
-# Category(ies) page
-def CategoryView(request):
-    auth_person = auth_Person_Function(str(request.user))
-    categories= Category.objects.all()
-    all_books = Book.objects.all()
-    dict_cat = {}
-    total_books = 0
-
-    for cat in categories:
-        counter = 0
-        dict_cat[cat] = counter
-
-        for book in all_books:
-            if (cat == book.cat):
-                counter += 1
-                dict_cat[cat] = counter
-        
-        total_books += counter
-
-
-            
-    return render(request, 'haq/categories.html', {
-        "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_cat': dict_cat,
-       })
-
-
-# Language page
-def LanguageView(request):
-    auth_person = auth_Person_Function(str(request.user))
-    language= Language.objects.all()
-    all_books = Book.objects.all()
-    dict_lang = {}
-    total_books = 0
-
-    for lang in language:
-        counter = 0
-        dict_lang[lang] = counter
-
-        for book in all_books:
-            if (lang == book.lang):
-                counter += 1
-                dict_lang[lang] = counter
-        
-        total_books += counter
-
-
-            
-    return render(request, 'haq/languages.html', {
-        "auth_person": auth_person,
-        'total_books': total_books,
-        'dict_lang': dict_lang,
-       })
-
-
 ###########################################
 ###########################################
 ###########################################
-
-
-# BookSectView -- Display Books List Sect-Wise
-def BookSectOptionView(request):
-    temp = topic()
-    all_sects = Religion.objects.all()
-    _size = len(all_sects)
-
-    return render(request, 'haq/bookSectOption.html', {
-        "all_sects": all_sects,
-        "size": _size,
-        "all_topics": temp[0],
-        "list_size": temp[1]
-    })
-
-
-# Add book option
-def BookAddView(request):
-    message = "Add A Book"
-    submission_form = "no"
-    p_list = [] #empty list to store persons name for html
-    r_list = [] #empty list to store religions / sect name for html
-    c_list = [] #empty list to store categories name for html
-    s_list = [] #empty list to store status name for html
-    n_list = [] #empty list to store need name for html
-    l_list = [] #empty list to store languages name for html
-
-    p_obj = Person.objects.all()
-    r_obj = Religion.objects.all()
-    c_obj = Category.objects.all()
-    s_obj = Status.objects.all()
-    n_obj = Need.objects.all()
-    l_obj = Language.objects.all()
-
-    for p in p_obj:
-        p_list.append([p.id, p._p_name])
-    for r in r_obj:
-        r_list.append([r.id, r._sect])
-    for c in c_obj:
-        c_list.append([c.id, c._category])
-    for s in s_obj:
-        s_list.append([s.id, s._status])
-    for n in n_obj:
-        n_list.append([n.id, n._need])
-    for l in l_obj:
-        l_list.append([l.id, l._language])
-
-    if request.method == "POST":
-        
-        bName = request.POST['bookName']
-        bAuthor = request.POST['bookAuthor']
-
-        bSect = request.POST['bookSect']
-        bCat = request.POST['bookCat']
-        bStatus = request.POST['bookStatus']
-        bNeed = request.POST['bookNeed']
-        bLang = request.POST['bookLang']
-        
-        data = None
-        data = Book(name = bName, author = Person.objects.get(id = bAuthor), sect = Religion.objects.get(id = bSect), cat = Category.objects.get(id = bCat), status = Status.objects.get(id = bStatus), need = Need.objects.get(id = bNeed), lang = Language.objects.get(id = bLang))
-        
-        data.save() # persist in database
-        
-        message = bName + " Book is Added"
-        submission_form = "yes"
-
-    return render(request, 'haq/bookAdd.html', {
-        "message": message,
-        "submission_form": submission_form,
-        "p_list": p_list,
-        "r_list": r_list,
-        "c_list": c_list,
-        "s_list": s_list,
-        "n_list": n_list,
-        "l_list": l_list,
-    })
-
-
-
-
-###############################
-
 
 
 ### Log out View
@@ -758,293 +616,3 @@ def IntoJsonView(request):
         'total_books': total_books,
         'dict_status': dict_status,
        })
-
-################################################
-# ~~~~~ JSON FILES Functions & VIEWS ~~~~~~~~~ #
-################################################
-# create 'authorizedPersonJSON.json' file
-def _createAuthPersonJSON(request):
-    auth_person = Authorized_Person.objects.all()
-    authPerson_list = [] # will store all auth.per in here 
-
-    for person in auth_person:
-        authPerson_list.append({
-            "name": person.auth_name,
-            "data_status" : person.data_status,
-            "data_user" : '',
-        })
-        
-    json_person = {"authPerson": authPerson_list}
-    my_json = json.dumps(json_person, indent=1)
-
-    with open('staticfiles/authorizedPersonJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "AuthPerson"
-
-# create 'topicsJSON.json' file
-def _createTopicsJSON():
-    topics = Topic.objects.all()
-    topics_list = [] # will store all topics and then go inside json_topic
-
-    for t in topics:
-        topics_list.append({
-            "id": t.id, "_topic": t._topic,
-            "data_status" : t.data_status,
-            "data_user" : '',
-        })
-
-    # will store topics json in here
-    json_data = { "topics" : topics_list }
-    # convert into json data
-    my_json = json.dumps(json_data, indent=1)
-
-    with open('staticfiles/topicsJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "Topics"
-
-# create 'categoriesJSON.json' file
-def _createCategoriesJSON():
-    categories = Category.objects.all()
-    categories_list = [] # will store all categories and then go inside json file
-
-    for c in categories:
-        categories_list.append({
-            "id": c.id,
-            "_category": c._category,
-            "data_status" : c.data_status,
-            "data_user" : '',
-        })
-
-    # will store topics json in here
-    json_data = { "categories" : categories_list }
-    # convert into json data
-    my_json = json.dumps(json_data, indent=1)
-
-    with open('staticfiles/categoriesJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "Categories"
-
-
-    # create 'statusJSON.json' file
-def _createStatusJSON():
-    status = Status.objects.all()
-    status_list = [] # will store all status and then go inside json file
-
-    for s in status:
-        status_list.append({
-            "id": s.id, 
-            "_status": s._status,
-            "data_status" : s.data_status,
-            "data_user" : '',
-        })
-
-    # will store topics json in here
-    json_data = { "status" : status_list }
-    # convert into json data
-    my_json = json.dumps(json_data, indent=1)
-
-    with open('staticfiles/statusJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "Status"
-
-    # create 'religionJSON.json' file
-def _createReligionJSON():
-    religion = Religion.objects.all()
-    religion_list = [] # will store all religion and then go inside json file
-
-    for r in religion:
-        religion_list.append({
-            "id": r.id, 
-            "_sect": r._sect,
-            "data_status" : r.data_status,
-            "data_user" : '',
-        })
-
-    # will store topics json in here
-    json_data = { "religion" : religion_list }
-    # convert into json data
-    my_json = json.dumps(json_data, indent=1)
-
-    with open('staticfiles/religionJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "Religion"
-
-
-    # create 'personJSON.json' file
-def _createPersonJSON():
-    person = Person.objects.all()
-    person_list = [] # will store all person and then go inside json file
-
-    for p in person:
-        person_list.append({
-            "id": p.id, 
-            "_p_name": p._p_name,
-            "_birth_year": p._birth_year, 
-            "_death_year": p._death_year,
-            "data_status" : p.data_status,
-            "data_user" : '',
-        })
-
-    # will store topics json in here
-    json_data = { "person" : person_list }
-    # convert into json data
-    my_json = json.dumps(json_data, indent=1)
-
-    with open('staticfiles/personJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "Persons"
-
-    # create 'needJSON.json' file
-def _createNeedJSON():
-    need = Need.objects.all()
-    need_list = [] # will store all need and then go inside json file
-
-    for n in need:
-        need_list.append({
-            "id": n.id, 
-            "_need": n._need,
-            "data_status" : n.data_status,
-            "data_user" : '',
-        })
-
-    # will store need json in here
-    json_data = { "need" : need_list }
-    # convert into json data
-    my_json = json.dumps(json_data, indent=1)
-
-    with open('staticfiles/needJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "Need"
-
-    # create 'languageJSON.json' file
-def _createLanguageJSON():
-    language = Language.objects.all()
-    language_list = [] # will store all language and then go inside json file
-
-    for l in language:
-        language_list.append({
-            "id": l.id, 
-            "_language": l._language,
-            "data_status" : l.data_status,
-            "data_user" : '',
-        })
-
-    # will store language json in here
-    json_data = { "language" : language_list }
-    # convert into json data
-    my_json = json.dumps(json_data, indent=1)
-
-    with open('staticfiles/languageJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "Language"
-
-    # create 'bookJSON.json' file
-def _createBookJSON():
-    book = Book.objects.all()
-    book_list = [] # will store all book and then go inside json file
-
-    for b in book:
-        book_list.append({
-            "id": b.id,
-            "name": b.name, 
-            "author": str(b.author),
-            "sect": str(b.sect),
-            "cat": str(b.cat), 
-            "status": str(b.status), 
-            "need": str(b.need), 
-            "lang": str(b.lang),
-            "data_status" : b.data_status,
-            "data_user" : '',
-        })
-    
-    # will store language json in here
-    json_data = { "book" : book_list }
-    
-    # convert into json data
-    my_json = json.dumps(json_data, indent=1)
-    
-    with open('staticfiles/bookJSON.json', mode='w+') as myFile:
-        myFile.write(my_json)
-    
-    return "Book"
-
-
-    # create 'referenceJSON.json' file
-def _createReferenceJSON():
-    reference = Reference.objects.all()
-    reference_list = [] # will store all reference and then go inside json file
-    
-    for r in reference:
-        reference_list.append({
-            "id": r.id,
-            "subject": str(r.subject),
-            "speaker" : str(r.speaker),
-            "personFor" : str(r.personFor),
-            "book" : str(r.book),
-            "vol_para" : r.vol_para,
-            "page_chapter" : r.page_chapter,
-            "hadees_verse" : r.hadees_verse,
-            "description" : r.description,
-            "data_status" : r.data_status,
-            "data_user" : '',
-        })
-
-    # will store reference json in here
-    json_data = { "reference" : reference_list }
-    # convert into json data
-    my_json = json.dumps(json_data, indent=2)
-
-    with io.open('staticfiles/referenceJSON.json', mode='w+', encoding="utf-16") as myFile:
-        myFile.write(my_json)
-    
-    return "Reference"
-
-def CreateJSONView(request):
-    auth_person = auth_Person_Function(str(request.user))
-
-    msg = []
-    if request.method == "POST":
-        # create Authorized Person File
-        create_authPerson = _createAuthPersonJSON(request)
-        msg.append(create_authPerson)
-        # create Topics File
-        created_file = _createTopicsJSON()
-        msg.append(created_file)
-        # create Categories File
-        created_file = _createCategoriesJSON()
-        msg.append(created_file)
-        # create Status File
-        created_file = _createStatusJSON()
-        msg.append(created_file)
-        # create Religion File
-        created_file = _createReligionJSON()
-        msg.append(created_file)
-        # create Person File
-        created_file = _createPersonJSON()
-        msg.append(created_file)
-        # create Need File
-        created_file = _createNeedJSON()
-        msg.append(created_file)
-        # create Language File
-        created_file = _createLanguageJSON()
-        msg.append(created_file)
-        # create Books File
-        created_file = _createBookJSON()
-        msg.append(created_file)
-        # create References File
-        created_file = _createReferenceJSON()
-        msg.append(created_file)
-
-
-    return render(request, 'haq/jsonFiles/createJson.html', {
-        "auth_person": auth_person,
-        "msg" : msg,
-    })

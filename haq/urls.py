@@ -30,12 +30,10 @@ urlpatterns = [
     path('about/', views.AboutView, name="about"),
     path('logout', views.LogOutView, name="logout"),
 
-    # JSON Files routes
-    path('createJSON', views.CreateJSONView, name="createJSON"),
 
     #  to work on below
-    path('bookAdd/', views.BookAddView, name="bookAdd"),
-    path('bookSectOption/', views.BookSectOptionView, name="bookSectOption"),
+    # path('bookAdd/', views.BookAddView, name="bookAdd"),
+    # path('bookSectOption/', views.BookSectOptionView, name="bookSectOption"),
 
     #  other ways to write route
     # path('getTopic/', views.GetTopicView, name="getTopic"),
