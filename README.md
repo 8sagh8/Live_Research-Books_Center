@@ -37,8 +37,11 @@ Same functionality is set on other APIs linked button.
 # API links:
 
 List of APIs available:
-    * References API [title](https://live-search-restful-api.herokuapp.com/rest_api/references_list/)
-    * Topics API [topics](https://live-search-restful-api.herokuapp.com/rest_api/topics_list/)
+    * [References API](https://live-search-restful-api.herokuapp.com/rest_api/references_list/) - (https://live-search-restful-api.herokuapp.com/rest_api/references_list/)
+
+    * [Topics API](https://live-search-restful-api.herokuapp.com/rest_api/topics_list/) - 
+    (https://live-search-restful-api.herokuapp.com/rest_api/topics_list/)
+
     * Books API
     * Categories API
     * Persons API
