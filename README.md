@@ -1,7 +1,12 @@
 # Books & Research Center
 It contains list of books from those Research material is gathered.
 -------------------------------------------------------------------
-URL: (https://live-research-books.herokuapp.com/)
+URL:  (https://live-research-books.herokuapp.com/)
+# Tools Used:
+* Python, Css, JavaScript, HTML
+* Python - Django Framework
+* Heroku to deploy project
+* Git|GitHub to track project
 
 # Login Page:
 Login using ID and Password or simply click 'GUEST' button to login
