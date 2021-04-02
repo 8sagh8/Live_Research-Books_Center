@@ -33,3 +33,16 @@ By clicking on 'References API', following page will pop-up.
 Same functionality is set on other APIs linked button.
 
 ![Alt Text](readmeImage/reference_page.png "Reference API")
+
+# API links:
+
+List of APIs available:
+    * References API [title](https://live-search-restful-api.herokuapp.com/rest_api/references_list/)
+    * Topics API [topics](https://live-search-restful-api.herokuapp.com/rest_api/topics_list/)
+    * Books API
+    * Categories API
+    * Persons API
+    * Religions API
+    * Languages API
+    * Needs API
+    * Status API
