@@ -5,7 +5,7 @@
     <span id = "titlespan">
         <div class="move_center" >
             <h1>List of Book According to Need of it</h1>
-            {% if is_added == False %}
+            {% if is_added == False and isServerLocal == True %}
                 <a href="#" id="add_new_id" class="btn btn-primary btn-lg">Add New Need</a>
             {% endif %}
         </div>
