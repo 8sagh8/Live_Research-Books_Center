@@ -361,8 +361,13 @@ def NeedView(request):
     if request.method == 'POST':
         newItem = (request.POST['add_item']).title()
         curr_user = str(request.user)
+        _url = None
+        
+        if isServerLocal == True:
+            _url = 'http://127.0.0.1:8080/rest_api/needs_list/'
+        else:
+            _url = 'https://live-search-restful-api.herokuapp.com/rest_api/needs_list/'
 
-        _url = 'http://127.0.0.1:8080/rest_api/needs_list/'
         response = requests.post(_url, data={
             'curr_user' : curr_user,
             'newItem' : newItem
