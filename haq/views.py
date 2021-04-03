@@ -353,11 +353,24 @@ def GetReligiousBooksView(request, sect_id):
 # Needs page
 def NeedView(request):
     auth_person = auth_Person_Function(str(request.user))
-    # need = get_need_json()
-    # all_books = get_book_json()
     need = get_need_json()
     all_books = get_book_json()
-    
+    is_added = False # to know if new item added
+    newItem = None
+
+    if request.method == 'POST':
+        newItem = (request.POST['add_item']).title()
+        curr_user = str(request.user)
+
+        _url = 'http://127.0.0.1:8080/rest_api/needs_list/'
+        response = requests.post(_url, data={
+            'curr_user' : curr_user,
+            'newItem' : newItem
+        })
+
+        if (response.status_code == 200):
+            is_added = True
+
     # 3rd parameter, is field name in BOOK MODULE
     returning_value = getData_countBooks(need, all_books, 'need')
 
@@ -366,7 +379,9 @@ def NeedView(request):
         'total_books': returning_value [1],
         'dict_need': returning_value [0],
         'isServerLocal': returning_value [2],
-    })
+        'is_added' : is_added,
+        'newItem': newItem,
+    });
 
 
 # get Books by Need

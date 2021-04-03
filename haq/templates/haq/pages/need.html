@@ -5,43 +5,71 @@
     <span id = "titlespan">
         <div class="move_center" >
             <h1>List of Book According to Need of it</h1>
-  
-            {% if auth_person == "Authorized Person" %}
-                <button type="button" class="btn btn-primary btn-lg">Add New Need</button>
+            {% if is_added == False %}
+                <a href="#" id="add_new_id" class="btn btn-primary btn-lg">Add New Need</a>
             {% endif %}
-        </span>
-     
         </div>
-
-        <br>
-        <div class="move_center">
-            <caption>List of needs and total number of books: {{total_books}} </caption>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Serial Number</th>
-                        <th scope="col">Need</th>
-                        <th scope="col">Total Books</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for k, v in dict_need.items %}
-                        <tr>
-                            <th scope="row">{{ forloop.counter }}</th>
-                            <td>
-                                {% if isServerLocal == True %}
-                                    <a href={% url 'haq:getNeedBooks' v.0 %}  class="a_book" >
-                                        {{k}}
-                                    </a>
-                                {% else %}
-                                    {{k}}
-                                {% endif %}
-                            </td>
-                            <td>{{ v.1 }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        {% if is_added == False %}
+            <div id="addItem_div" style="display: none;">
+        {% else %}
+            <div id="addItem_div">
+                <br>
+                <h4 style="text-align: center; color:blue; font-style: italic;">
+                    {{ newItem }} is saved Temporary, after ADMIN confirmation will be saved Permanently
+                </h4>
+        {% endif %}
+            <br>
+            
+                <form action="{% url 'haq:need' %}" method="POST">
+                    {% csrf_token %}
+                <div class="form-group" style="text-align: center;">
+                    <input type="text" class="form-control" id="add_item" name="add_item" placeholder="Enter new need">
+                    <button type="submit" id="form_button">Click to Submit</button>
+                </div>
+            </form>
         </div>
     </span>
+
+    <br>
+    <div class="move_center">
+        <caption>List of needs and total number of books: {{total_books}} </caption>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Serial Number</th>
+                    <th scope="col">Need</th>
+                    <th scope="col">Total Books</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for k, v in dict_need.items %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>
+                            {% if isServerLocal == True %}
+                                <a href={% url 'haq:getNeedBooks' v.0 %}  class="a_book" >
+                                    {{k}}
+                                </a>
+                            {% else %}
+                                {{k}}
+                            {% endif %}
+                        </td>
+                        <td>{{ v.1 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- SCRIPTING -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#add_new_id").click(function(){
+            $("#addItem_div").show();
+            $("#add_new_id").hide();
+        });
+    });
+    </script>
 {% endblock %}
