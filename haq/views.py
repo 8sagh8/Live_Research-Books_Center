@@ -62,9 +62,11 @@ def get_person_json():
 #  Fetch data from 'needJSON.json' File 
 def get_need_json():
     _data = requests.get(
-        'https://live-search-restful-api.herokuapp.com/rest_api/needs_list/?format=json'
+        "http://127.0.0.1:8080/rest_api/needs_list/?format=json"
+        # 'https://live-search-restful-api.herokuapp.com/rest_api/needs_list/?format=json'
     ).json()
 
+    
     return _data
 
 #  Fetch data from 'languageJSON.json' File 
@@ -124,8 +126,10 @@ def getData_countBooks(jsonData, all_books, _field):
     isServerLocal = isServerLocalFunction()
     dict_jsonData = {}
     total_books = 0
+    
     for jsonData_dict in jsonData:
         for jsonData in jsonData_dict.values():
+            print("==jsonData==>", jsonData, flush=True)
             counter = 0
             for book in all_books:
                 if (jsonData == str(book[_field])):
@@ -136,6 +140,16 @@ def getData_countBooks(jsonData, all_books, _field):
                         dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
                     else:
                         dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
+                else:
+                    
+                    if jsonData in dict_jsonData.keys():
+                        pass
+                    elif jsonData == jsonData_dict['_need']:
+                        print("==jsonData in else==>", jsonData, "|",jsonData_dict['_need'] , flush=True)
+                        if len(dict_jsonData) == 0:
+                            dict_jsonData = {jsonData: [jsonData_dict['id'], 0]}
+                        else:
+                            dict_jsonData[jsonData] = [jsonData_dict['id'], 0]
             total_books += counter
     return [dict_jsonData, total_books, isServerLocal]
 
@@ -353,7 +367,6 @@ def GetReligiousBooksView(request, sect_id):
 # Needs page
 def NeedView(request):
     auth_person = auth_Person_Function(str(request.user))
-    need = get_need_json()
     all_books = get_book_json()
     is_added = False # to know if new item added
     newItem = None
@@ -363,11 +376,13 @@ def NeedView(request):
         curr_user = str(request.user)
         _url = None
         
+        isServerLocal = isServerLocalFunction()
         if isServerLocal == True:
             _url = 'http://127.0.0.1:8080/rest_api/needs_list/'
         else:
             _url = 'https://live-search-restful-api.herokuapp.com/rest_api/needs_list/'
 
+        
         response = requests.post(_url, data={
             'curr_user' : curr_user,
             'newItem' : newItem
@@ -376,6 +391,7 @@ def NeedView(request):
         if (response.status_code == 200):
             is_added = True
 
+    need = get_need_json()
     # 3rd parameter, is field name in BOOK MODULE
     returning_value = getData_countBooks(need, all_books, 'need')
 
