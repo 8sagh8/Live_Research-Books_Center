@@ -35,8 +35,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-
-                        <a class="dropdown-item" href="{% url 'haq:logout' %}">Logout</a>
+                        {% if auth_person != False %}
+                            <a class="dropdown-item" href="{% url 'haq:logout' %}">Logout</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{% url 'haq:logout' %}">Login</a>
+                        {% endif %}
                     </div>
                 </li>
             </ul>
@@ -137,7 +140,12 @@
 
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        Salam.. {{user.first_name}}!
+                        Salam.. 
+                        {% if auth_person == False %}
+                            Guest!
+                        {% else %} 
+                            {{user.first_name}}!
+                        {% endif %}
                     </div>
                 </nav>
             </div>
