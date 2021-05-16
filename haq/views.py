@@ -520,12 +520,12 @@ def TopicsView(request):
         print(">>>>>0<<<<<<", flush=True)
         print("<<<<<<<<", f, flush=True)
 
-    return render(request, 'haq/pages/topics.html', {
-        "auth_person": final_list[0],
-        'total_references': final_list[1],
-        'dict_topics': final_list[2],
-        'isServerLocal' : final_list[3],
-    })
+    return render(request, 'haq/pages/topics.html')#, {
+    #     "auth_person": final_list[0],
+    #     'total_references': final_list[1],
+    #     'dict_topics': final_list[2],
+    #     'isServerLocal' : final_list[3],
+    # })
     
     
 
