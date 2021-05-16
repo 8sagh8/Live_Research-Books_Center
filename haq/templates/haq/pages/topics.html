@@ -32,9 +32,9 @@
                 </thead>
                 <tbody>
                     {% for dict_topics in list_topics %}
-                        {% for k, v in dict_topics.items %}
-                            <tr>
-                                <th scope="row">{{ forloop.revcounter }}</th>
+                        <tr>
+                            <th scope="row">{{ forloop.revcounter }}</th>
+                            {% for k, v in dict_topics.items %}                          
                                 <td>
                                     {% if isServerLocal == True %}
                                         <a href={% url 'haq:getTopic' v.0 %}  class="a_book" >
@@ -45,8 +45,8 @@
                                     {% endif %}
                                 </td>
                                 <td>{{ v.1 }}</td>
-                            </tr>
-                        {% endfor %}
+                            {% endfor %}
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>

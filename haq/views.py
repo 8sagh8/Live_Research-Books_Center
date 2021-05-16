@@ -502,18 +502,15 @@ def TopicsView(request):
     # 3rd parameter, is field name in BOOK MODULE
     final_list = getData_countReferences(request, topics, 'subject')
 
-    # if request.method == 'POST':
-    #     _searchWord = request.POST['searchWord']
-    #     temp = final_list[2] 
-    #     final_list[2] = None
+    if request.method == 'POST':
+        _searchWord = request.POST['searchWord']
+        temp_list = final_list[2] 
+        final_list[2] = []
 
-    #     for key, value in temp.items():
-    #         if _searchWord.lower() in key.lower():
-    #             if final_list[2] == None:
-    #                 final_list[2] = {key: value}
-    #             else:
-    #                 final_list[2][key] = value
-
+        for temp_dict in temp_list:
+            for key, value in temp_dict.items():
+                if _searchWord.lower() in key.lower():
+                    final_list[2].append({key: value})
 
     return render(request, 'haq/pages/topics.html', {
         "auth_person": final_list[0],

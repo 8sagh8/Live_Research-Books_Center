@@ -27,11 +27,11 @@ SECRET_KEY = ')pyq(4tqo*f&m=0sd=-h=4m9)yxvas782b^jpy1xhlc)c#szu+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Determine if in Production or Development
-# if (len(sys.argv) >= 2 and sys.argv[1] == 'runserver'):
-#     DEBUG = True  
-# else:
-#     DEBUG = False
-DEBUG = True
+if (len(sys.argv) >= 2 and sys.argv[1] == 'runserver'):
+    DEBUG = True  
+else:
+    DEBUG = False
+
 
 ALLOWED_HOSTS = []
 
