@@ -128,7 +128,6 @@ def getData_countBooks(jsonData, all_books, _field):
     
     for jsonData_dict in jsonData:
         for jsonData in jsonData_dict.values():
-            print("==jsonData==>", jsonData, flush=True)
             counter = 0
             for book in all_books:
                 if (jsonData == str(book[_field])):
@@ -139,16 +138,6 @@ def getData_countBooks(jsonData, all_books, _field):
                         dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
                     else:
                         dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
-                else:
-                    
-                    if jsonData in dict_jsonData.keys():
-                        pass
-                    elif jsonData == jsonData_dict['_need']:
-                        print("==jsonData in else==>", jsonData, "|",jsonData_dict['_need'] , flush=True)
-                        if len(dict_jsonData) == 0:
-                            dict_jsonData = {jsonData: [jsonData_dict['id'], 0]}
-                        else:
-                            dict_jsonData[jsonData] = [jsonData_dict['id'], 0]
             total_books += counter
     return [dict_jsonData, total_books, isServerLocal]
 
@@ -457,11 +446,9 @@ def CategoriesView(request):
     auth_person = auth_Person_Function(str(request.user))
     categories = get_categories_json()
     all_books = get_book_json()
-    
 
     # 3rd parameter, is field name in BOOK MODULE
     final_list = getData_countBooks(categories, all_books, 'cat')
-    
     if request.method == 'POST':
         _searchWord = request.POST['searchWord']
         temp = final_list[0] 
