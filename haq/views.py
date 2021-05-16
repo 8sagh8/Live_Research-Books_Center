@@ -501,24 +501,24 @@ def TopicsView(request):
     final_list = []
     topics = get_topics_json()
 
-    # 3rd parameter, is field name in BOOK MODULE
-    final_list = getData_countReferences(request, topics, 'subject')
+    # # 3rd parameter, is field name in BOOK MODULE
+    # final_list = getData_countReferences(request, topics, 'subject')
 
-    if request.method == 'POST':
-        _searchWord = request.POST['searchWord']
-        temp = final_list[2] 
-        final_list[2] = None
+    # if request.method == 'POST':
+    #     _searchWord = request.POST['searchWord']
+    #     temp = final_list[2] 
+    #     final_list[2] = None
 
-        for key, value in temp.items():
-            if _searchWord.lower() in key.lower():
-                if final_list[2] == None:
-                    final_list[2] = {key: value}
-                else:
-                    final_list[2][key] = value
+    #     for key, value in temp.items():
+    #         if _searchWord.lower() in key.lower():
+    #             if final_list[2] == None:
+    #                 final_list[2] = {key: value}
+    #             else:
+    #                 final_list[2][key] = value
 
-    for f in final_list:
-        print(">>>>>0<<<<<<", flush=True)
-        print("<<<<<<<<", f, flush=True)
+    # for f in final_list:
+    #     print(">>>>>0<<<<<<", flush=True)
+    #     print("<<<<<<<<", f, flush=True)
 
     return render(request, 'haq/pages/topics.html')#, {
     #     "auth_person": final_list[0],
