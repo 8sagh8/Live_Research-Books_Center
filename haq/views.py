@@ -62,8 +62,7 @@ def get_person_json():
 #  Fetch data from 'needJSON.json' File 
 def get_need_json():
     _data = requests.get(
-        "http://127.0.0.1:8080/rest_api/needs_list/?format=json"
-        # 'https://live-search-restful-api.herokuapp.com/rest_api/needs_list/?format=json'
+        'https://live-search-restful-api.herokuapp.com/rest_api/needs_list/?format=json'
     ).json()
 
     
