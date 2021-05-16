@@ -22,7 +22,7 @@
                 {% endif %}
             
             <br><br>
-            {% if isServerLocal == True %}
+            
             <form action = '{% url 'haq:reference' %}' method="POST" class="move_center">
                 {% csrf_token %}   <!--this is to avoid fraugry-->
                 <input type="text" name="searchWord" size="50" value="" placeholder="Search References">
@@ -30,7 +30,7 @@
                 <input type="submit" value="Click to Search">
             </form>
             <br>
-            {% endif %}
+            
             <a href="{% url 'haq:topics' %}" class="btn btn-primary " role="button">Go to Topics Page</a>
         </div>
         <br>
