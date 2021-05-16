@@ -177,16 +177,13 @@ def getData_countReferences(request, jsonData, _field):
                     else:
                         dict_jsonData[jsonData] = [jsonData_dict['id'], counter]
             total_references += counter
-    # below is to get Dictionary in Reverse ORDER...
-    new_dict_jsonData = {}
+    # below is to get List in Reverse ORDER...
+    new_list_jsonData = []
     for key, value in dict_jsonData.items():
-        if len(new_dict_jsonData) == 0:
-            new_dict_jsonData = {key : value}
-        else:
-            new_dict_jsonData[key] = value
+        new_list_jsonData.append({key : value})
+    new_list_jsonData.reverse()
 
-    print(">>>> TOPIC >>>>", type(auth_person), "|", type(str(total_references)), "|", type(new_dict_jsonData), "|", type(isServerLocal), flush=True)
-    return [auth_person, str(total_references), new_dict_jsonData, isServerLocal]
+    return [auth_person, total_references, new_list_jsonData, isServerLocal]
 
 #standard function to get References by Demand
 def references_by_demand(request, demanded_name, _field):
@@ -517,14 +514,11 @@ def TopicsView(request):
     #             else:
     #                 final_list[2][key] = value
 
-    for f in final_list:
-        print(">>>>>0<<<<<<", flush=True)
-        print("<<<<<<<<", f, flush=True)
 
     return render(request, 'haq/pages/topics.html', {
         "auth_person": final_list[0],
         'total_references': final_list[1],
-        'dict_topics': final_list[2],
+        'list_topics': final_list[2],
         'isServerLocal' : final_list[3],
    
      })

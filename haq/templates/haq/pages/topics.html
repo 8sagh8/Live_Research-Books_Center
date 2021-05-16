@@ -2,8 +2,6 @@
 {% block title%}List of Topics {% endblock %}
 
 {% block body %}
-    <h1> i am in topic page  new nothig</h1>
-    
     <span id = "titlespan">
         <div class="move_center" >
             <h1>List of Topics</h1>
@@ -33,20 +31,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for k, v in dict_topics.items %}
-                        <tr>
-                            <th scope="row">{{ forloop.revcounter }}</th>
-                            <td>
-                                {% if isServerLocal == True %}
-                                    <a href={% url 'haq:getTopic' v.0 %}  class="a_book" >
-                                        {{k}}
-                                    </a>
-                                {% else %}
-                                        {{k}}
-                                {% endif %}
-                            </td>
-                            <td>{{ v.1 }}</td>
-                        </tr>
+                    {% for dict_topics in list_topics %}
+                        {% for k, v in dict_topics.items %}
+                            <tr>
+                                <th scope="row">{{ forloop.revcounter }}</th>
+                                <td>
+                                    {% if isServerLocal == True %}
+                                        <a href={% url 'haq:getTopic' v.0 %}  class="a_book" >
+                                            {{k}}
+                                        </a>
+                                    {% else %}
+                                            {{k}}
+                                    {% endif %}
+                                </td>
+                                <td>{{ v.1 }}</td>
+                            </tr>
+                        {% endfor %}
                     {% endfor %}
                 </tbody>
             </table>
