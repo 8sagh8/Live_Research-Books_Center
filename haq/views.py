@@ -488,7 +488,7 @@ def GetCategoriesBooksView(request, category_id):
 def BookView(request):
     all_books = get_book_json()
     final_list = getData(request, all_books)
-    
+
     return render(request, 'haq/pages/books.html', {
         "auth_person": final_list[0],
         'status' : False, # the status is used by search by status, see 'GetStatusBooksView' 
@@ -498,30 +498,32 @@ def BookView(request):
 
 # Topic page
 def TopicsView(request):
-    final_list = None
-    topics = get_topics_json()
+
+    return redirect("/")
+    # final_list = None
+    # topics = get_topics_json()
     
-    # 3rd parameter, is field name in BOOK MODULE
-    final_list = getData_countReferences(request, topics, 'subject')
+    # # 3rd parameter, is field name in BOOK MODULE
+    # final_list = getData_countReferences(request, topics, 'subject')
 
-    if request.method == 'POST':
-        _searchWord = request.POST['searchWord']
-        temp = final_list[2] 
-        final_list[2] = None
+    # if request.method == 'POST':
+    #     _searchWord = request.POST['searchWord']
+    #     temp = final_list[2] 
+    #     final_list[2] = None
 
-        for key, value in temp.items():
-            if _searchWord.lower() in key.lower():
-                if final_list[2] == None:
-                    final_list[2] = {key: value}
-                else:
-                    final_list[2][key] = value
+    #     for key, value in temp.items():
+    #         if _searchWord.lower() in key.lower():
+    #             if final_list[2] == None:
+    #                 final_list[2] = {key: value}
+    #             else:
+    #                 final_list[2][key] = value
 
-    return render(request, 'haq/pages/topics.html', {
-        "auth_person": final_list[0],
-        'total_references': final_list[1],
-        'dict_topics': final_list[2],
-        'isServerLocal' : final_list[3],
-    })
+    # return render(request, 'haq/pages/topics.html', {
+    #     "auth_person": final_list[0],
+    #     'total_references': final_list[1],
+    #     'dict_topics': final_list[2],
+    #     'isServerLocal' : final_list[3],
+    # })
 
 # to Get references of a Topic
 def GetTopicView(request, topic_id):
