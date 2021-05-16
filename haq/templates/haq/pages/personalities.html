@@ -4,7 +4,7 @@
 {% block body %}
     <span id = "titlespan">
         <div class="move_center" >
-            <h1>List of Personalities - </h1>
+            <h1>List of Personalities</h1>
             
             <form action = '{% url 'haq:personalities' %}' method="POST" class="move_center">
                 {% csrf_token %}   <!--this is to avoid fraugry-->

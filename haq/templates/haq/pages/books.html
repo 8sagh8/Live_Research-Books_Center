@@ -12,14 +12,14 @@
                     by Status: {{status}}
                 {% endif %}
             </h1>
-            {% if isServerLocal == True %}
+            
             <form action = '{% url 'haq:books' %}' method="POST" class="move_center">
                 {% csrf_token %}   <!--this is to avoid fraugry-->
                 <input type="text" name="searchWord" size="50" value="" placeholder="Search A Book">
                 
                 <input type="submit" value="Click to Search">
             </form>
-            {% endif %}
+            
             <br>
             {% if auth_person == "Authorized Person" %}
                     <button type="button" class="btn btn-primary btn-lg">Add New Book</button>
