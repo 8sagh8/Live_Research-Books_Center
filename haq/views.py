@@ -624,3 +624,21 @@ def GetPersonRefView(request, person_id):
 def LogOutView(request):
     auth.logout(request)
     return redirect("/")
+
+## LOGIN VIEW
+def LoginView(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = auth.authenticate(username = username, password = password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect("index/")
+        else:
+            messages.info(request, 'Invalid Username OR Password')
+            return redirect('login')
+
+    else:
+        return render(request, 'haq/pages/login.html')    
