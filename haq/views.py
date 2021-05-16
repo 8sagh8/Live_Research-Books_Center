@@ -501,7 +501,7 @@ def TopicsView(request):
     final_list = []
     topics = get_topics_json()
 
-    # # 3rd parameter, is field name in BOOK MODULE
+    # 3rd parameter, is field name in BOOK MODULE
     # final_list = getData_countReferences(request, topics, 'subject')
 
     # if request.method == 'POST':
@@ -522,10 +522,13 @@ def TopicsView(request):
 
     return render(request, 'haq/pages/topics.html'), {
     #     "auth_person": final_list[0],
-        'total_references': 5,
         #  'total_references': final_list[1],
     #     'dict_topics': final_list[2],
     #     'isServerLocal' : final_list[3],
+   
+            'total_references': '5',
+    #     'dict_topics': final_list[2],
+        'isServerLocal' : True,
      })
     
     
