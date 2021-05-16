@@ -213,11 +213,11 @@ def getData(request, all_json_data):
     
     if request.method == "POST":
         _searchWord = request.POST['searchWord']
-        for json_data in all_json_data.values():
-            for data in json_data:      
-                for d in data.values():
-                    if _searchWord.lower() in str(d).lower():
-                        final_list.append(data)
+
+        for json_data_dict in all_json_data:
+            for json_data in json_data_dict.values():
+                if _searchWord.lower() in str(json_data).lower():
+                    final_list.append(json_data_dict)
     else:
         # for json_data in all_json_data.values():
         for json in all_json_data:
