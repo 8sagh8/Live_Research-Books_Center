@@ -179,7 +179,7 @@ def getData_countReferences(request, jsonData, _field):
             total_references += counter
     # below is to get Dictionary in Reverse ORDER...
     new_dict_jsonData = {}
-    for key, value in reversed(dict_jsonData.items()):
+    for key, value in dict_jsonData.items():
         if len(new_dict_jsonData) == 0:
             new_dict_jsonData = {key : value}
         else:
