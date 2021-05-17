@@ -305,7 +305,11 @@ def StatusView(request):
 
 # get Books by Status
 def GetStatusBooksView(request, status_id):
-    status_name = get_object_or_404(Status, pk=status_id)
+    status = get_status_json()
+    status_name = None
+    for s in status:
+        if eval(status_id) == s['id']:
+            status_name = s['_status']
     
     # 3rd parameter, is field name in BOOK MODULE
     demanded = books_by_demand(request, status_name, 'status')
