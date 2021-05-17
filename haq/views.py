@@ -341,7 +341,13 @@ def ReligionView(request):
 
 # get Books by Religious / Sects
 def GetReligiousBooksView(request, sect_id):
-    religion_name = get_object_or_404(Religion, pk=sect_id)
+    religion = get_religion_json()
+    religion_name = None
+
+    for r in religion:
+        if eval(sect_id) == r['id']:
+            religion_name = r['_sect']
+    
     
     # 3rd parameter, is field name in BOOK MODULE
     demanded = books_by_demand(request, religion_name, 'sect')
