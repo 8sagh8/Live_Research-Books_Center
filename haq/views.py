@@ -405,7 +405,7 @@ def NeedView(request):
 def GetNeedBooksView(request, need_id):
     need = get_need_json()
     need_name = None
-    
+
     for n in need:
         if eval(need_id) == n['id']:
             need_name = n['_need']
@@ -441,7 +441,12 @@ def LanguagesView(request):
 
 # get Books by Languages
 def GetLanguagesBooksView(request, language_id):
-    languages_name = get_object_or_404(Language, pk=language_id)
+    languages = get_language_json()
+    languages_name = None
+    
+    for l in languages:
+        if eval(language_id) == l['id']:
+            languages_name = l['_language']
 
     # 3rd parameter, is field name in BOOK MODULE
     demanded = books_by_demand(request, languages_name, 'lang')
@@ -484,7 +489,13 @@ def CategoriesView(request):
 
 # get Books by Categories
 def GetCategoriesBooksView(request, category_id):
-    categories_name = get_object_or_404(Category, pk=category_id)
+    categories = get_categories_json()
+    categories_name = None
+    
+    for c in categories:
+        if eval(category_id) == c['id']:
+            categories_name = c['_category']
+
     # 3rd parameter, is field name in BOOK MODULE
     demanded = books_by_demand(request, categories_name, 'cat')
     
