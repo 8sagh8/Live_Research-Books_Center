@@ -403,7 +403,12 @@ def NeedView(request):
 
 # get Books by Need
 def GetNeedBooksView(request, need_id):
-    need_name = get_object_or_404(Need, pk=need_id)
+    need = get_need_json()
+    need_name = None
+    
+    for n in need:
+        if eval(need_id) == n['id']:
+            need_name = n['_need']
     
     # 3rd parameter, is field name in BOOK MODULE
     demanded = books_by_demand(request, need_name, 'need')
@@ -592,7 +597,12 @@ def PersonalityView(request):
 
 # get References by Person
 def GetPersonRefView(request, person_id):
-    person_name = get_object_or_404(Person, pk=person_id)
+    person = get_person_json()
+    person_name = None
+    
+    for p in person:
+        if eval(person_id) == p['id']:
+            person_name = p['_p_name']
 
     # 3rd parameter, is field name in Reference MODULE
     returning_value = references_by_demand(request, person_name, 'personFor')

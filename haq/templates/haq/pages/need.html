@@ -46,13 +46,9 @@
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>
-                            {% if isServerLocal == True %}
-                                <a href={% url 'haq:getNeedBooks' v.0 %}  class="a_book" >
-                                    {{k}}
-                                </a>
-                            {% else %}
+                            <a href={% url 'haq:getNeedBooks' v.0 %}  class="a_book" >
                                 {{k}}
-                            {% endif %}
+                            </a>
                         </td>
                         <td>{{ v.1 }}</td>
                     </tr>
