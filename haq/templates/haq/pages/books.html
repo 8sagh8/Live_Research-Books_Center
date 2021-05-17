@@ -45,25 +45,14 @@
                 <tbody>
                     {% for book in books  %}
                         <tr>
-                            {% if isServerLocal == True %}
-                                <th scope="row">{{ forloop.revcounter }}</th>
-                                <td>{{ book.name }}</td>
-                                <td>{{ book.author }}</td>
-                                <td>{{ book.sect }}</td>
-                                <td>{{ book.cat }}</td>
-                                <td>{{ book.status }}</td>
-                                <td>{{ book.need }}</td>
-                                <td>{{ book.lang }}</td>
-                            {% else %}
-                                <th scope="row">{{ forloop.revcounter }}</th>
-                                <td>{{ book.name }}</td>
-                                <td>{{ book.author }}</td>
-                                <td>{{ book.sect }}</td>
-                                <td>{{ book.cat }} </td>
-                                <td>{{ book.status }}</td>
-                                <td>{{ book.need }}</td>
-                                <td>{{ book.lang }}</td>
-                            {% endif %}                          
+                            <th scope="row">{{ forloop.revcounter }}</th>
+                            <td>{{ book.name }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.sect }}</td>
+                            <td>{{ book.cat }}</td>
+                            <td>{{ book.status }}</td>
+                            <td>{{ book.need }}</td>
+                            <td>{{ book.lang }}</td>                        
                         </tr>
                     {% endfor %}
                 </tbody>

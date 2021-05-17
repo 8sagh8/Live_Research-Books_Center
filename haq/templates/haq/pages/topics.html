@@ -36,13 +36,11 @@
                             <th scope="row">{{ forloop.revcounter }}</th>
                             {% for k, v in dict_topics.items %}                          
                                 <td>
-                                    {% if isServerLocal == True %}
-                                        <a href={% url 'haq:getTopic' v.0 %}  class="a_book" >
-                                            {{k}}
-                                        </a>
-                                    {% else %}
-                                            {{k}}
-                                    {% endif %}
+                                    
+                                    <a href={% url 'haq:getTopic' v.0 %}  class="a_book" >
+                                        {{k}}
+                                    </a>
+                                   
                                 </td>
                                 <td>{{ v.1 }}</td>
                             {% endfor %}

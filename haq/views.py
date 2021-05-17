@@ -545,14 +545,17 @@ def TopicsView(request):
         'isServerLocal' : final_list[3],
    
      })
-    
-    
 
-   
 
 # to Get references of a Topic
 def GetTopicView(request, topic_id):
-    topic_name = get_object_or_404(Topic, pk=topic_id)
+    topic = get_topics_json()
+    topic_name = None
+    
+    for t in topic:
+        if eval(topic_id) == t['id']:
+            topic_name = t['_topic']
+
     returning_value = references_by_demand(request, topic_name, 'subject')
     
     return render(request, 'haq/pages/referencesByTopic.html', {
