@@ -25,7 +25,8 @@ urlpatterns = [
     path('getPersonRef/<person_id>/', views.GetPersonRefView, name="getPersonRef"),
 
 
-    path('', views.IndexView, name="index"),
+    # path('', views.IndexView, name="index"),
+    path('', views.AboutView, name="about"),
     path('index/', views.IndexView, name="index"),
     path('about/', views.AboutView, name="about"),
     path('logout', views.LogOutView, name="logout"),
